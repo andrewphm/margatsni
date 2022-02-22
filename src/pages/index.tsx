@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import connectToDb from '../lib/connectToDb'
+import connectToDb from '../lib/connectToDb.js'
 
 const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
   return (
