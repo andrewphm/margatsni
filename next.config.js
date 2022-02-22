@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
+  env: {
+    MONGODB_URI:
+      'mongodb+srv://admin:admin@cluster0.61vc6.mongodb.net/mainDB?retryWrites=true&w=majority',
+  },
 }

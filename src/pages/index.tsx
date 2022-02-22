@@ -1,8 +1,9 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import connectToDb from '../lib/connectToDb'
 
-const Home: NextPage = () => {
+const Home: NextPage = ({ isConnected }) => {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Head>
@@ -24,6 +25,12 @@ const Home: NextPage = () => {
             pages/index.tsx
           </code>
         </p>
+
+        {isConnected && (
+          <div>
+            <p>is connected!</p>
+          </div>
+        )}
 
         <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
           <a
@@ -81,6 +88,22 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
+}
+
+/* Retrieves pet(s) data from mongodb database */
+export async function getServerSideProps(context) {
+  try {
+    connectToDb()
+    return {
+      props: { isConnected: true },
+    }
+  } catch (error) {
+    console.log(error)
+
+    return {
+      props: { isConnected: false },
+    }
+  }
 }
 
 export default Home
