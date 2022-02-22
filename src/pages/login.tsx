@@ -6,6 +6,9 @@ import { useEffect } from 'react'
 import phone from '../../public/images/login/phone.png'
 import home from '../../public/images/login/home.png'
 
+// Components
+import Footer from '../components/common/Footer'
+
 const Login: NextPage = () => {
   const router = useRouter()
 
@@ -17,7 +20,7 @@ const Login: NextPage = () => {
   }, [])
 
   return (
-    <section>
+    <section className="h-screen w-screen">
       <main>
         <article>
           {/* PhoneSlideShow */}
@@ -25,7 +28,7 @@ const Login: NextPage = () => {
         </article>
       </main>
 
-      {/* Footer */}
+      <Footer />
     </section>
   )
 }
