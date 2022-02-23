@@ -5,3 +5,8 @@
 body {
   background-color: #fafafa;
 }
+
+:root {
+  --blue-btn: #0095f6;
+  --background-colour: #fafafa;
+}

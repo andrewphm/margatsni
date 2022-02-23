@@ -2,7 +2,7 @@ import { ExpandMore } from '@mui/icons-material'
 
 function Footer(): JSX.Element {
   return (
-    <footer className="mx-auto flex w-full justify-center px-4 text-sm">
+    <footer className="mx-auto flex w-full justify-center px-4 py-10 text-sm">
       <div className="flex flex-col gap-y-3 text-gray-400">
         <ul className="flex flex-wrap justify-center gap-x-4">
           <li className="cursor-pointer">Meta</li>

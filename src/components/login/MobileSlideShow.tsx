@@ -1,5 +1,5 @@
 const MobileSlideShow = () => {
-  return <div>MobileSlideShow</div>
+  return <div className="hidden lg1:flex">MobileSlideShow</div>
 }
 
 export default MobileSlideShow
