@@ -31,14 +31,14 @@ const LoginForm = () => {
 
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
-      <div className="flex w-full flex-col items-center border bg-white p-6">
+      <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <div className="relative mb-2 h-[20px] w-40 p-10">
           <Image src={logo} layout="fill" objectFit="contain" />
         </div>
 
         <form className="flex w-full flex-col items-center gap-y-2">
           <div
-            className={`relative w-full rounded-sm border bg-[#fafafa] ${
+            className={`relative w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
               form.username ? 'pt-[9px] pb-[1px]' : 'py-[5px]'
             }`}
           >
@@ -63,7 +63,7 @@ const LoginForm = () => {
           </div>
 
           <div
-            className={`relative flex w-full rounded-sm border bg-[#fafafa] ${
+            className={`relative flex w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
               form.password ? 'pt-[9px] pb-[1px]' : 'py-[5px]'
             }`}
           >
@@ -131,7 +131,7 @@ const LoginForm = () => {
         </div>
       </div>
 
-      <div className="flex w-full flex-col items-center border bg-white p-6">
+      <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <p className="text-sm">
           Don't have an account?{' '}
           <span className="cursor-pointer font-semibold text-[#0095f6] hover:underline">

@@ -23,9 +23,9 @@ const Login: NextPage = () => {
 
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">
-      <main>
+      <main className="h-full">
         <article className="mx-auto flex h-full w-full max-w-7xl">
-          <div className="flex h-full w-full justify-center">
+          <div className="flex h-full w-full justify-center xs:items-center">
             <MobileSlideShow />
             <LoginForm />
           </div>
