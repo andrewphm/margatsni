@@ -6,3 +6,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp
+
+// SSR app: Next.js
+// -> database MongoDB
+// -> react-loading-skeleton
+// -> tailwind
+
+// Folder Structure
+// src
+// -> Components,
+// -> Constants,
+// -> Context,
+// -> helpers,
+// -> lib (mongoDB connection)

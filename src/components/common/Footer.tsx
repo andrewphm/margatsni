@@ -1,6 +1,8 @@
+import { ExpandMore } from '@mui/icons-material'
+
 function Footer(): JSX.Element {
   return (
-    <footer className="mx-auto flex w-full justify-center px-4">
+    <footer className="mx-auto flex w-full justify-center px-4 text-sm">
       <div className="flex flex-col gap-y-3 text-gray-400">
         <ul className="flex flex-wrap justify-center gap-x-4">
           <li className="cursor-pointer">Meta</li>
@@ -26,8 +28,11 @@ function Footer(): JSX.Element {
         </ul>
 
         <ul className="flex flex-wrap justify-center gap-x-4">
-          <li className="cursor-pointer">English </li>
-          <li className="cursor-pointer">© 2022 Instagram from Meta</li>
+          <li className="flex cursor-pointer items-center">
+            English <ExpandMore />
+          </li>
+
+          <li>© 2022 Instagram from Meta</li>
         </ul>
       </div>
     </footer>

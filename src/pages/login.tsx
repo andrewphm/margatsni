@@ -8,6 +8,8 @@ import home from '../../public/images/login/home.png'
 
 // Components
 import Footer from '../components/common/Footer'
+import LoginForm from '../components/login/LoginForm'
+import MobileSlideShow from '../components/login/MobileSlideShow'
 
 const Login: NextPage = () => {
   const router = useRouter()
@@ -22,9 +24,11 @@ const Login: NextPage = () => {
   return (
     <section className="h-screen w-screen">
       <main>
-        <article>
-          {/* PhoneSlideShow */}
-          {/* Login Form */}
+        <article className="mx-auto w-full max-w-7xl">
+          <div className="flex w-full justify-center">
+            <MobileSlideShow />
+            <LoginForm />
+          </div>
         </article>
       </main>
 
