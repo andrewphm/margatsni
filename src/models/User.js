@@ -4,18 +4,21 @@ const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, 'Please provide a username'],
+      required: [true, 'Username is required'],
       maxLength: [20, 'Name cannot be more than 20 characters'],
       unique: true,
     },
     fullName: {
       type: String,
-      required: [true, 'Please provide a full name'],
+      required: [true, 'Full name is required.'],
     },
     email: {
       type: String,
-      required: [true, 'Please provide an email address'],
+      required: [true, 'Email is required.'],
       unique: true,
+    },
+    hashedPassword: {
+      type: String,
     },
     image: {
       type: String,
@@ -38,4 +41,4 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-export default mongoose.model('User', UserSchema)
+export default mongoose.models.User || mongoose.model('User', UserSchema)
