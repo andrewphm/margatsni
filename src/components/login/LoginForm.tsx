@@ -98,9 +98,9 @@ const LoginForm = () => {
           </div>
 
           <button
-            className={`mt-3 w-full rounded-md bg-[#0095f6] py-[2px] font-medium text-white ${
+            className={`mt-3 w-full rounded-md bg-[#0095f6] py-[2px] font-medium text-white shadow-sm ease-out hover:scale-[1.01] ${
               form.username && form.password
-                ? ''
+                ? 'hover:shadow-md'
                 : 'cursor-not-allowed opacity-50'
             }`}
             disabled={form.username && form.password ? false : true}
@@ -108,8 +108,10 @@ const LoginForm = () => {
             Log In
           </button>
 
-          <button className=" w-full  rounded-md border bg-neutral-100 py-[2px] font-medium text-gray-500">
-            Demo Log In
+          <button className="w-full rounded-md border bg-white py-[2px] font-medium text-gray-500 ease-out hover:scale-[1.01] hover:bg-neutral-50 hover:shadow-sm">
+            <span className="bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] bg-clip-text text-transparent xl:text-2xl">
+              Demo Log In
+            </span>
           </button>
         </form>
 
