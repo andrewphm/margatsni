@@ -10,6 +10,7 @@
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.3",
     "axios": "^0.26.0",
+    "bcrypt": "^5.0.1",
     "date-fn": "^0.0.2",
     "mongoose": "^6.2.3",
     "next": "latest",
