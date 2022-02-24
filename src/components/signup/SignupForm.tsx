@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import logo from '../../../public/images/logo.png'
 import googleBadge from '../../../public/images/login/googleplaybadge.png'
 import appleBadge from '../../../public/images/login/applestorebadge.png'
@@ -16,6 +16,14 @@ const initialForm = {
 const LoginForm = () => {
   const [form, setForm] = useState(initialForm)
   const [isVisible, setIsVisible] = useState(false)
+  const inputRef = useRef(null)
+
+  // Focus input
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   const handleFormChange = (e) => {
     setForm((prev) => {
@@ -45,6 +53,8 @@ const LoginForm = () => {
         </div>
 
         <form className="flex w-full flex-col items-center gap-y-2">
+          <input type="hidden" value="prayer" />
+
           <div
             className={`relative w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
               form.email ? 'pt-[9px] pb-[1px]' : 'py-[5px]'
@@ -54,9 +64,13 @@ const LoginForm = () => {
               className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="email"
               name="email"
-              type="text"
+              type="email"
+              required
               onChange={handleFormChange}
               value={form.email}
+              autoFocus
+              autoComplete="new-email"
+              ref={inputRef}
             />
             <label
               htmlFor="email"
@@ -82,6 +96,7 @@ const LoginForm = () => {
               type="text"
               onChange={handleFormChange}
               value={form.fullName}
+              autoComplete="new-fullname"
             />
             <label
               htmlFor="email"
@@ -107,6 +122,7 @@ const LoginForm = () => {
               type="text"
               onChange={handleFormChange}
               value={form.username}
+              autoComplete="new-username"
             />
             <label
               htmlFor="username"
@@ -132,6 +148,7 @@ const LoginForm = () => {
               type={isVisible ? 'text' : 'password'}
               onChange={handleFormChange}
               value={form.password}
+              autoComplete="new-password"
             />
 
             {form.password && (
@@ -163,7 +180,7 @@ const LoginForm = () => {
             }`}
             disabled={form.username && form.password ? false : true}
           >
-            Log In
+            Sign Up
           </button>
 
           <button className="w-full rounded-md border bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] py-[2px] font-medium text-white ease-out hover:scale-[1.01] hover:bg-neutral-50 hover:shadow-sm">
@@ -180,7 +197,7 @@ const LoginForm = () => {
         <div className="text-center">
           <div className="flex cursor-pointer items-center gap-x-1 text-[14px] text-[#4267B2]">
             <Facebook />
-            <p className="font-semibold">Log in with Facebook</p>
+            <p className="font-semibold">Sign up with Facebook</p>
           </div>
 
           <p className="mt-2 cursor-pointer text-sm text-[#4267B2] hover:underline">
@@ -191,9 +208,9 @@ const LoginForm = () => {
 
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <p className="text-sm">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <span className="cursor-pointer font-semibold text-[#0095f6] hover:underline">
-            Sign Up
+            Sign In
           </span>
         </p>
       </div>

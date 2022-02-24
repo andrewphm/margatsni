@@ -8,7 +8,7 @@ const Signup: NextPage = () => {
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">
       <main className="h-full">
-        <article className="mx-auto flex h-full w-full max-w-7xl">
+        <article className="mx-auto flex h-screen w-full max-w-7xl">
           <div className="flex h-full w-full justify-center xs:items-center">
             <MobileSlideShow />
             <SignupForm />
