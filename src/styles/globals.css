@@ -10,3 +10,9 @@ body {
   --blue-btn: #0095f6;
   --background-colour: #fafafa;
 }
+
+input:-internal-autofill-selected {
+  background: none !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0%), inset 0 0 0 100px #fff;
+  -webkit-text-fill-color: #000;
+}

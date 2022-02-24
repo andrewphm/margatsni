@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import logo from '../../../public/images/logo.png'
 import googleBadge from '../../../public/images/login/googleplaybadge.png'
 import appleBadge from '../../../public/images/login/applestorebadge.png'
@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { Facebook } from '@mui/icons-material'
 
 const initialForm = {
+  email: '',
+  fullName: '',
   username: '',
   password: '',
 }
@@ -14,14 +16,6 @@ const initialForm = {
 const LoginForm = () => {
   const [form, setForm] = useState(initialForm)
   const [isVisible, setIsVisible] = useState(false)
-  const inputRef = useRef(null)
-
-  // Focus input
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [])
 
   const handleFormChange = (e) => {
     setForm((prev) => {
@@ -40,12 +34,66 @@ const LoginForm = () => {
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
-        <div className="relative mb-2 h-[20px] w-40 p-10">
+        <div className="relative h-[20px] w-40 p-9">
           <Image src={logo} layout="fill" objectFit="contain" />
         </div>
 
+        <div className="mt-2 mb-4">
+          <p className="text-center text-sm font-semibold text-gray-500">
+            Sign up to see photos and videos from your friends.
+          </p>
+        </div>
+
         <form className="flex w-full flex-col items-center gap-y-2">
-          <input type="hidden" value="prayer" />
+          <div
+            className={`relative w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
+              form.email ? 'pt-[9px] pb-[1px]' : 'py-[5px]'
+            }`}
+          >
+            <input
+              className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
+              id="email"
+              name="email"
+              type="text"
+              onChange={handleFormChange}
+              value={form.email}
+            />
+            <label
+              htmlFor="email"
+              className={
+                form.email
+                  ? 'absolute top-[1px] left-2 text-[10px] font-normal text-gray-400 transition-all'
+                  : 'absolute top-[6px] left-2 text-sm font-normal text-gray-400 transition-all'
+              }
+            >
+              Email
+            </label>
+          </div>
+
+          <div
+            className={`relative w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
+              form.fullName ? 'pt-[9px] pb-[1px]' : 'py-[5px]'
+            }`}
+          >
+            <input
+              className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
+              id="fullName"
+              name="fullName"
+              type="text"
+              onChange={handleFormChange}
+              value={form.fullName}
+            />
+            <label
+              htmlFor="email"
+              className={
+                form.fullName
+                  ? 'absolute top-[1px] left-2 text-[10px] font-normal text-gray-400 transition-all'
+                  : 'absolute top-[6px] left-2 text-sm font-normal text-gray-400 transition-all'
+              }
+            >
+              Full name
+            </label>
+          </div>
 
           <div
             className={`relative w-full rounded-sm border bg-white xs:bg-[#fafafa] ${
@@ -53,13 +101,10 @@ const LoginForm = () => {
             }`}
           >
             <input
-              className="w-full bg-transparent px-2 text-sm font-light autofill:bg-yellow-200 focus:outline-none"
+              className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="username"
               name="username"
               type="text"
-              ref={inputRef}
-              autoFocus
-              autoComplete="new-username"
               onChange={handleFormChange}
               value={form.username}
             />
@@ -81,10 +126,9 @@ const LoginForm = () => {
             }`}
           >
             <input
-              className="w-full bg-transparent px-2 text-sm font-light autofill:bg-transparent focus:outline-none"
+              className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="password"
               name="password"
-              autoComplete="new-password"
               type={isVisible ? 'text' : 'password'}
               onChange={handleFormChange}
               value={form.password}
