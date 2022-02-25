@@ -44,12 +44,18 @@ export default async function handler(req, res) {
         // Find User and validate
         let user = await User.findOne({ username })
         if (!user)
-          return res.status(403).json({ success: false, error: 'username' })
+          return res.status(403).json({
+            success: false,
+            error: 'This username does not exist.',
+          })
 
         // Validate password
         let success = await bcrypt.compare(password, user.hashedPassword)
         if (!success)
-          return res.status(403).json({ success: false, error: 'password' })
+          return res.status(403).json({
+            success: false,
+            error: 'Incorrect password, please try again.',
+          })
 
         // Create JWT accessToken
         // Return custom user object

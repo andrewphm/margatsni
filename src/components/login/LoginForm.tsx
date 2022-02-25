@@ -59,8 +59,7 @@ const LoginForm = () => {
 
       dispatch(loginSuccess('test'))
     } catch (error) {
-      dispatch(loginFailure())
-      console.log(error)
+      dispatch(loginFailure(error.response.data.error))
     }
 
     // Redirect to '/'
@@ -196,6 +195,12 @@ const LoginForm = () => {
           >
             Demo Log In
           </button>
+
+          {user.error && (
+            <div className="mt-2">
+              <span className="font-semibold text-red-500">{user.error}</span>
+            </div>
+          )}
         </form>
 
         <div className="my-5 flex w-full items-center gap-x-5">
