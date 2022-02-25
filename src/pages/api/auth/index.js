@@ -38,6 +38,24 @@ export default async function handler(req, res) {
 
     // Log in user
     case 'POST':
+      try {
+        let { username, password } = body
+
+        // Find User and validate
+        let user = await User.findOne({ username })
+        if (!user)
+          return res.status(403).json({ success: false, error: 'username' })
+
+        // Validate password
+        let success = await bcrypt.compare(password, user.hashedPassword)
+        if (!success)
+          return res.status(403).json({ success: false, error: 'password' })
+
+        // Create JWT accessToken
+        // Return custom user object
+      } catch (error) {
+        res.status(400).json({ success: false })
+      }
     default:
       res.status(400).json({ success: false })
   }

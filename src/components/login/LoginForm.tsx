@@ -55,6 +55,8 @@ const LoginForm = () => {
 
       const res = await API.userLogin(form)
 
+      console.log(res.data)
+
       dispatch(loginSuccess('test'))
     } catch (error) {
       dispatch(loginFailure())
