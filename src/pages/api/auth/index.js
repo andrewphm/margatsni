@@ -1,4 +1,4 @@
-import { red } from '@mui/material/colors'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
@@ -25,7 +25,19 @@ export default async function handler(req, res) {
 
         let savedUser = await newUser.save()
 
-        return res.status(200).json(savedUser)
+        // Create JWT accessToken
+        const accessToken = jwt.sign(
+          {
+            id: savedUser._id,
+            isAdmin: savedUser.isAdmin,
+          },
+          process.env.JWT_SEC,
+          {
+            expiresIn: '10d',
+          }
+        )
+
+        return res.status(200).json({ ...savedUser, accessToken })
       } catch (error) {
         let { code } = error
 
@@ -58,11 +70,27 @@ export default async function handler(req, res) {
           })
 
         // Create JWT accessToken
+        const accessToken = await jwt.sign(
+          {
+            id: user._id,
+            isAdmin: user.isAdmin,
+          },
+          process.env.JWT_SEC,
+          {
+            expiresIn: '10d',
+          }
+        )
+
         // Return custom user object
+        let { hashedPassword, ...others } = user._doc
+
+        return res.status(200).json({ ...others, accessToken })
       } catch (error) {
-        res.status(400).json({ success: false })
+        return res
+          .status(400)
+          .json({ success: false, message: 'Something went wrong.' })
       }
     default:
-      res.status(400).json({ success: false })
+      return res.status(400).json({ success: false })
   }
 }

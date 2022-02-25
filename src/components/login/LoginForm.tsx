@@ -51,14 +51,13 @@ const LoginForm = () => {
 
     // Call post auth login endpoint
     try {
+      // Assign user to persisted global state
       dispatch(loginStart())
-
       const res = await API.userLogin(form)
-
       console.log(res.data)
-
-      dispatch(loginSuccess('test'))
+      dispatch(loginSuccess(res.data))
     } catch (error) {
+      // Display error message
       dispatch(loginFailure(error.response.data.error))
     }
 

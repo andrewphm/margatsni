@@ -1,1 +1,3 @@
-export function middleware(req) {}
+import { NextResponse } from 'next/server'
+
+export function middleware(req, res) {}

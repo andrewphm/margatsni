@@ -4,5 +4,6 @@ module.exports = {
   env: {
     MONGODB_URI:
       'mongodb+srv://admin:admin@cluster0.61vc6.mongodb.net/mainDB?retryWrites=true&w=majority',
+    JWT_SEC: '12345',
   },
 }
