@@ -1,0 +1,9 @@
+- [] Add login functionality
+    - [] Implement Redux/redux toolkit.js for global state management
+    - [] Implement Redux persist
+    - [] Create login authentication endpoints
+    - [] Create signup endpoints
+
+- [] Middleware authentication
+    - [] checks JWT
+
