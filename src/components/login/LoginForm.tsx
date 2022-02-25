@@ -4,7 +4,7 @@ import googleBadge from '../../../public/images/login/googleplaybadge.png'
 import appleBadge from '../../../public/images/login/applestorebadge.png'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Facebook } from '@mui/icons-material'
+import { DoubleArrowTwoTone, Facebook } from '@mui/icons-material'
 
 const initialForm = {
   username: '',
@@ -18,6 +18,8 @@ const LoginForm = () => {
 
   // Focus input
   useEffect(() => {
+    document.title = 'Login - Instagram'
+
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -37,6 +39,10 @@ const LoginForm = () => {
     setIsVisible((prev) => !prev)
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
@@ -44,7 +50,10 @@ const LoginForm = () => {
           <Image src={logo} layout="fill" objectFit="contain" />
         </div>
 
-        <form className="flex w-full flex-col items-center gap-y-2">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full flex-col items-center gap-y-2"
+        >
           <input type="hidden" value="prayer" />
 
           <div
@@ -62,6 +71,7 @@ const LoginForm = () => {
               autoComplete="new-username"
               onChange={handleFormChange}
               value={form.username}
+              aria-label="Enter a username."
             />
             <label
               htmlFor="username"
@@ -81,6 +91,7 @@ const LoginForm = () => {
             }`}
           >
             <input
+              aria-label="Enter a password."
               className="w-full bg-transparent px-2 text-sm font-light autofill:bg-transparent focus:outline-none"
               id="password"
               name="password"

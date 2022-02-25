@@ -20,6 +20,8 @@ const LoginForm = () => {
 
   // Focus input
   useEffect(() => {
+    document.title = 'Signup - Instagram'
+
     if (inputRef.current) {
       inputRef.current.focus()
     }
@@ -39,6 +41,10 @@ const LoginForm = () => {
     setIsVisible((prev) => !prev)
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
@@ -52,7 +58,10 @@ const LoginForm = () => {
           </p>
         </div>
 
-        <form className="flex w-full flex-col items-center gap-y-2">
+        <form
+          onSubmit={handleSubmit}
+          className="flex w-full flex-col items-center gap-y-2"
+        >
           <input type="hidden" value="prayer" />
 
           <div
@@ -61,6 +70,7 @@ const LoginForm = () => {
             }`}
           >
             <input
+              aria-label="Enter your email address"
               className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="email"
               name="email"
@@ -91,6 +101,7 @@ const LoginForm = () => {
           >
             <input
               className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
+              aria-label="Enter your full name"
               id="fullName"
               name="fullName"
               type="text"
@@ -116,6 +127,7 @@ const LoginForm = () => {
             }`}
           >
             <input
+              aria-label="Enter a username"
               className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="username"
               name="username"
@@ -142,6 +154,7 @@ const LoginForm = () => {
             }`}
           >
             <input
+              aria-label="Enter a password"
               className="w-full bg-transparent px-2 text-sm font-light focus:outline-none"
               id="password"
               name="password"
