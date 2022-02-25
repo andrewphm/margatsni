@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import logo from '../../../public/images/logo.png'
 import googleBadge from '../../../public/images/login/googleplaybadge.png'
 import appleBadge from '../../../public/images/login/applestorebadge.png'
-
+import Link from 'next/link'
 import Image from 'next/image'
 import { Facebook } from '@mui/icons-material'
 
@@ -148,9 +148,13 @@ const LoginForm = () => {
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <p className="text-sm">
           Don't have an account?{' '}
-          <span className="cursor-pointer font-semibold text-[#0095f6] hover:underline">
-            Sign Up
-          </span>
+          <Link href="/signup">
+            <a>
+              <span className="cursor-pointer font-semibold text-[#0095f6] hover:underline">
+                Sign Up
+              </span>
+            </a>
+          </Link>
         </p>
       </div>
 
