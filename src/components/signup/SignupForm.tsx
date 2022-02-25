@@ -36,11 +36,6 @@ const LoginForm = () => {
     })
   }
 
-  const handleVisibility = (e) => {
-    e.preventDefault()
-    setIsVisible((prev) => !prev)
-  }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
   }
@@ -166,7 +161,7 @@ const LoginForm = () => {
 
             {form.password && (
               <p
-                onClick={handleVisibility}
+                onClick={() => setIsVisible((prev) => !prev)}
                 className="relative bottom-1 cursor-pointer pr-3 text-sm"
               >
                 Show

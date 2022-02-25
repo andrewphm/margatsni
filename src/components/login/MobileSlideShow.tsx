@@ -9,6 +9,7 @@ import ss4 from '../../../public/images/login/ss4.jpg'
 import ss5 from '../../../public/images/login/ss5.jpg'
 
 const MobileSlideShow = () => {
+  // Logic for slide show
   useEffect(() => {
     let slide = 1
 
