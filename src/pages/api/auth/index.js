@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
 import formatValidationErr from '../../../helpers/formatValidationErr'
+import cookie from 'cookie'
 
 export default async function handler(req, res) {
   const { method, body } = req
@@ -35,6 +36,16 @@ export default async function handler(req, res) {
           {
             expiresIn: '10d',
           }
+        )
+
+        // Set HttpOnly cookie
+        res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            path: '/',
+          })
         )
 
         return res.status(200).json({ ...savedUser, accessToken })
@@ -79,6 +90,16 @@ export default async function handler(req, res) {
           {
             expiresIn: '10d',
           }
+        )
+
+        // Set HttpOnly cookie
+        res.setHeader(
+          'Set-Cookie',
+          cookie.serialize('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            path: '/',
+          })
         )
 
         // Return custom user object

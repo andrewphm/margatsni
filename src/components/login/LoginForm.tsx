@@ -4,15 +4,9 @@ import googleBadge from '../../../public/images/login/googleplaybadge.png'
 import appleBadge from '../../../public/images/login/applestorebadge.png'
 import Link from 'next/link'
 import Image from 'next/image'
-import { DoubleArrowTwoTone, Facebook } from '@mui/icons-material'
+import { Facebook } from '@mui/icons-material'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  setCurrentUser,
-  loginStart,
-  loginFailure,
-  loginSuccess,
-} from '../../redux/userRedux'
-
+import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux'
 import API from '../../API'
 
 const initialForm = {
@@ -24,7 +18,6 @@ const LoginForm = () => {
   const [form, setForm] = useState(initialForm)
   const [isVisible, setIsVisible] = useState(false)
   const inputRef = useRef(null)
-
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
@@ -54,7 +47,6 @@ const LoginForm = () => {
       // Assign user to persisted global state
       dispatch(loginStart())
       const res = await API.userLogin(form)
-      console.log(res.data)
       dispatch(loginSuccess(res.data))
     } catch (error) {
       // Display error message
