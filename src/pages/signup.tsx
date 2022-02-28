@@ -1,10 +1,16 @@
 import type { NextPage } from 'next'
-
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import Footer from '../components/common/Footer'
 import SignupForm from '../components/signup/SignupForm'
 import MobileSlideShow from '../components/login/MobileSlideShow'
 
 const Signup: NextPage = () => {
+  const router = useRouter()
+  const user = useSelector((state) => state.user.currentUser)
+  // If user is already logged in, redirect to main index
+  user && router.push('/')
+
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">
       <main className="h-full">

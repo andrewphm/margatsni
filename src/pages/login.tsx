@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 // Components
@@ -8,14 +9,11 @@ import LoginForm from '../components/login/LoginForm'
 import MobileSlideShow from '../components/login/MobileSlideShow'
 
 const Login: NextPage = () => {
+  const user = useSelector((state) => state.user.currentUser)
   const router = useRouter()
 
-  useEffect(() => {
-    // Change URL
-    router.replace('/login', '/', {
-      shallow: true,
-    })
-  }, [])
+  // If User already logged in, push to main index
+  user && router.push('/')
 
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">

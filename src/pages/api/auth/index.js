@@ -15,7 +15,6 @@ export default async function handler(req, res) {
     case 'PUT':
       try {
         const { fullName, username, password, email } = body
-
         let hashedPassword
 
         if (password) {
@@ -23,10 +22,9 @@ export default async function handler(req, res) {
         }
 
         let newUser = new User({ username, fullName, hashedPassword, email })
-
         let savedUser = await newUser.save()
 
-        // Create JWT accessToken
+        // Create JWT
         const accessToken = jwt.sign(
           {
             id: savedUser._id,
@@ -38,7 +36,7 @@ export default async function handler(req, res) {
           }
         )
 
-        // Set HttpOnly cookie
+        // Set HttpOnly accessToken cookie
         res.setHeader(
           'Set-Cookie',
           cookie.serialize('accessToken', accessToken, {
@@ -48,6 +46,7 @@ export default async function handler(req, res) {
           })
         )
 
+        // Return custom user object
         return res.status(200).json({ ...savedUser, accessToken })
       } catch (error) {
         let { code } = error
@@ -61,6 +60,7 @@ export default async function handler(req, res) {
 
     // Log in user
     case 'POST':
+      console.log('second')
       try {
         let { username, password } = body
 
@@ -80,7 +80,7 @@ export default async function handler(req, res) {
             error: 'Incorrect password, please try again.',
           })
 
-        // Create JWT accessToken
+        // Create JWT
         const accessToken = await jwt.sign(
           {
             id: user._id,
@@ -92,13 +92,12 @@ export default async function handler(req, res) {
           }
         )
 
-        // Set HttpOnly cookie
+        // Set HttpOnly accessToken cookie
         res.setHeader(
           'Set-Cookie',
           cookie.serialize('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
-            path: '/',
           })
         )
 
