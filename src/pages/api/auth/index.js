@@ -42,6 +42,7 @@ export default async function handler(req, res) {
           cookie.serialize('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
             path: '/',
           })
         )
@@ -60,7 +61,6 @@ export default async function handler(req, res) {
 
     // Log in user
     case 'POST':
-      console.log('second')
       try {
         let { username, password } = body
 
@@ -98,6 +98,8 @@ export default async function handler(req, res) {
           cookie.serialize('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
+            path: '/',
+            sameSite: 'strict',
           })
         )
 

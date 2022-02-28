@@ -9,9 +9,9 @@ import { useEffect } from 'react'
 const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
   const router = useRouter()
 
-  // If no user logged in, push to login page
-  const user = useSelector((state) => state.user?.currentUser)
-  !user && router.push('/login')
+  // // If no user logged in, push to login page
+  // const user = useSelector((state) => state.user?.currentUser)
+  // !user && router.push('/login')
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">

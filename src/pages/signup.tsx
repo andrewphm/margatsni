@@ -8,8 +8,8 @@ import MobileSlideShow from '../components/login/MobileSlideShow'
 const Signup: NextPage = () => {
   const router = useRouter()
   const user = useSelector((state) => state.user.currentUser)
-  // If user is already logged in, redirect to main index
-  user && router.push('/')
+  // // If user is already logged in, redirect to main index
+  // user && router.push('/')
 
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">

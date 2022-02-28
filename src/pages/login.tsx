@@ -12,8 +12,8 @@ const Login: NextPage = () => {
   const user = useSelector((state) => state.user.currentUser)
   const router = useRouter()
 
-  // If User already logged in, push to main index
-  user && router.push('/')
+  // // If User already logged in, push to main index
+  // user && router.push('/')
 
   return (
     <section className="flex h-screen min-h-screen w-screen flex-col justify-between">
