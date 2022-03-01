@@ -48,14 +48,27 @@ export default async function handler(req, res) {
         )
 
         // Return custom user object
-        return res.status(200).json({ ...savedUser, accessToken })
+        return res.status(200).json({ ...savedUser })
       } catch (error) {
         let { code } = error
 
+        if (code) {
+          return res.status(400).json({
+            success: false,
+            error: 'This username is already taken.',
+          })
+        }
+
+        if (error.message) {
+          return res.status(400).json({
+            success: false,
+            validationErrors: formatValidationErr(error.message),
+          })
+        }
+
         return res.status(400).json({
           success: false,
-          errorCode: code || null,
-          validationErrors: formatValidationErr(error.message),
+          error: 'Something went wrong. Please try again.',
         })
       }
 
@@ -106,7 +119,7 @@ export default async function handler(req, res) {
         // Return custom user object
         let { hashedPassword, ...others } = user._doc
 
-        return res.status(200).json({ ...others, accessToken })
+        return res.status(200).json({ ...others })
       } catch (error) {
         return res
           .status(400)

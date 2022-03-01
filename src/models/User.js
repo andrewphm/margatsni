@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema(
     },
     hashedPassword: {
       type: String,
+      required: [true, 'Password is required.'],
     },
     image: {
       type: String,

@@ -36,8 +36,8 @@ const LoginForm = () => {
     })
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
   }
 
   return (

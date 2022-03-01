@@ -1,14 +1,14 @@
 const formatValidationErr = (err) => {
   let formattedErr = err.split('User validation failed: ')[1].split(', ')
 
-  let res = {}
+  let res = ''
   formattedErr.forEach((err) => {
     let message = err.split(': ')
 
-    res = { ...res, [message[0]]: message[1] }
+    res = res + ' ' + message[1]
   })
 
-  return res
+  return res.trim()
 }
 
 export default formatValidationErr
