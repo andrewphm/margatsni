@@ -50,15 +50,18 @@ export default async function handler(req, res) {
         // Return custom user object
         return res.status(200).json({ ...savedUser })
       } catch (error) {
-        let { code } = error
+        let { keyValue, code } = error
+        let keys = Object.keys(keyValue)
 
+        // If username/email is already taken
         if (code) {
           return res.status(400).json({
             success: false,
-            error: 'This username is already taken.',
+            error: `This ${keys[0]} is already taken.`,
           })
         }
 
+        // If missing input
         if (error.message) {
           return res.status(400).json({
             success: false,

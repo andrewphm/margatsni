@@ -5,6 +5,9 @@ import appleBadge from '../../../public/images/login/applestorebadge.png'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Facebook } from '@mui/icons-material'
+import API from '../../API'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux'
 
 const initialForm = {
   email: '',
@@ -17,6 +20,8 @@ const LoginForm = () => {
   const [form, setForm] = useState(initialForm)
   const [isVisible, setIsVisible] = useState(false)
   const inputRef = useRef(null)
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user)
 
   // Focus input
   useEffect(() => {
@@ -36,10 +41,17 @@ const LoginForm = () => {
     })
   }
 
-  console.log('hi')
-
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    try {
+      dispatch(loginStart())
+      const res = await API.userSignup(form)
+      dispatch(loginSuccess(res.data))
+    } catch (error) {
+      // Display error message
+      dispatch(loginFailure(error.response.data.error))
+    }
   }
 
   return (
@@ -184,18 +196,53 @@ const LoginForm = () => {
 
           <button
             className={`mt-3 w-full rounded-md bg-[#0095f6] py-[2px] font-medium text-white shadow-sm ease-out hover:scale-[1.01] ${
-              form.username && form.password
+              form.username && form.password && form.email && form.fullName
                 ? 'hover:shadow-md'
                 : 'cursor-not-allowed opacity-50'
             }`}
-            disabled={form.username && form.password ? false : true}
+            disabled={
+              form.username && form.password && form.email && form.fullName
+                ? false
+                : true
+            }
           >
-            Sign Up
+            {user.isFetching ? (
+              <div className="flex justify-center">
+                <svg
+                  className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </div>
+            ) : (
+              <span>Sign up</span>
+            )}
           </button>
 
           <button className="w-full rounded-md border bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] py-[2px] font-medium text-white ease-out hover:scale-[1.01] hover:bg-neutral-50 hover:shadow-sm">
             Demo Log In
           </button>
+
+          {user.error && (
+            <div className="mt-2">
+              <span className="font-semibold text-red-500">{user.error}</span>
+            </div>
+          )}
         </form>
 
         <div className="my-5 flex w-full items-center gap-x-5">
