@@ -7,6 +7,10 @@ const apiSettings = {
     const res = await axios.post(`${BASE_URL}auth`, body)
     return res
   },
+  userSignup: async (body) => {
+    const res = await axios.put(`${BASE_URL}auth`, body)
+    return res
+  },
 }
 
 export default apiSettings

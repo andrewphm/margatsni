@@ -36,6 +36,8 @@ const LoginForm = () => {
     })
   }
 
+  console.log('hi')
+
   const handleSubmit = async (e) => {
     e.preventDefault()
   }
