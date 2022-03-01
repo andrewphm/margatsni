@@ -5,23 +5,27 @@ import connectToDb from '../lib/connectToDb.js'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Header from '../components/common/Header'
+import Footer from '../components/common/Footer'
 
 const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
   const router = useRouter()
 
-  // // If no user logged in, push to login page
-  // const user = useSelector((state) => state.user?.currentUser)
-  // !user && router.push('/login')
+  // Client side validation if there is user, redirect to authentication if false
+  const user = useSelector((state) => state.user?.currentUser)
+  !user && router.push('/login')
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className="">
       <Head>
         <title>Margatsni</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>
-        <p>Hello</p>
+      <div className="flex h-screen w-screen flex-col justify-between">
+        <Header></Header>
+        <main>hi</main>
+        <Footer></Footer>
       </div>
     </div>
   )
