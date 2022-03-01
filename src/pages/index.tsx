@@ -22,7 +22,7 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen w-screen flex-col justify-between">
+      <div className="flex  h-[3000px] w-screen flex-col justify-between">
         <Header></Header>
         <main>hi</main>
         <Footer></Footer>

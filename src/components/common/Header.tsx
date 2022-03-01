@@ -31,8 +31,8 @@ const Header = () => {
 
   return (
     <>
-      <header className="flex h-[60px] w-screen items-center justify-center border bg-white">
-        <div className="flex w-full max-w-4xl items-center justify-between">
+      <header className="sticky top-0 flex h-[60px] w-screen items-center justify-center border bg-white px-3">
+        <div className="flex w-full max-w-6xl items-center justify-between gap-x-2">
           {/* Logo */}
           <div className="relative flex h-[35px] w-[113px] min-w-[113px] cursor-pointer">
             <Image src={logo} layout="fill" />
