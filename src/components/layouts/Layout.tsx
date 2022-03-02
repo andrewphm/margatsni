@@ -12,7 +12,7 @@ const Layout = ({ children }): ReactElement => {
   return (
     <>
       <Header currentTab={router.pathname} />
-      <main>{children}</main>
+      <main className="h-full">{children}</main>
       <Footer />
     </>
   )
