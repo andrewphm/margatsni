@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Header from '../components/common/Header'
 import Footer from '../components/common/Footer'
+import Layout from '../components/layouts/Layout'
 
 const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
   const router = useRouter()
@@ -25,10 +26,10 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex  h-[3000px] w-screen flex-col justify-between">
-        <Header></Header>
-        <main>hi</main>
-        <Footer></Footer>
+      <div className="flex h-[3000px] w-screen flex-col justify-between">
+        <Layout>
+          <p>hi</p>
+        </Layout>
       </div>
     </div>
   )

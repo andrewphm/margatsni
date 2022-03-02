@@ -4,13 +4,14 @@ import logo from '../../../public/images/logo.png'
 import nopfp from '../../../public/images/nopfp.jpeg'
 import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { clearCurrentUser } from '../../redux/userRedux'
 import API from '../../API'
+import * as ROUTE from '../../constants/routes'
 
-const Header = () => {
+const Header = ({ currentTab }) => {
   const user = useSelector((state) => state.user.currentUser)
-  const [tab, setTab] = useState('home')
+  const [tab, setTab] = useState(currentTab)
   const [inputIsActive, setInputIsActive] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const menuRef = useRef(null)
@@ -41,9 +42,14 @@ const Header = () => {
       <header className="sticky top-0 flex h-[60px] w-screen items-center justify-center border bg-white px-5">
         <div className="flex w-full max-w-6xl items-center justify-between gap-x-2">
           {/* Logo */}
-          <div className="relative flex h-[35px] w-[113px] min-w-[113px] cursor-pointer">
-            <Image src={logo} layout="fill" />
-          </div>
+
+          <Link href={ROUTE.DASHBOARD}>
+            <a>
+              <div className="relative flex h-[35px] w-[113px] min-w-[113px] cursor-pointer">
+                <Image src={logo} layout="fill" />
+              </div>
+            </a>
+          </Link>
 
           {/* Search Bar */}
           <div
@@ -76,93 +82,101 @@ const Header = () => {
           </div>
 
           {/* Nav */}
-          <div className="relative flex items-center gap-x-4">
-            <div
-              className="cursor-pointer "
-              onClick={() => setTab((prev) => 'home')}
-            >
-              {tab === 'home' ? (
-                <svg
-                  aria-label="Home"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
+          <div className="relative flex max-w-[228px] items-center gap-x-4">
+            <Link href={ROUTE.DASHBOARD}>
+              <a>
+                <div
+                  className="cursor-pointer "
+                  onClick={() => setTab((prev) => '/')}
                 >
-                  <path d="M22 23h-6.001a1 1 0 01-1-1v-5.455a2.997 2.997 0 10-5.993 0V22a1 1 0 01-1 1H2a1 1 0 01-1-1V11.543a1.002 1.002 0 01.31-.724l10-9.543a1.001 1.001 0 011.38 0l10 9.543a1.002 1.002 0 01.31.724V22a1 1 0 01-1 1z"></path>
-                </svg>
-              ) : (
-                <svg
-                  aria-label="Home"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <path
-                    d="M9.005 16.545a2.997 2.997 0 012.997-2.997h0A2.997 2.997 0 0115 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  ></path>
-                </svg>
-              )}
-            </div>
+                  {tab === '/' ? (
+                    <svg
+                      aria-label="Home"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <path d="M22 23h-6.001a1 1 0 01-1-1v-5.455a2.997 2.997 0 10-5.993 0V22a1 1 0 01-1 1H2a1 1 0 01-1-1V11.543a1.002 1.002 0 01.31-.724l10-9.543a1.001 1.001 0 011.38 0l10 9.543a1.002 1.002 0 01.31.724V22a1 1 0 01-1 1z"></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      aria-label="Home"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <path
+                        d="M9.005 16.545a2.997 2.997 0 012.997-2.997h0A2.997 2.997 0 0115 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      ></path>
+                    </svg>
+                  )}
+                </div>
+              </a>
+            </Link>
 
-            <div
-              className="cursor-pointer "
-              onClick={() => setTab((prev) => 'send')}
-            >
-              {tab === 'send' ? (
-                <svg
-                  aria-label="Direct"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
+            <Link href={ROUTE.INBOX}>
+              <a>
+                <div
+                  className="cursor-pointer "
+                  onClick={() => setTab((prev) => '/direct/inbox')}
                 >
-                  <path
-                    d="M22.91 2.388a.69.69 0 00-.597-.347l-20.625.002a.687.687 0 00-.482 1.178L7.26 9.16a.686.686 0 00.778.128l7.612-3.657a.723.723 0 01.937.248.688.688 0 01-.225.932l-7.144 4.52a.69.69 0 00-.3.743l2.102 8.692a.687.687 0 00.566.518.655.655 0 00.103.008.686.686 0 00.59-.337L22.903 3.08a.688.688 0 00.007-.692"
-                    fill-rule="evenodd"
-                  ></path>
-                </svg>
-              ) : (
-                <svg
-                  aria-label="Direct"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <line
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    x1="22"
-                    x2="9.218"
-                    y1="3"
-                    y2="10.083"
-                  ></line>
-                  <polygon
-                    fill="none"
-                    points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
-                    stroke="currentColor"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  ></polygon>
-                </svg>
-              )}
-            </div>
+                  {tab === '/direct/inbox' ? (
+                    <svg
+                      aria-label="Direct"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <path
+                        d="M22.91 2.388a.69.69 0 00-.597-.347l-20.625.002a.687.687 0 00-.482 1.178L7.26 9.16a.686.686 0 00.778.128l7.612-3.657a.723.723 0 01.937.248.688.688 0 01-.225.932l-7.144 4.52a.69.69 0 00-.3.743l2.102 8.692a.687.687 0 00.566.518.655.655 0 00.103.008.686.686 0 00.59-.337L22.903 3.08a.688.688 0 00.007-.692"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      aria-label="Direct"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <line
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        x1="22"
+                        x2="9.218"
+                        y1="3"
+                        y2="10.083"
+                      ></line>
+                      <polygon
+                        fill="none"
+                        points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
+                        stroke="currentColor"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      ></polygon>
+                    </svg>
+                  )}
+                </div>
+              </a>
+            </Link>
 
             <div
               className="cursor-pointer "
@@ -224,57 +238,61 @@ const Header = () => {
               )}
             </div>
 
-            <div
-              className="cursor-pointer "
-              onClick={() => setTab((prev) => 'explore')}
-            >
-              {tab === 'explore' ? (
-                <svg
-                  aria-label="Find People"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
+            <Link href={ROUTE.EXPLORE}>
+              <a>
+                <div
+                  className="cursor-pointer "
+                  onClick={() => setTab((prev) => '/explore')}
                 >
-                  <path d="M13.173 13.164l1.491-3.829-3.83 1.49zM12.001.5a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012.001.5zm5.35 7.443l-2.478 6.369a1 1 0 01-.57.569l-6.36 2.47a1 1 0 01-1.294-1.294l2.48-6.369a1 1 0 01.57-.569l6.359-2.47a1 1 0 011.294 1.294z"></path>
-                </svg>
-              ) : (
-                <svg
-                  aria-label="Find People"
-                  color="#262626"
-                  fill="#262626"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
-                >
-                  <polygon
-                    fill="none"
-                    points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  ></polygon>
-                  <polygon
-                    fill-rule="evenodd"
-                    points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"
-                  ></polygon>
-                  <circle
-                    cx="12.001"
-                    cy="12.005"
-                    fill="none"
-                    r="10.5"
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  ></circle>
-                </svg>
-              )}
-            </div>
+                  {tab === '/explore' ? (
+                    <svg
+                      aria-label="Find People"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <path d="M13.173 13.164l1.491-3.829-3.83 1.49zM12.001.5a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012.001.5zm5.35 7.443l-2.478 6.369a1 1 0 01-.57.569l-6.36 2.47a1 1 0 01-1.294-1.294l2.48-6.369a1 1 0 01.57-.569l6.359-2.47a1 1 0 011.294 1.294z"></path>
+                    </svg>
+                  ) : (
+                    <svg
+                      aria-label="Find People"
+                      color="#262626"
+                      fill="#262626"
+                      height="24"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="24"
+                    >
+                      <polygon
+                        fill="none"
+                        points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      ></polygon>
+                      <polygon
+                        fill-rule="evenodd"
+                        points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"
+                      ></polygon>
+                      <circle
+                        cx="12.001"
+                        cy="12.005"
+                        fill="none"
+                        r="10.5"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      ></circle>
+                    </svg>
+                  )}
+                </div>
+              </a>
+            </Link>
 
             <div
               className="cursor-pointer "
@@ -310,10 +328,10 @@ const Header = () => {
             <div
               onClickCapture={handleProfileClick}
               className={`flex cursor-pointer items-center justify-center rounded-full ${
-                tab === 'user' ? 'border border-black p-[1px]' : ''
+                tab === 'user' ? 'border border-black p-[2px]' : ''
               }`}
             >
-              <div className="relative h-[30px] w-[30px]">
+              <div className="relative h-[28px] w-[28px]">
                 <Image
                   src={user?.image ? user.image : nopfp}
                   className="rounded-full"
