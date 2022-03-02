@@ -18,8 +18,11 @@ import {
 import { useRef, useState } from 'react'
 import logo from '../../../public/images/logo.png'
 import nopfp from '../../../public/images/nopfp.jpeg'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { clearCurrentUser } from '../../redux/userRedux'
+import API from '../../API'
 
 const Header = () => {
   const user = useSelector((state) => state.user.currentUser)
@@ -27,17 +30,26 @@ const Header = () => {
   const [inputIsActive, setInputIsActive] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const menuRef = useRef(null)
+  const dispatch = useDispatch()
 
   const handleProfileClick = () => {
     setTab((prev) => 'user')
 
-    menuRef.current.classList.toggle('opacity-0')
-    menuRef.current.classList.toggle('transform-none')
+    menuRef?.current?.classList.toggle('opacity-0')
+    menuRef?.current?.classList.toggle('transform-none')
   }
 
   const handleSearchClose = () => {
     setSearchInput((prev) => '')
     setInputIsActive((prev) => !prev)
+  }
+
+  const handleSignOut = async () => {
+    await API.userSignOut()
+
+    dispatch(clearCurrentUser())
+
+    window.location.reload()
   }
 
   return (
@@ -169,7 +181,10 @@ const Header = () => {
                   <SettingsOutlined fontSize="small" />
                   <p>Settings</p>
                 </li>
-                <li className="flex cursor-pointer items-center gap-x-2 rounded-b-md border-t py-[10px] px-5 hover:bg-gray-100">
+                <li
+                  onClick={handleSignOut}
+                  className="flex cursor-pointer items-center gap-x-2 rounded-b-md border-t py-[10px] px-5 hover:bg-gray-100"
+                >
                   <p>Sign Out</p>
                 </li>
               </ul>

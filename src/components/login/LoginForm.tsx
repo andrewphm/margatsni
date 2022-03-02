@@ -48,12 +48,11 @@ const LoginForm = () => {
       dispatch(loginStart())
       const res = await API.userLogin(form)
       dispatch(loginSuccess(res.data))
+      window.location.reload()
     } catch (error) {
       // Display error message
       dispatch(loginFailure(error.response.data.error))
     }
-
-    // Redirect to '/'
   }
 
   const handleDemoLogin = async (event) => {

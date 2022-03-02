@@ -48,6 +48,7 @@ const LoginForm = () => {
       dispatch(loginStart())
       const res = await API.userSignup(form)
       dispatch(loginSuccess(res.data))
+      window.location.reload()
     } catch (error) {
       // Display error message
       dispatch(loginFailure(error.response.data.error))

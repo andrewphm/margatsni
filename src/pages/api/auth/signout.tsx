@@ -1,0 +1,23 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import type { NextApiRequest, NextApiResponse } from 'next'
+import cookie from 'cookie'
+
+type Data = {
+  success: boolean
+  message: string
+}
+
+export default function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
+  res.setHeader(
+    'Set-Cookie',
+    cookie.serialize('accessToken', '', {
+      expires: new Date(0),
+      path: '/',
+    })
+  )
+
+  res.status(200).json({ success: true, message: 'Cleared cookies' })
+}

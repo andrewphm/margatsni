@@ -21,13 +21,13 @@ const userSlice = createSlice({
       state.isFetching = false
       state.error = action.payload
     },
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload
+    clearCurrentUser: (state) => {
+      state.currentUser = null
     },
   },
 })
 
-export const { loginStart, loginSuccess, loginFailure, setCurrentUser } =
+export const { loginStart, loginSuccess, loginFailure, clearCurrentUser } =
   userSlice.actions
 
 export default userSlice.reducer

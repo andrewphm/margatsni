@@ -13,7 +13,10 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
 
   // Client side validation if there is user, redirect to authentication if false
   const user = useSelector((state) => state.user?.currentUser)
-  !user && router.push('/login')
+
+  // useEffect(() => {
+  //   !user && router.push('/login')
+  // }, [user])
 
   return (
     <div className="">
