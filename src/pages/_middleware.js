@@ -23,7 +23,11 @@ export default function middleware(req) {
   }
 
   // Redirect to login page if trying to access main index ('/') and not authenticated
-  if (pathname === '/') {
+  if (
+    pathname === '/' ||
+    pathname === '/explore' ||
+    pathname === '/direct/inbox'
+  ) {
     const url = req.nextUrl.clone()
     url.pathname = '/login'
 
