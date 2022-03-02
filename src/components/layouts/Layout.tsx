@@ -7,14 +7,12 @@ import Header from '../common/Header'
 const Layout = ({ children }): ReactElement => {
   const router = useRouter()
 
-  console.log(router.pathname)
-
   return (
-    <>
+    <main className="flex h-screen flex-col justify-between">
       <Header currentTab={router.pathname} />
-      <main className="h-full">{children}</main>
+      <section className="h-full">{children}</section>
       <Footer />
-    </>
+    </main>
   )
 }
 

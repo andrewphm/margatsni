@@ -39,7 +39,7 @@ const Header = ({ currentTab }) => {
 
   return (
     <>
-      <header className="sticky top-0 flex h-[60px] w-screen items-center justify-center border bg-white px-5">
+      <header className="sticky top-0 flex min-h-[60px] w-screen items-center justify-center border bg-white px-5">
         <div className="flex w-full max-w-6xl items-center justify-between gap-x-2">
           {/* Logo */}
 
@@ -451,10 +451,10 @@ const Header = ({ currentTab }) => {
               </div>
             </div>
           ) : (
-            <div className="flex gap-x-4">
+            <div className="flex items-center gap-x-4">
               <Link href={ROUTE.LOGIN}>
                 <a>
-                  <button className="rounded-md bg-blue-btn px-3 py-1 font-semibold text-white">
+                  <button className="whitespace-nowrap rounded-md bg-blue-btn px-3 py-1 font-semibold text-white">
                     Log In
                   </button>
                 </a>
@@ -462,7 +462,7 @@ const Header = ({ currentTab }) => {
 
               <Link href={ROUTE.SIGNUP}>
                 <a>
-                  <button className="font-semibold text-blue-btn">
+                  <button className="whitespace-nowrap font-semibold text-blue-btn">
                     Sign Up
                   </button>
                 </a>
