@@ -14,6 +14,9 @@ module.exports = {
       '2xl': '1536px',
     },
     extend: {
+      colors: {
+        'blue-btn': '#0095f6',
+      },
       keyframes: {
         fade: {
           '0%': { opacity: 1 },
