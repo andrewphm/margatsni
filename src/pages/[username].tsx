@@ -2,6 +2,8 @@ import { useSelector } from 'react-redux'
 import Layout from '../components/layouts/Layout'
 import ProfileInfo from '../components/profile/ProfileInfo'
 import Link from 'next/link'
+import connectToDb from '../lib/connectToDb'
+import User from '../models/User'
 
 const Profile = ({ userData }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -19,7 +21,7 @@ const Profile = ({ userData }) => {
             removed.{' '}
             <Link href="/">
               <a>
-                <span className="cursor-pointer text-blue-400">
+                <span className="cursor-pointer text-blue-btn">
                   Click here to go back home.
                 </span>
               </a>
@@ -46,12 +48,35 @@ const Profile = ({ userData }) => {
 export default Profile
 
 export async function getServerSideProps(context) {
-  let userData
-  // Get user data from params
+  await connectToDb()
 
-  return {
-    props: {
-      userData: userData || false,
-    },
+  let user
+  let userQuery = context.query.username
+
+  try {
+    user = await User.findOne({ username: userQuery }).lean()
+
+    console.log(user)
+
+    if (user) {
+      return {
+        props: {
+          userData: user,
+        },
+      }
+    } else {
+      return {
+        props: {
+          userData: false,
+        },
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      props: {
+        userData: false,
+      },
+    }
   }
 }

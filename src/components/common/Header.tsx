@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { clearCurrentUser } from '../../redux/userRedux'
 import API from '../../API'
 import * as ROUTE from '../../constants/routes'
+import NewPost from '../newpost/NewPost'
 
 const Header = ({ currentTab }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -471,6 +472,7 @@ const Header = ({ currentTab }) => {
           )}
         </div>
       </header>
+      <NewPost />
     </>
   )
 }
