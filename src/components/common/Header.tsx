@@ -17,6 +17,7 @@ const Header = ({ currentTab }) => {
   const [searchInput, setSearchInput] = useState('')
   const menuRef = useRef(null)
   const dispatch = useDispatch()
+  const [showNewPost, setShowNewPost] = useState(false)
 
   const handleProfileClick = () => {
     setTab((prev) => 'user')
@@ -182,7 +183,10 @@ const Header = ({ currentTab }) => {
 
               <div
                 className="cursor-pointer "
-                onClick={() => setTab((prev) => 'add')}
+                onClick={() => {
+                  setTab((prev) => 'add')
+                  setShowNewPost((prev) => true)
+                }}
               >
                 {tab === 'add' ? (
                   <svg
@@ -472,7 +476,7 @@ const Header = ({ currentTab }) => {
           )}
         </div>
       </header>
-      <NewPost />
+      {showNewPost && <NewPost setShowNewPost={setShowNewPost} />}
     </>
   )
 }
