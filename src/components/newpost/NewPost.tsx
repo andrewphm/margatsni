@@ -3,13 +3,12 @@ import { useState } from 'react'
 
 const NewPost = ({ setShowNewPost }) => {
   const [fileURL, setFileUrl] = useState(null)
+  const [postCaption, setPostCaption] = useState('')
+  const [file, setFile] = useState(null)
 
   const handleUserInputChange = (event) => {
-    //Take the file, upload to firebase.
-
+    setFile((prev) => event.target.files[0])
     setFileUrl((prev) => URL.createObjectURL(event.target.files[0]))
-
-    console.log(fileURL)
   }
 
   const handleCloseNewPost = (event) => {
@@ -20,6 +19,12 @@ const NewPost = ({ setShowNewPost }) => {
     setFileUrl((prev) => null)
   }
 
+  const handlePostClick = (e) => {
+    // Upload photo to firebase storage.
+    // Create Post document to mongoDB
+    // Show success
+  }
+
   return (
     <section
       id="overlay"
@@ -27,7 +32,7 @@ const NewPost = ({ setShowNewPost }) => {
       onClick={handleCloseNewPost}
     >
       <div className="relative flex min-h-[400px] w-11/12 max-w-xl flex-col items-center rounded-xl bg-white">
-        <div className="w-full border-b-2 py-3 text-center">
+        <div className="w-full border-b border-b-black py-3 text-center">
           <h3 className="text-xl font-semibold">Create new post</h3>
         </div>
 
@@ -38,18 +43,33 @@ const NewPost = ({ setShowNewPost }) => {
                 <img src={fileURL} alt="" className="object-contain" />
               </div>
 
-              <div className="flex w-full">
-                <div className="w-full border p-3">
-                  <textarea
-                    name=""
-                    id=""
-                    rows="3"
-                    placeholder="Write a caption..."
-                    autoFocus
-                    className="w-full resize-none focus:outline-none"
-                  ></textarea>
-                </div>
+              <div className="w-full border-t p-3">
+                <textarea
+                  name="post-caption"
+                  id="post-caption"
+                  value={postCaption}
+                  rows="3"
+                  placeholder="Write a caption..."
+                  autoFocus
+                  className="w-full resize-none focus:outline-none"
+                  onChange={(e) => setPostCaption((prev) => e.target.value)}
+                ></textarea>
               </div>
+            </div>
+
+            <div className="mt-2 flex gap-x-3">
+              <button
+                onClick={handlePostClick}
+                className="rounded-md bg-blue-btn px-3 py-1 text-white hover:scale-105"
+              >
+                Post
+              </button>
+              <button
+                onClick={() => setShowNewPost((prev) => !prev)}
+                className="rounded-md bg-red-500 px-3 py-1 text-white hover:scale-105"
+              >
+                Delete
+              </button>
             </div>
           </div>
         )}
