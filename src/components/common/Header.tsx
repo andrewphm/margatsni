@@ -118,8 +118,8 @@ const Header = ({ currentTab }) => {
                           d="M9.005 16.545a2.997 2.997 0 012.997-2.997h0A2.997 2.997 0 0115 16.545V22h7V11.543L12 2 2 11.543V22h7.005z"
                           fill="none"
                           stroke="currentColor"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         ></path>
                       </svg>
                     )}
@@ -145,7 +145,7 @@ const Header = ({ currentTab }) => {
                       >
                         <path
                           d="M22.91 2.388a.69.69 0 00-.597-.347l-20.625.002a.687.687 0 00-.482 1.178L7.26 9.16a.686.686 0 00.778.128l7.612-3.657a.723.723 0 01.937.248.688.688 0 01-.225.932l-7.144 4.52a.69.69 0 00-.3.743l2.102 8.692a.687.687 0 00.566.518.655.655 0 00.103.008.686.686 0 00.59-.337L22.903 3.08a.688.688 0 00.007-.692"
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                         ></path>
                       </svg>
                     ) : (
@@ -161,8 +161,8 @@ const Header = ({ currentTab }) => {
                         <line
                           fill="none"
                           stroke="currentColor"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           x1="22"
                           x2="9.218"
                           y1="3"
@@ -172,8 +172,8 @@ const Header = ({ currentTab }) => {
                           fill="none"
                           points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334"
                           stroke="currentColor"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         ></polygon>
                       </svg>
                     )}
@@ -214,16 +214,16 @@ const Header = ({ currentTab }) => {
                       d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552z"
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                     ></path>
                     <line
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       x1="6.545"
                       x2="17.455"
                       y1="12.001"
@@ -232,9 +232,9 @@ const Header = ({ currentTab }) => {
                     <line
                       fill="none"
                       stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
                       x1="12.003"
                       x2="12.003"
                       y1="6.545"
@@ -276,12 +276,12 @@ const Header = ({ currentTab }) => {
                           fill="none"
                           points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953"
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         ></polygon>
                         <polygon
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"
                         ></polygon>
                         <circle
@@ -290,9 +290,9 @@ const Header = ({ currentTab }) => {
                           fill="none"
                           r="10.5"
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         ></circle>
                       </svg>
                     )}
@@ -368,17 +368,17 @@ const Header = ({ currentTab }) => {
                         fill="none"
                         r="10.5"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-miterlimit="10"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
                       ></circle>
                       <path
                         d="M18.793 20.014a6.08 6.08 0 00-1.778-2.447 3.991 3.991 0 00-2.386-.791H9.38a3.994 3.994 0 00-2.386.791 6.09 6.09 0 00-1.779 2.447"
                         fill="none"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-miterlimit="10"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
                       ></path>
                       <circle
                         cx="12.006"
@@ -386,9 +386,9 @@ const Header = ({ currentTab }) => {
                         fill="none"
                         r="4.109"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-miterlimit="10"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeMiterlimit="10"
+                        strokeWidth="2"
                       ></circle>
                     </svg>
                     <p>Profile</p>
@@ -407,9 +407,9 @@ const Header = ({ currentTab }) => {
                         fill="none"
                         points="20 21 12 13.44 4 21 4 3 20 3 20 21"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                       ></polygon>
                     </svg>
                     <p>Saved</p>
@@ -430,16 +430,16 @@ const Header = ({ currentTab }) => {
                         fill="none"
                         r="8.635"
                         stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                       ></circle>
                       <path
                         d="M14.232 3.656a1.269 1.269 0 01-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 01-.796.66m-.001 16.688a1.269 1.269 0 01.796.66l.505.996h1.862l.505-.996a1.269 1.269 0 01.796-.66M3.656 9.768a1.269 1.269 0 01-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 01.66.796m16.688-.001a1.269 1.269 0 01.66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 01-.66-.796M7.678 4.522a1.269 1.269 0 01-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 01-.096 1.03m11.8 11.799a1.269 1.269 0 011.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 01.096-1.03m-14.956.001a1.269 1.269 0 01.096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 011.03.096m11.799-11.8a1.269 1.269 0 01-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 01-1.03-.096"
                         fill="none"
                         stroke="currentColor"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                       ></path>
                     </svg>
                     <p>Settings</p>
