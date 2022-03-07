@@ -22,14 +22,12 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen w-screen flex-col justify-between">
-        <Layout>
-          <section className="mx-auto my-0 flex py-[30px]">
-            <Timeline />
-            <Sidebar />
-          </section>
-        </Layout>
-      </div>
+      <Layout>
+        <section className="mx-auto my-0 flex h-[3000px] py-[30px]">
+          <Timeline />
+          <Sidebar />
+        </section>
+      </Layout>
     </>
   )
 }
