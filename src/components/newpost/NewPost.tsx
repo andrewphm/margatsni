@@ -28,10 +28,10 @@ const NewPost = ({ setShowNewPost }) => {
   return (
     <section
       id="overlay"
-      className="absolute flex h-full w-full items-center justify-center bg-black bg-opacity-70"
+      className="fixed bottom-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-80"
       onClick={handleCloseNewPost}
     >
-      <div className="relative flex min-h-[400px] w-11/12 max-w-xl flex-col items-center rounded-xl bg-white">
+      <div className="relative flex min-h-[400px] w-[88%] max-w-xl flex-col items-center rounded-xl bg-white">
         <div className="w-full border-b border-b-black py-3 text-center">
           <h3 className="text-xl font-semibold">Create new post</h3>
         </div>

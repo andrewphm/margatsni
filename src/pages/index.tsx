@@ -23,7 +23,7 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
       </Head>
 
       <Layout>
-        <section className="mx-auto my-0 flex h-[3000px] py-[30px]">
+        <section className="mx-auto my-0 flex py-[30px]">
           <Timeline />
           <Sidebar />
         </section>
