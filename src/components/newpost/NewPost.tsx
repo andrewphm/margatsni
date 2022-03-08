@@ -1,10 +1,13 @@
 import { Close, KeyboardBackspace } from '@mui/icons-material'
 import { useState } from 'react'
+import imageUpload from '../../helpers/imageUpload'
 
 const NewPost = ({ setShowNewPost }) => {
   const [fileURL, setFileUrl] = useState(null)
   const [postCaption, setPostCaption] = useState('')
   const [file, setFile] = useState(null)
+  const [loading, setIsLoading] = useState(false)
+  const [error, setError] = useState(false)
 
   const handleUserInputChange = (event) => {
     setFile((prev) => event.target.files[0])
@@ -19,7 +22,14 @@ const NewPost = ({ setShowNewPost }) => {
     setFileUrl((prev) => null)
   }
 
-  const handlePostClick = (e) => {
+  const handlePostClick = async (e) => {
+    e.preventDefault()
+    setIsLoading((prev) => !prev)
+
+    try {
+      const imgUrl = await imageUpload(file)
+    } catch (error) {}
+
     // Upload photo to firebase storage.
     // Create Post document to mongoDB
     // Show success
