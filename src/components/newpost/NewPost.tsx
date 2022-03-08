@@ -2,8 +2,10 @@ import {
   Close,
   KeyboardBackspace,
   CheckCircleOutline,
+  ErrorOutline,
 } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
+import Cropper from 'react-easy-crop'
 import imageUpload from '../../helpers/imageUpload'
 
 const NewPost = ({ setShowNewPost }) => {
@@ -13,6 +15,10 @@ const NewPost = ({ setShowNewPost }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
+
+  // Easy crop states
+  const [croppedArea, setCroppedArea] = useState(null)
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
 
   const handleUserInputChange = (event) => {
     setFile((prev) => event.target.files[0])
@@ -40,7 +46,11 @@ const NewPost = ({ setShowNewPost }) => {
 
     try {
       // Call API route to create Post document in DB
-
+      // await API.createUserPost({
+      //   postCaption,
+      //   image: imgUrl,
+      // }, )
+      setIsLoading((prev) => !prev)
       setSuccess((prev) => !prev)
     } catch (error) {
       setIsLoading((prev) => !prev)
@@ -49,12 +59,12 @@ const NewPost = ({ setShowNewPost }) => {
   }
 
   useEffect(() => {
-    if (success) {
+    if (success || error) {
       setTimeout(() => {
         setShowNewPost((prev) => !prev)
       }, 2000)
     }
-  }, [success])
+  }, [success, error])
 
   return (
     <section
@@ -62,90 +72,17 @@ const NewPost = ({ setShowNewPost }) => {
       className="fixed bottom-0 left-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-80"
       onClick={handleCloseNewPost}
     >
-      <div className="relative flex min-h-[400px] w-[88%] max-w-xl flex-col items-center rounded-xl bg-white">
-        <div className="w-full border-b border-b-black py-3 text-center">
-          <h3 className="text-xl font-semibold">Create new post</h3>
+      <div className="relative flex min-h-[60vh] w-[88%] max-w-xl flex-col items-center rounded-xl bg-white">
+        <div className="w-full border-b  py-3 text-center">
+          <h3 className="text-lg font-medium">
+            {fileURL ? 'Write a caption' : 'Create a new post'}
+          </h3>
         </div>
 
-        {fileURL && !isLoading && !success && (
-          <div className="my-3 flex h-full w-full flex-col items-center px-3">
-            <div className="w-full border">
-              <div className="flex max-h-[500px] w-full justify-center overflow-hidden ">
-                <img src={fileURL} alt="" className="object-contain" />
-              </div>
-
-              <div className="w-full border-t p-3">
-                <textarea
-                  name="post-caption"
-                  id="post-caption"
-                  value={postCaption}
-                  rows="3"
-                  placeholder="Write a caption..."
-                  autoFocus
-                  className="w-full resize-none focus:outline-none"
-                  onChange={(e) => setPostCaption((prev) => e.target.value)}
-                ></textarea>
-              </div>
-            </div>
-
-            <div className="mt-2 flex gap-x-3">
-              <button
-                onClick={handlePostClick}
-                className="rounded-md bg-blue-btn px-3 py-1 text-white hover:scale-105"
-              >
-                Post
-              </button>
-              <button
-                onClick={() => setShowNewPost((prev) => !prev)}
-                className="rounded-md bg-red-500 px-3 py-1 text-white hover:scale-105"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        )}
-
-        {isLoading && (
-          <div className="flex h-[300px] w-full items-center justify-center">
-            <div className="flex items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
-              <svg
-                className="h-10 w-10 animate-spin text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <p className="text-lg font-semibold">Uploading... </p>
-            </div>
-          </div>
-        )}
-
-        {success && (
-          <div className="flex h-[300px] w-full items-center justify-center">
-            <div className="flex animate-pulse items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
-              <CheckCircleOutline />
-              <p className="text-lg font-semibold">Success!</p>
-            </div>
-          </div>
-        )}
-
-        {!fileURL && !isLoading && !success && (
-          <div className="my-10 flex h-full w-full flex-col items-center gap-y-6">
-            <div className="">
-              <div className="mx-auto">
+        <div className="flex h-full w-full flex-grow items-center">
+          {!fileURL && (
+            <div className="mb-10 flex h-full w-full flex-col items-center gap-y-6">
+              <div className="flex flex-col items-center justify-center">
                 <svg
                   aria-label="Icon to represent media such as images or videos"
                   color="#262626"
@@ -168,30 +105,125 @@ const NewPost = ({ setShowNewPost }) => {
                     fill="currentColor"
                   ></path>
                 </svg>
+
+                <h3 className="pt-2 text-xl font-light">
+                  Upload photos to share with the world
+                </h3>
               </div>
 
-              <h3></h3>
+              <label
+                htmlFor="user-image"
+                className="text-md cursor-pointer rounded-lg bg-blue-btn py-2 px-3 font-semibold text-white shadow-md transition hover:scale-[1.03] "
+              >
+                Select from device
+                <input
+                  type="file"
+                  name="user-image"
+                  id="user-image"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleUserInputChange}
+                />
+              </label>
             </div>
+          )}
 
-            <label
-              htmlFor="user-image"
-              className="text-md cursor-pointer rounded-lg bg-blue-btn py-2 px-3 font-semibold text-white shadow-md transition hover:scale-[1.03] "
-            >
-              Select from device
-              <input
-                type="file"
-                name="user-image"
-                id="user-image"
-                accept="image/*"
-                className="hidden"
-                onChange={handleUserInputChange}
-              />
-            </label>
-          </div>
-        )}
+          {fileURL && (
+            <div className="my-3 flex h-full w-full flex-col items-center px-3">
+              <div className="h-full w-full border">
+                <div className="flex max-h-[400px] justify-center bg-white md:max-h-[500px]">
+                  <img
+                    src={fileURL}
+                    alt="User uploaded photo"
+                    className="object-contain"
+                  />
+                </div>
+
+                <div className="w-full border-t p-3">
+                  <textarea
+                    name="post-caption"
+                    id="post-caption"
+                    value={postCaption}
+                    rows="3"
+                    placeholder="Write a caption..."
+                    autoFocus={true}
+                    className="w-full resize-none focus:outline-none"
+                    onChange={(e) => setPostCaption((prev) => e.target.value)}
+                  ></textarea>
+                </div>
+              </div>
+
+              <div className="mt-2 flex gap-x-3">
+                <button
+                  onClick={handlePostClick}
+                  className="rounded-md bg-blue-btn px-3 py-1 text-white hover:scale-105"
+                >
+                  Post
+                </button>
+                <button
+                  onClick={() => setShowNewPost((prev) => !prev)}
+                  className="rounded-md bg-red-500 px-3 py-1 text-white hover:scale-105"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Loading state Component */}
+          {isLoading && (
+            <div className="absolute flex h-[90%] w-full items-center justify-center bg-black bg-opacity-30">
+              <div className="mb-10 flex items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
+                <svg
+                  className="h-10 w-10 animate-spin text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                <p className="text-lg font-semibold">Uploading... </p>
+              </div>
+            </div>
+          )}
+
+          {/* Error state component */}
+          {error && (
+            <div className="absolute flex h-[90%] w-full items-center justify-center bg-black bg-opacity-30">
+              <div className="mb-10 flex items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
+                <ErrorOutline />
+                <p className="text-lg font-semibold">Error!</p>
+
+                <p className="block">Please try again later.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Success state component */}
+          {success && (
+            <div className="absolute flex h-[90%] w-full items-center justify-center bg-black bg-opacity-30">
+              <div className="mb-10 flex animate-pulse items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
+                <CheckCircleOutline />
+                <p className="text-lg font-semibold">Success!</p>
+              </div>
+            </div>
+          )}
+        </div>
 
         <div
-          className="absolute right-3 top-3 cursor-pointer text-black"
+          className="absolute right-3 top-3 cursor-pointer text-gray-500"
           onClick={() => setShowNewPost((prev) => false)}
         >
           <Close />
