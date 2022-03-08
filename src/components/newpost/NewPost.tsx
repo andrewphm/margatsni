@@ -5,8 +5,9 @@ import {
   ErrorOutline,
 } from '@mui/icons-material'
 import { useEffect, useState } from 'react'
-import Cropper from 'react-easy-crop'
 import imageUpload from '../../helpers/imageUpload'
+import API from '../../API'
+import { useSelector } from 'react-redux'
 
 const NewPost = ({ setShowNewPost }) => {
   const [fileURL, setFileUrl] = useState(null)
@@ -15,10 +16,7 @@ const NewPost = ({ setShowNewPost }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
-
-  // Easy crop states
-  const [croppedArea, setCroppedArea] = useState(null)
-  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const user = useSelector((state) => state.user.currentUser)
 
   const handleUserInputChange = (event) => {
     setFile((prev) => event.target.files[0])
@@ -45,14 +43,14 @@ const NewPost = ({ setShowNewPost }) => {
     }
 
     try {
-      // Call API route to create Post document in DB
-      // await API.createUserPost({
-      //   postCaption,
-      //   image: imgUrl,
-      // }, )
+      await API.createNewUserPost(user.username, {
+        image: imgUrl,
+        caption: postCaption,
+      })
       setIsLoading((prev) => !prev)
       setSuccess((prev) => !prev)
     } catch (error) {
+      console.log(error)
       setIsLoading((prev) => !prev)
       setError((prev) => !prev)
     }
