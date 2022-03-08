@@ -19,7 +19,7 @@ const imageUpload = async (file) => {
 
     return downloadURL
   } catch (error) {
-    console.log(error)
+    return false
   }
 
   // // Register three observers:

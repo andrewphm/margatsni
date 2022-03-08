@@ -1,13 +1,18 @@
-import { Close, KeyboardBackspace } from '@mui/icons-material'
-import { useState } from 'react'
+import {
+  Close,
+  KeyboardBackspace,
+  CheckCircleOutline,
+} from '@mui/icons-material'
+import { useEffect, useState } from 'react'
 import imageUpload from '../../helpers/imageUpload'
 
 const NewPost = ({ setShowNewPost }) => {
   const [fileURL, setFileUrl] = useState(null)
   const [postCaption, setPostCaption] = useState('')
   const [file, setFile] = useState(null)
-  const [loading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const handleUserInputChange = (event) => {
     setFile((prev) => event.target.files[0])
@@ -26,14 +31,30 @@ const NewPost = ({ setShowNewPost }) => {
     e.preventDefault()
     setIsLoading((prev) => !prev)
 
-    try {
-      const imgUrl = await imageUpload(file)
-    } catch (error) {}
+    // Upload image to firebase
+    const imgUrl = await imageUpload(file)
+    if (!imgUrl) {
+      setIsLoading((prev) => !prev)
+      setError((prev) => !prev)
+    }
 
-    // Upload photo to firebase storage.
-    // Create Post document to mongoDB
-    // Show success
+    try {
+      // Call API route to create Post document in DB
+
+      setSuccess((prev) => !prev)
+    } catch (error) {
+      setIsLoading((prev) => !prev)
+      setError((prev) => !prev)
+    }
   }
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setShowNewPost((prev) => !prev)
+      }, 2000)
+    }
+  }, [success])
 
   return (
     <section
@@ -46,7 +67,7 @@ const NewPost = ({ setShowNewPost }) => {
           <h3 className="text-xl font-semibold">Create new post</h3>
         </div>
 
-        {fileURL && (
+        {fileURL && !isLoading && !success && (
           <div className="my-3 flex h-full w-full flex-col items-center px-3">
             <div className="w-full border">
               <div className="flex max-h-[500px] w-full justify-center overflow-hidden ">
@@ -84,7 +105,44 @@ const NewPost = ({ setShowNewPost }) => {
           </div>
         )}
 
-        {!fileURL && (
+        {isLoading && (
+          <div className="flex h-[300px] w-full items-center justify-center">
+            <div className="flex items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
+              <svg
+                className="h-10 w-10 animate-spin text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <p className="text-lg font-semibold">Uploading... </p>
+            </div>
+          </div>
+        )}
+
+        {success && (
+          <div className="flex h-[300px] w-full items-center justify-center">
+            <div className="flex animate-pulse items-center gap-x-2 rounded-lg bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] px-8 py-5 text-white">
+              <CheckCircleOutline />
+              <p className="text-lg font-semibold">Success!</p>
+            </div>
+          </div>
+        )}
+
+        {!fileURL && !isLoading && !success && (
           <div className="my-10 flex h-full w-full flex-col items-center gap-y-6">
             <div className="">
               <div className="mx-auto">
