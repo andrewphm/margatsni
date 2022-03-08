@@ -16,12 +16,15 @@ const Header = ({ currentTab }) => {
   const [inputIsActive, setInputIsActive] = useState(false)
   const [searchInput, setSearchInput] = useState('')
   const menuRef = useRef(null)
+  const menuRefMobile = useRef(null)
   const dispatch = useDispatch()
   const [showNewPost, setShowNewPost] = useState(false)
 
   const handleProfileClick = () => {
     setTab((prev) => 'user')
 
+    menuRefMobile?.current.classList.toggle('opacity-0')
+    menuRefMobile?.current?.classList.toggle('transform-none')
     menuRef?.current?.classList.toggle('opacity-0')
     menuRef?.current?.classList.toggle('transform-none')
   }
@@ -86,9 +89,9 @@ const Header = ({ currentTab }) => {
 
           {/* Nav */}
           {user ? (
-            <div className="relative flex max-w-[228px] items-center gap-x-4">
+            <nav className="relative flex max-w-[228px] items-center gap-x-4">
               <Link href={ROUTE.DASHBOARD}>
-                <a>
+                <a tabIndex={0}>
                   <div
                     className="cursor-pointer "
                     onClick={() => setTab((prev) => '/')}
@@ -183,6 +186,7 @@ const Header = ({ currentTab }) => {
               </Link>
 
               <div
+                tabIndex={0}
                 className="cursor-pointer "
                 onClick={() => {
                   setTab((prev) => 'add')
@@ -246,7 +250,7 @@ const Header = ({ currentTab }) => {
               </div>
 
               <Link href={ROUTE.EXPLORE}>
-                <a>
+                <a tabIndex={0}>
                   <div
                     className="cursor-pointer "
                     onClick={() => setTab((prev) => '/explore')}
@@ -302,6 +306,7 @@ const Header = ({ currentTab }) => {
               </Link>
 
               <div
+                tabIndex={0}
                 className="cursor-pointer "
                 onClick={() => setTab((prev) => 'favorite')}
               >
@@ -333,6 +338,7 @@ const Header = ({ currentTab }) => {
               </div>
 
               <div
+                tabIndex={0}
                 onClickCapture={handleProfileClick}
                 className={`flex cursor-pointer items-center justify-center rounded-full ${
                   tab === 'user' ? 'border border-black p-[2px]' : ''
@@ -350,7 +356,7 @@ const Header = ({ currentTab }) => {
 
               <div
                 ref={menuRef}
-                className="absolute top-12 -right-2 z-10 flex w-56 -translate-y-96  rounded-md bg-white opacity-0 shadow-[0px_0px_5px_1px_rgba(0,0,0,0.0975)] transition-opacity duration-500 ease-linear"
+                className="absolute top-[50px] -right-3 z-10 flex w-56 -translate-y-96  rounded-md bg-white opacity-0 shadow-[0px_0px_5px_1px_rgba(0,0,0,0.0975)] transition-opacity duration-500 ease-linear"
               >
                 <ul className="h-full w-full text-sm">
                   <li className="flex cursor-pointer items-center gap-x-2 rounded-t-md py-[10px] px-4 hover:bg-gray-100">
@@ -455,7 +461,7 @@ const Header = ({ currentTab }) => {
 
                 <div className="absolute right-[17px] -top-[9px] -z-10 h-4 w-4 rotate-45 border-l border-t bg-white"></div>
               </div>
-            </div>
+            </nav>
           ) : (
             <div className="flex items-center gap-x-4">
               <Link href={ROUTE.LOGIN}>
@@ -522,7 +528,7 @@ const Header = ({ currentTab }) => {
           )}
 
           <div
-            ref={menuRef}
+            ref={menuRefMobile}
             className="absolute top-[64px] right-[13px] z-10 flex w-56 -translate-y-96 rounded-md bg-white opacity-0 shadow-[0px_0px_5px_1px_rgba(0,0,0,0.0975)] transition-opacity duration-500 ease-linear sm:right-[20px]"
           >
             <ul className="h-full w-full text-sm">
