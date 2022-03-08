@@ -15,6 +15,11 @@ const apiSettings = {
     const res = await axios.get(`${BASE_URL}auth/signout`)
     return res
   },
+  createNewUserPost: async (user, body) => {
+    const res = await axios.post(`${BASE_URL}post/${user}`, body)
+
+    return res
+  },
 }
 
 export default apiSettings

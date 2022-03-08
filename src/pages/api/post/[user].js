@@ -18,6 +18,11 @@ export default async function (req, res) {
 
   // Create new post
   const handlePOSTMethod = async () => {
+    if (!req.body)
+      return res
+        .status(400)
+        .json({ success: false, message: 'No data/body provided.' })
+
     userPosts.items.push(req.body)
 
     try {
