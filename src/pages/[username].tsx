@@ -4,10 +4,12 @@ import ProfileInfo from '../components/profile/ProfileInfo'
 import Link from 'next/link'
 import connectToDb from '../lib/connectToDb'
 import User from '../models/User'
+import Post from '../models/Post'
 
 const Profile = ({ userData }) => {
   const user = useSelector((state) => state.user.currentUser)
 
+  // If user cannot be found.
   if (!userData) {
     return (
       <Layout>
@@ -34,13 +36,7 @@ const Profile = ({ userData }) => {
 
   return (
     <Layout>
-      <section className="">
-        <ProfileInfo />
-
-        <div>
-          <p>tabs</p>
-        </div>
-      </section>
+      <ProfileInfo />
     </Layout>
   )
 }
@@ -50,24 +46,32 @@ export default Profile
 export async function getServerSideProps(context) {
   await connectToDb()
 
-  let user
   let userQuery = context.query.username
 
   try {
-    user = await User.findOne({ username: userQuery }).lean()
-
-    console.log(user)
+    const user = await User.findOne({ username: userQuery })
+    const userPosts = await Post.findOne({ username: userQuery })
 
     if (user) {
-      return {
-        props: {
-          userData: user,
-        },
+      if (!user.isPrivate) {
+        return {
+          props: {
+            userData: {
+              username: user.username,
+              bio: user.bio || '',
+              followers: user.followers.length,
+              following: user.following.length,
+              posts: userPosts?.items.length || 0,
+            },
+          },
+        }
       }
     } else {
       return {
         props: {
-          userData: false,
+          userData: {
+            userData: false,
+          },
         },
       }
     }
