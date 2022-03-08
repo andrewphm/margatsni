@@ -1,11 +1,30 @@
 import mongoose from 'mongoose'
 
-const SinglePost = new mongoose.Schema(
+const PostCommentSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+)
+
+const SinglePostSchema = new mongoose.Schema(
   {
     image: {
       type: String,
       required: true,
     },
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    comments: [PostCommentSchema],
     caption: String,
   },
   { timestamps: true }
@@ -13,7 +32,7 @@ const SinglePost = new mongoose.Schema(
 
 const PostSchema = new mongoose.Schema(
   {
-    items: [SinglePost],
+    items: [SinglePostSchema],
     username: {
       type: String,
       unique: true,
