@@ -10,10 +10,8 @@ import ProfileContent from '../components/profile/ProfileContent'
 const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
 
-  console.log(userData)
-
   // If user cannot be found.
-  if (!userData) {
+  if (!userData.username) {
     return (
       <Layout>
         <div className="my-10 mx-auto flex flex-col gap-y-5 px-10 text-center">
@@ -40,7 +38,16 @@ const Profile = ({ userData, userPosts }) => {
   return (
     <Layout>
       <ProfileInfo userData={userData} />
-      <ProfileContent userPosts={userPosts} />
+      {userData.isPrivate ? (
+        <div className="mx-auto flex w-full flex-col border-y border-neutral-300  bg-white md:max-w-4xl">
+          <div className="mx-auto flex flex-col py-10 text-center">
+            <p className="text-sm font-semibold">This Account is Private</p>
+            <p className="text-sm">Follow to see their photos and videos.</p>
+          </div>
+        </div>
+      ) : (
+        <ProfileContent userPosts={userPosts} />
+      )}
     </Layout>
   )
 }
@@ -67,6 +74,21 @@ export async function getServerSideProps(context) {
               followers: user.followers.length,
               following: user.following.length,
               posts: userPosts?.items.length || 0,
+              isPrivate: user.isPrivate,
+            },
+          },
+        }
+      } else {
+        return {
+          props: {
+            userData: {
+              username: user.username,
+              fullName: user.fullName,
+              bio: user.bio || '',
+              followers: user.followers.length,
+              following: user.following.length,
+              posts: userPosts?.items.length || 0,
+              isPrivate: user.isPrivate,
             },
           },
         }
