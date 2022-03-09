@@ -152,12 +152,12 @@ const ProfileContent = ({ userPosts }) => {
       </div>
 
       {/* Mobile Tab */}
-      <div className="relative mx-auto flex w-full justify-center py-3 text-gray-500 md:hidden">
+      <div className="relative mx-auto flex w-full justify-around py-3 text-gray-500 xs:px-10 sm:px-14 md:hidden">
         <div
           onClick={handleMobileTabChange}
           id="posts"
           ref={mobileTabRef}
-          className="flex max-w-[200px] flex-grow cursor-pointer justify-center text-blue-btn"
+          className="flex max-w-[200px] cursor-pointer justify-center text-blue-btn"
         >
           <svg
             aria-label=""
@@ -228,7 +228,7 @@ const ProfileContent = ({ userPosts }) => {
 
         <div
           id="tagged"
-          className="flex max-w-[200px] flex-grow cursor-pointer justify-center"
+          className="flex max-w-[200px] cursor-pointer justify-center"
           onClick={handleMobileTabChange}
         >
           <svg

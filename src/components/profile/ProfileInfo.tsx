@@ -61,7 +61,7 @@ const ProfileInfo = ({ userData }) => {
 
       <div className="flex flex-col px-4 pb-4 sm:px-8 sm:pb-5 md:hidden">
         <h2 className="font-medium">{userData.fullName}</h2>
-        <p className="max-w-[400px]">
+        <p className="max-w-[400px] text-sm">
           Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
           consectetur, adipisci velit...
         </p>
