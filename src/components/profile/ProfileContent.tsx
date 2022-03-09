@@ -1,6 +1,8 @@
+import Image from 'next/image'
 import { useState, useRef } from 'react'
+import { Favorite, ModeComment } from '@mui/icons-material'
 
-const ProfileContent = ({}) => {
+const ProfileContent = ({ userPosts }) => {
   const [tab, setTab] = useState('posts')
   const tabRef = useRef(null)
 
@@ -11,6 +13,8 @@ const ProfileContent = ({}) => {
     tabRef.current = e.currentTarget
     setTab((prev) => tabRef.current.id)
   }
+
+  console.log(userPosts.items)
 
   return (
     <div className="mx-auto flex w-full flex-col border-t border-neutral-300  md:max-w-4xl">
@@ -134,6 +138,40 @@ const ProfileContent = ({}) => {
           <p className="tracking-wide">TAGGED</p>
         </div>
       </div>
+
+      {tab === 'posts' && (
+        <div className="mb-1 grid w-full grid-cols-3 gap-1 py-3 md:gap-5 md:py-4 xl:gap-4">
+          {userPosts.items?.map((item) => {
+            return (
+              <div
+                onClick={(e) => console.log(e.currentTarget)}
+                key={item._id}
+                className="relative w-full cursor-pointer pt-[100%]"
+              >
+                <Image
+                  layout="fill"
+                  src={item.image}
+                  className=""
+                  objectFit="cover"
+                />
+
+                <div className="absolute top-0 bottom-0 right-0 left-0 z-50 hidden h-full  w-full bg-black bg-opacity-0 hover:bg-opacity-40 sm:flex">
+                  <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-3 text-base text-transparent hover:text-white">
+                    <div className="flex gap-x-2">
+                      <Favorite />
+                      <p className="font-semibold">{item.likes}</p>
+                    </div>
+                    <div className="flex gap-x-2">
+                      <ModeComment />
+                      <p className="font-semibold">{item.comments.length}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

@@ -62,9 +62,11 @@ export async function getServerSideProps(context) {
   try {
     const user = await User.findOne({ username: userQuery })
     const userPosts = await Post.findOne({ username: userQuery })
+    const items = JSON.parse(JSON.stringify(userPosts.items))
 
     if (user) {
       if (!user.isPrivate) {
+        console.log('firing first')
         return {
           props: {
             userData: {
@@ -76,9 +78,13 @@ export async function getServerSideProps(context) {
               posts: userPosts?.items.length || 0,
               isPrivate: user.isPrivate,
             },
+            userPosts: {
+              items,
+            },
           },
         }
       } else {
+        // User is private, so only return user info.
         return {
           props: {
             userData: {
@@ -103,7 +109,7 @@ export async function getServerSideProps(context) {
       }
     }
   } catch (error) {
-    console.log(error)
+    console.log('firing: ', error)
     return {
       props: {
         userData: false,

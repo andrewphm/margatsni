@@ -7,4 +7,7 @@ module.exports = {
     JWT_SEC: '12345',
     FIREBASE_SEC: 'Cfd17sgJVzeJJ_KNXq62xII1vSkiRs',
   },
+  images: {
+    domains: ['firebasestorage.googleapis.com'],
+  },
 }
