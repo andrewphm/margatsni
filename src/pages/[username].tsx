@@ -9,6 +9,8 @@ import Post from '../models/Post'
 const Profile = ({ userData }) => {
   const user = useSelector((state) => state.user.currentUser)
 
+  console.log(userData)
+
   // If user cannot be found.
   if (!userData) {
     return (
@@ -36,7 +38,7 @@ const Profile = ({ userData }) => {
 
   return (
     <Layout>
-      <ProfileInfo />
+      <ProfileInfo userData={userData} />
     </Layout>
   )
 }
@@ -58,6 +60,7 @@ export async function getServerSideProps(context) {
           props: {
             userData: {
               username: user.username,
+              fullName: user.fullName,
               bio: user.bio || '',
               followers: user.followers.length,
               following: user.following.length,
