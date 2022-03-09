@@ -1,11 +1,11 @@
 import { useSelector } from 'react-redux'
-import Layout from '../components/layouts/Layout'
-import ProfileInfo from '../components/profile/ProfileInfo'
+import Layout from '../../components/layouts/Layout'
+import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
-import connectToDb from '../lib/connectToDb'
-import User from '../models/User'
-import Post from '../models/Post'
-import ProfileContent from '../components/profile/ProfileContent'
+import connectToDb from '../../lib/connectToDb'
+import User from '../../models/User'
+import Post from '../../models/Post'
+import ProfileContent from '../../components/profile/ProfileContent'
 
 const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -80,6 +80,7 @@ export async function getServerSideProps(context) {
             },
             userPosts: {
               items,
+              username: user.username,
             },
           },
         }
