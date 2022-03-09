@@ -8,9 +8,9 @@ const Layout = ({ children }): ReactElement => {
   const router = useRouter()
 
   return (
-    <main className="relative flex flex-col justify-between">
+    <main className="relative flex h-screen flex-col justify-between">
       <Header currentTab={router.pathname} />
-      <section className="w-full">{children}</section>
+      <section className="h-full w-full">{children}</section>
       <Footer />
     </main>
   )

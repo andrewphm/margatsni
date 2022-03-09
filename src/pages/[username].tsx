@@ -5,8 +5,9 @@ import Link from 'next/link'
 import connectToDb from '../lib/connectToDb'
 import User from '../models/User'
 import Post from '../models/Post'
+import ProfileContent from '../components/profile/ProfileContent'
 
-const Profile = ({ userData }) => {
+const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
 
   console.log(userData)
@@ -39,6 +40,7 @@ const Profile = ({ userData }) => {
   return (
     <Layout>
       <ProfileInfo userData={userData} />
+      <ProfileContent userPosts={userPosts} />
     </Layout>
   )
 }
