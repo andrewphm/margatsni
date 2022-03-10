@@ -1,47 +1,49 @@
-const secret = process.env.JWT_SEC
+export default function middleware(req) {}
 
-import { verify } from 'jsonwebtoken'
-import { NextResponse } from 'next/server'
+// const secret = process.env.JWT_SEC
 
-export default function middleware(req) {
-  const { cookies } = req
-  const pathname = req.nextUrl.pathname
-  const jwt = cookies.accessToken
+// import { verify } from 'jsonwebtoken'
+// import { NextResponse } from 'next/server'
 
-  // Restrict login/signup page if valid JWT
-  if (pathname.includes('/login') || pathname.includes('/signup')) {
-    if (jwt) {
-      try {
-        verify(jwt, secret)
-        const url = req.nextUrl.clone()
-        url.pathname = '/'
-        return NextResponse.redirect(url)
-      } catch (error) {
-        return NextResponse.next()
-      }
-    }
-  }
+// export default function middleware(req) {
+//   const { cookies } = req
+//   const pathname = req.nextUrl.pathname
+//   const jwt = cookies.accessToken
 
-  // Redirect to login page if trying to access main index ('/') and not authenticated
-  if (
-    pathname === '/' ||
-    pathname === '/explore' ||
-    pathname === '/direct/inbox'
-  ) {
-    const url = req.nextUrl.clone()
-    url.pathname = '/login'
+//   // Restrict login/signup page if valid JWT
+//   if (pathname.includes('/login') || pathname.includes('/signup')) {
+//     if (jwt) {
+//       try {
+//         verify(jwt, secret)
+//         const url = req.nextUrl.clone()
+//         url.pathname = '/'
+//         return NextResponse.redirect(url)
+//       } catch (error) {
+//         return NextResponse.next()
+//       }
+//     }
+//   }
 
-    // No JWT saved in cookies, redirect to login page
-    if (!jwt) {
-      return NextResponse.redirect(url)
-    }
+//   // Redirect to login page if trying to access main index ('/') and not authenticated
+//   if (
+//     pathname === '/' ||
+//     pathname === '/explore' ||
+//     pathname === '/direct/inbox'
+//   ) {
+//     const url = req.nextUrl.clone()
+//     url.pathname = '/login'
 
-    // Verify jwt, if authenticated, move to next req
-    try {
-      verify(jwt, secret)
-      return NextResponse.next()
-    } catch (error) {
-      return NextResponse.redirect(url)
-    }
-  }
-}
+//     // No JWT saved in cookies, redirect to login page
+//     if (!jwt) {
+//       return NextResponse.redirect(url)
+//     }
+
+//     // Verify jwt, if authenticated, move to next req
+//     try {
+//       verify(jwt, secret)
+//       return NextResponse.next()
+//     } catch (error) {
+//       return NextResponse.redirect(url)
+//     }
+//   }
+// }
