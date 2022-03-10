@@ -288,7 +288,7 @@ const ProfileContent = ({ userPosts }) => {
                       objectFit="cover"
                     />
 
-                    <div className="absolute top-0 bottom-0 right-0 left-0 z-50 flex h-full w-full bg-black bg-opacity-0 hover:bg-opacity-40">
+                    <div className="absolute top-0 bottom-0 right-0 left-0 flex h-full w-full bg-black bg-opacity-0 hover:bg-opacity-40">
                       <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-3 text-base text-transparent hover:text-white">
                         <div className="flex gap-x-2">
                           <Favorite />

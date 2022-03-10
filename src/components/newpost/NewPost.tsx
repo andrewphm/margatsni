@@ -104,7 +104,7 @@ const NewPost = ({ setShowNewPost }) => {
                   ></path>
                 </svg>
 
-                <h3 className="pt-2 text-xl font-light">
+                <h3 className="w-10/12 pt-2 text-center text-xl font-light">
                   Upload photos to share with the world
                 </h3>
               </div>
