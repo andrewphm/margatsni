@@ -1,9 +1,7 @@
-import type { NextPage } from 'next'
-
 // Layout
 import Layout from '../components/layouts/Layout'
 
-const Explore: NextPage = () => {
+const Explore = () => {
   return (
     <Layout>
       <p>explore page</p>

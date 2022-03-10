@@ -1,4 +1,3 @@
-import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import connectToDb from '../lib/connectToDb.js'
 import { useSelector } from 'react-redux'
@@ -10,7 +9,7 @@ import Layout from '../components/layouts/Layout'
 import Sidebar from '../components/home/Sidebar'
 import Timeline from '../components/home/Timeline'
 
-const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
+const Home = ({ isConnected }) => {
   const router = useRouter()
 
   const user = useSelector((state) => state.user?.currentUser)
@@ -33,7 +32,7 @@ const Home: NextPage<{ isConnected: boolean }> = ({ isConnected }) => {
 }
 
 /* Retrieves pet(s) data from mongodb database */
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = async (context) => {
   try {
     connectToDb()
     return {

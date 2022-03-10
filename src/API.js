@@ -1,6 +1,11 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000/api/'
+const BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000/api/'
+    : 'https://margatsni.andrewpham.ca/api/'
+
+console.log(BASE_URL)
 
 const apiSettings = {
   userLogin: async (body) => {

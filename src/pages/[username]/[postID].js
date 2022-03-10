@@ -45,6 +45,7 @@ const UserPost = ({ userPosts, post, userData }) => {
               src={userData.image || nopfp}
               objectFit="contain"
               layout="fill"
+              className="-z-20"
             />
           </div>
 
@@ -61,8 +62,13 @@ const UserPost = ({ userPosts, post, userData }) => {
           </button>
         </div>
 
-        <div className="flex min-h-[300px] w-full items-center border border-neutral-200 bg-black bg-opacity-30">
-          <img src={post.image} className="h-auto w-full" />
+        <div className=" relative flex w-full items-center border border-neutral-200 bg-neutral-400 bg-opacity-20 pt-[100%]">
+          <Image
+            src={post.image}
+            layout="fill"
+            className="object-cover"
+            objectPosition="center"
+          />
         </div>
       </article>
     </Layout>

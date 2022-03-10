@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
-import type { ReactElement } from 'react'
+
 // Components
 import Footer from '../common/Footer'
 import Header from '../common/Header'
 
-const Layout = ({ children }): ReactElement => {
+const Layout = ({ children }) => {
   const router = useRouter()
 
   return (

@@ -1,8 +1,6 @@
-import type { NextPage } from 'next'
-
 import Layout from '../../components/layouts/Layout'
 
-const Inbox: NextPage = () => {
+const Inbox = () => {
   return (
     <Layout>
       <p>inbox</p>

@@ -23,7 +23,7 @@ const Header = ({ currentTab }) => {
   const handleProfileClick = () => {
     setTab((prev) => 'user')
 
-    menuRefMobile?.current.classList.toggle('opacity-0')
+    menuRefMobile.current.classList.toggle('opacity-0')
     menuRefMobile?.current?.classList.toggle('transform-none')
     menuRef?.current?.classList.toggle('opacity-0')
     menuRef?.current?.classList.toggle('transform-none')
@@ -44,7 +44,7 @@ const Header = ({ currentTab }) => {
 
   return (
     <>
-      <header className="sticky top-0 flex min-h-[60px] w-full items-center justify-center border bg-white">
+      <header className="sticky top-0 z-50 flex min-h-[60px] w-full items-center justify-center border bg-white">
         {/* Hidden on small screens */}
         <div className="hidden w-full max-w-6xl items-center justify-between gap-x-2 px-5 md:flex">
           {/* Logo */}

@@ -1,18 +1,13 @@
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
-
-// Components
 import Footer from '../components/common/Footer'
-import LoginForm from '../components/login/LoginForm'
+import SignupForm from '../components/signup/SignupForm'
 import MobileSlideShow from '../components/login/MobileSlideShow'
 
-const Login: NextPage = () => {
-  const user = useSelector((state) => state.user.currentUser)
+const Signup = () => {
   const router = useRouter()
-
-  // // If User already logged in, push to main index
+  const user = useSelector((state) => state.user.currentUser)
+  // // If user is already logged in, redirect to main index
   // user && router.push('/')
 
   return (
@@ -21,7 +16,7 @@ const Login: NextPage = () => {
         <article className="mx-auto flex h-screen w-full max-w-7xl">
           <div className="flex h-full w-full justify-center xs:items-center">
             <MobileSlideShow />
-            <LoginForm />
+            <SignupForm />
           </div>
         </article>
       </main>
@@ -31,4 +26,4 @@ const Login: NextPage = () => {
   )
 }
 
-export default Login
+export default Signup
