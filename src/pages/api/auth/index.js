@@ -36,10 +36,10 @@ export default async function handler(req, res) {
           }
         )
 
-        // Set HttpOnly accessToken cookie
+        // Set HttpOnly user-token cookie
         res.setHeader(
           'Set-Cookie',
-          cookie.serialize('accessToken', accessToken, {
+          cookie.serialize('user-token', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
@@ -111,7 +111,7 @@ export default async function handler(req, res) {
         // Set HttpOnly accessToken cookie
         res.setHeader(
           'Set-Cookie',
-          cookie.serialize('accessToken', accessToken, {
+          cookie.serialize('user-token', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             path: '/',

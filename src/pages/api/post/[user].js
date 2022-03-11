@@ -1,4 +1,3 @@
-import { isJSDocCommentContainingNode } from 'typescript'
 import connectToDb from '../../../lib/connectToDb'
 import Post from '../../../models/Post'
 

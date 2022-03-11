@@ -42,7 +42,7 @@ export default async function () {
     try {
       cached.promise = mongoose.connect(MONGODB_URI, opts).then((conn) => conn)
 
-      console.log('Connected to DB 🚀🔥')
+      console.log('Connected to DB 🚀🔥 and cached connection')
     } catch (error) {
       console.log(error)
     }
