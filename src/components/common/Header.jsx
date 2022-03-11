@@ -651,7 +651,7 @@ const Header = ({ currentTab }) => {
 
       {/* Only shown on mobile devices */}
       {user && (
-        <nav className="fixed bottom-0 flex min-h-[60px] w-full border-t bg-white shadow-lg md:hidden">
+        <nav className="fixed bottom-0 z-50 flex min-h-[60px] w-full border-t bg-white shadow-lg md:hidden">
           <div className="relative flex w-full items-center justify-around">
             <Link href={ROUTE.DASHBOARD}>
               <a>
