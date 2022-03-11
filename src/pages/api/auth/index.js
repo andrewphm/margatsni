@@ -8,7 +8,7 @@ import cookie from 'cookie'
 export default async function handler(req, res) {
   const { method, body } = req
 
-  connectToDb()
+  await connectToDb()
 
   switch (method) {
     // Sign up user
