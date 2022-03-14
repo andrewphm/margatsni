@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
 import formatValidationErr from '../../../helpers/formatValidationErr'
 import cookie from 'cookie'
+import { SignJWT } from 'jose'
 
 export default async function handler(req, res) {
   const { method, body } = req
@@ -25,21 +25,26 @@ export default async function handler(req, res) {
         let savedUser = await newUser.save()
 
         // Create JWT
-        const accessToken = jwt.sign(
-          {
-            id: savedUser._id,
-            isAdmin: savedUser.isAdmin,
-          },
-          process.env.JWT_SEC,
-          {
-            expiresIn: '10d',
-          }
-        )
+        // const accessToken = jwt.sign(
+        //   {
+        //     id: savedUser._id,
+        //     isAdmin: savedUser.isAdmin,
+        //   },
+        //   process.env.JWT_SEC,
+        //   {
+        //     expiresIn: '10d',
+        //   }
+        // )
+        const token = await new SignJWT({})
+          .setProtectedHeader({ alg: 'HS256' })
+          .setIssuedAt()
+          .setExpirationTime('10d')
+          .sign(new TextEncoder().encode(process.env.JWT_SEC))
 
         // Set HttpOnly user-token cookie
         res.setHeader(
           'Set-Cookie',
-          cookie.serialize('user-token', accessToken, {
+          cookie.serialize('user-token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
@@ -97,21 +102,27 @@ export default async function handler(req, res) {
           })
 
         // Create JWT
-        const accessToken = await jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT_SEC,
-          {
-            expiresIn: '10d',
-          }
-        )
+        // const accessToken = await jwt.sign(
+        //   {
+        //     id: user._id,
+        //     isAdmin: user.isAdmin,
+        //   },
+        //   process.env.JWT_SEC,
+        //   {
+        //     expiresIn: '10d',
+        //   }
+        // )
+
+        const token = await new SignJWT({})
+          .setProtectedHeader({ alg: 'HS256' })
+          .setIssuedAt()
+          .setExpirationTime('10d')
+          .sign(new TextEncoder().encode(process.env.JWT_SEC))
 
         // Set HttpOnly accessToken cookie
         res.setHeader(
           'Set-Cookie',
-          cookie.serialize('user-token', accessToken, {
+          cookie.serialize('user-token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             path: '/',

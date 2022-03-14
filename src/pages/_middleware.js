@@ -16,15 +16,14 @@ export default async function middleware(req) {
   }
 
   if (token && req.nextUrl.pathname !== '/login') {
-    console.log(process.env.JWT_SEC)
-
     try {
-      const verified = await jwtVerify(token, process.env.JWT_SEC)
+      const verified = await jwtVerify(token, new TextEncoder().encode(secret))
       console.log(verified)
       console.log('Verification passed')
       return NextResponse.next()
     } catch (error) {
       console.log('Verification failed.')
+      console.log(error)
       const url = req.nextUrl.clone()
       url.pathname = '/login'
       return NextResponse.redirect(url)
