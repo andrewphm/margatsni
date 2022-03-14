@@ -34,7 +34,7 @@ const Home = ({ isConnected }) => {
 /* Retrieves pet(s) data from mongodb database */
 export const getServerSideProps = async (context) => {
   try {
-    connectToDb()
+    await connectToDb()
     return {
       props: { isConnected: true },
     }
