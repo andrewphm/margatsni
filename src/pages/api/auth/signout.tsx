@@ -13,7 +13,7 @@ export default function handler(
 ) {
   res.setHeader(
     'Set-Cookie',
-    cookie.serialize('accessToken', '', {
+    cookie.serialize('user-token', '', {
       expires: new Date(0),
       path: '/',
     })
