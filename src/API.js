@@ -5,8 +5,6 @@ const BASE_URL =
     ? 'http://localhost:3000/api/'
     : 'https://margatsni.andrewpham.ca/api/'
 
-console.log(BASE_URL)
-
 const apiSettings = {
   userLogin: async (body) => {
     const res = await axios.post(`${BASE_URL}auth`, body)

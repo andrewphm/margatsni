@@ -8,6 +8,8 @@ import { SignJWT } from 'jose'
 export default async function handler(req, res) {
   const { method, body } = req
 
+  console.log('auth route')
+
   await connectToDb()
 
   switch (method) {
@@ -35,7 +37,10 @@ export default async function handler(req, res) {
         //     expiresIn: '10d',
         //   }
         // )
-        const token = await new SignJWT({})
+        const token = await new SignJWT({
+          isAdmin: savedUser.isAdmin,
+          username: savedUser.username,
+        })
           .setProtectedHeader({ alg: 'HS256' })
           .setIssuedAt()
           .setExpirationTime('10d')
@@ -49,12 +54,14 @@ export default async function handler(req, res) {
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
             path: '/',
+            maxAge: 60 * 60 * 24 * 7,
           })
         )
 
         // Return custom user object
         return res.status(200).json({ ...savedUser })
       } catch (error) {
+        console.log(error)
         let { keyValue, code } = error
         let keys = Object.keys(keyValue)
 
@@ -82,6 +89,8 @@ export default async function handler(req, res) {
 
     // Log in user
     case 'POST':
+      console.log('attempting to log in')
+
       try {
         let { username, password } = body
 
@@ -113,7 +122,10 @@ export default async function handler(req, res) {
         //   }
         // )
 
-        const token = await new SignJWT({})
+        const token = await new SignJWT({
+          isAdmin: user.isAdmin,
+          username: user.username,
+        })
           .setProtectedHeader({ alg: 'HS256' })
           .setIssuedAt()
           .setExpirationTime('10d')
@@ -127,6 +139,7 @@ export default async function handler(req, res) {
             secure: process.env.NODE_ENV !== 'development',
             path: '/',
             sameSite: 'strict',
+            maxAge: 60 * 60 * 24 * 7,
           })
         )
 
@@ -135,6 +148,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ ...others })
       } catch (error) {
+        console.log(error)
         return res
           .status(400)
           .json({ success: false, message: 'Something went wrong.' })

@@ -23,18 +23,18 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
-  // If in production, don't use cache
-  if (process.env.NODE_ENV === 'production') {
-    mongoose
-      .connect(MONGODB_URI, opts)
-      .then((conn) => console.log('Connected to DB 🚀🔥'))
-      .catch((error) => console.log(error))
-  }
-
   // Try connecting via cached connection
   if (cached.conn) {
     console.log('Connected to DB via cache 🔥🚀')
     return cached.conn
+  }
+
+  // If in production, don't use cache
+  if (process.env.NODE_ENV === 'development') {
+    return mongoose
+      .connect(MONGODB_URI, opts)
+      .then((conn) => console.log('Connected to DB in dev mode 🚀🔥'))
+      .catch((error) => console.log(error))
   }
 
   // Checking cache

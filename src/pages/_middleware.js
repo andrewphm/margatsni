@@ -9,61 +9,44 @@ import { NextResponse } from 'next/server'
 export default async function middleware(req) {
   const token = req.cookies[USER_TOKEN]
 
-  if (!token && req.nextUrl.pathname !== '/login') {
-    const url = req.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
-  }
-
-  if (token && req.nextUrl.pathname !== '/login') {
-    try {
-      const verified = await jwtVerify(token, new TextEncoder().encode(secret))
-      console.log(verified)
-      console.log('Verification passed')
-      return NextResponse.next()
-    } catch (error) {
-      console.log('Verification failed.')
-      console.log(error)
+  // Check user-token if attempting to reach main page
+  if (req.nextUrl.pathname === '/') {
+    if (!token) {
+      console.log('No token, redirect to login')
       const url = req.nextUrl.clone()
       url.pathname = '/login'
       return NextResponse.redirect(url)
+    } else {
+      try {
+        const verified = await jwtVerify(
+          token,
+          new TextEncoder().encode(secret)
+        )
+        return NextResponse.next()
+      } catch (error) {
+        const url = req.nextUrl.clone()
+        url.pathname = '/login'
+        return NextResponse.redirect(url)
+      }
     }
   }
 
-  // const { cookies } = req
-  // const pathname = req.nextUrl.pathname
-  // const jwt = cookies.accessToken
-  // // Restrict login/signup page if valid JWT
-  // if (pathname.includes('/login') || pathname.includes('/signup')) {
-  //   if (jwt) {
-  //     try {
-  //       verify(jwt, secret)
-  //       const url = req.nextUrl.clone()
-  //       url.pathname = '/'
-  //       return NextResponse.redirect(url)
-  //     } catch (error) {
-  //       return NextResponse.next()
-  //     }
-  //   }
-  // }
-  // // Redirect to login page if trying to access main index ('/') and not authenticated
-  // if (
-  //   pathname === '/' ||
-  //   pathname === '/explore' ||
-  //   pathname === '/direct/inbox'
-  // ) {
-  //   const url = req.nextUrl.clone()
-  //   url.pathname = '/login'
-  //   // No JWT saved in cookies, redirect to login page
-  //   if (!jwt) {
-  //     return NextResponse.redirect(url)
-  //   }
-  //   // Verify jwt, if authenticated, move to next req
-  //   try {
-  //     verify(jwt, secret)
-  //     return NextResponse.next()
-  //   } catch (error) {
-  //     return NextResponse.redirect(url)
-  //   }
-  // }
+  // Redirect to homepage if attempting to view login/signup page when already logged in
+  if (req.nextUrl.pathname === '/login' || req.nextUrl.pathname === '/signup') {
+    if (token) {
+      try {
+        const verified = await jwtVerify(
+          token,
+          new TextEncoder().encode(secret)
+        )
+        console.log('redirecting to homepage')
+        const url = req.nextUrl.clone()
+        url.pathname = '/'
+        return NextResponse.redirect(url)
+      } catch (error) {
+        console.log(error)
+        return NextResponse.next()
+      }
+    }
+  }
 }
