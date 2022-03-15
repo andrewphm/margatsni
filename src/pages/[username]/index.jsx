@@ -6,6 +6,7 @@ import connectToDb from '../../lib/connectToDb'
 import User from '../../models/User'
 import Post from '../../models/Post'
 import ProfileContent from '../../components/profile/ProfileContent'
+import mongoose from 'mongoose'
 
 const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -55,10 +56,18 @@ const Profile = ({ userData, userPosts }) => {
 export default Profile
 
 export async function getServerSideProps(context) {
-  const db = await connectToDb()
-  console.log('connected to db from prod')
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      console.log('Not connected to db, connecting now')
+      await connectToDb()
+      console.log('Done connecting')
+    } catch (error) {
+      console.log('Failed to connect')
+      console.log(error)
+    }
+  }
 
-  let userQuery = context.query.username
+  const userQuery = context.query.username
 
   try {
     const user = await User.findOne({ username: userQuery })

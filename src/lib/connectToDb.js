@@ -24,7 +24,7 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'development') {
     const db = await mongoose.connect(MONGODB_URI, opts)
     return db
   }
