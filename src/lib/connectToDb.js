@@ -23,8 +23,8 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
-  console.log(cached)
-  if (cached.isConnected) {
+  console.log(cached.conn)
+  if (cached.conn) {
     return console.log('Already connected to DB 🔥🚀')
   }
 
