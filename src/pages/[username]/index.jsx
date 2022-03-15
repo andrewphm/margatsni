@@ -55,7 +55,7 @@ const Profile = ({ userData, userPosts }) => {
 
 export default Profile
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (context) => {
   try {
     await connectToDb()
     const userQuery = context.query.username
