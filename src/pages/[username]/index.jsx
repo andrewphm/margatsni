@@ -56,20 +56,20 @@ const Profile = ({ userData, userPosts }) => {
 export default Profile
 
 export async function getServerSideProps(context) {
-  if (mongoose.connection.readyState !== 1) {
-    try {
-      console.log('Not connected to db, connecting now')
-      await connectToDb()
-      console.log('Done connecting')
-    } catch (error) {
-      console.log('Failed to connect')
-      console.log(error)
-    }
-  }
-
-  const userQuery = context.query.username
-
   try {
+    if (mongoose.connection.readyState !== 1) {
+      try {
+        console.log('Not connected to db, connecting now')
+        await connectToDb()
+        console.log('Done connecting')
+      } catch (error) {
+        console.log('Failed to connect')
+        console.log(error)
+      }
+    }
+
+    const userQuery = context.query.username
+
     const user = await User.findOne({ username: userQuery })
     const userPosts = await Post.findOne({ username: userQuery })
     const items = JSON.parse(JSON.stringify(userPosts.items))
@@ -120,7 +120,7 @@ export async function getServerSideProps(context) {
       }
     }
   } catch (error) {
-    console.log('firing: ', error)
+    console.log('Error: ', error)
     return {
       props: {
         userData: false,
