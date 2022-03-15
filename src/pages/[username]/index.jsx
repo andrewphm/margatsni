@@ -57,7 +57,13 @@ export default Profile
 
 export const getServerSideProps = async (context) => {
   try {
-    await connectToDb()
+    console.log('Connecting to db')
+
+    const db = await mongoose
+      .connect(process.env.MONGODB_URI, {
+        bufferCommands: false,
+      })
+      .then(() => console.log('Connected to db!'))
     const userQuery = context.query.username
 
     const user = await User.findOne({ username: userQuery })

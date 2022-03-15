@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Layout from '../components/layouts/Layout'
+import mongoose from 'mongoose'
 
 // Components
 import Sidebar from '../components/home/Sidebar'
