@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import nopfp from '../../../public/images/nopfp.jpeg'
 import Image from 'next/image'
+import { formatDistance } from 'date-fns'
 
 const UserPost = ({ userPosts, post, userData }) => {
   // If user post cannot be found
@@ -34,7 +35,33 @@ const UserPost = ({ userPosts, post, userData }) => {
     )
   }
 
-  console.log(userData)
+  console.log(post.caption.length)
+
+  const commentData = [
+    {
+      username: 'test',
+      comment: 'This is awesome!',
+    },
+    {
+      username: 'test',
+      comment: 'This is awesome!',
+    },
+    {
+      username: 'test',
+      comment: 'This is awesome!',
+    },
+    {
+      username: 'test',
+      comment: 'This is awesome!',
+    },
+  ]
+
+  const [showMoreCaption, setShowMoreCaption] = useState(false)
+  const handleShowMoreCaption = () => {
+    setShowMoreCaption((prev) => !prev)
+    const caption = document.getElementById('caption')
+    caption.classList.add('whitespace-normal')
+  }
 
   return (
     <Layout>
@@ -72,7 +99,7 @@ const UserPost = ({ userPosts, post, userData }) => {
         </div>
 
         {/* Buttons */}
-        <div className="flex items-center justify-between p-4">
+        <div className="my-3 flex items-center justify-between px-4">
           <div className="flex items-center gap-x-[18px]">
             {/* Like */}
             <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
@@ -191,16 +218,41 @@ const UserPost = ({ userPosts, post, userData }) => {
         </div>
 
         {/* Likes */}
-        <div className="px-4">
+        <div className="my-2 px-4">
           <p className="text-[15px]">
             Be the first to{' '}
             <span className="cursor-pointer font-bold">like this</span>
           </p>
         </div>
 
+        {/* Caption */}
+        {post.caption && (
+          <div className="w-full px-4">
+            <p id="caption" className="truncate">
+              <span className="font-semibold">{userData.username}</span>{' '}
+              {post.caption}
+            </p>
+            {post.caption.length > 50 && !showMoreCaption && (
+              <p
+                onClick={handleShowMoreCaption}
+                className="cursor-pointer font-medium text-neutral-500"
+              >
+                more
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Comments */}
+        <div></div>
+
         {/* Date */}
-        <div className="px-4 text-[13px] text-neutral-500">
-          <p>3 days ago</p>
+        <div className="my-3 px-4 text-[13px] text-neutral-500">
+          <p>
+            {formatDistance(new Date(post.createdAt), new Date(), {
+              addSuffix: true,
+            })}
+          </p>
         </div>
       </article>
     </Layout>
