@@ -29,7 +29,7 @@ const ProfileContent = ({ userPosts }) => {
   }
 
   return (
-    <div className="mx-auto flex w-full flex-col border-neutral-300 md:max-w-4xl  md:border-t">
+    <div className="mx-auto flex w-full flex-col border-neutral-300 md:max-w-4xl md:border-t">
       {/* Desktop Tab */}
       <div className="relative -top-[1px] mx-auto hidden w-full justify-center gap-x-10 pb-4 text-gray-500 md:flex">
         <div
