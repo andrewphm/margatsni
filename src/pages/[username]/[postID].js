@@ -310,8 +310,6 @@ export async function getServerSideProps(context) {
     return item._id === postID
   })[0]
 
-  console.log(post)
-
   return {
     props: {
       userPosts,

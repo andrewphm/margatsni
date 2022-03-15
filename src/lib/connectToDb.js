@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { env } from 'process'
 
 const MONGODB_URI = process.env.MONGODB_URI
 
@@ -24,50 +23,19 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
-  if (process.env.NODE_ENV === 'development') {
-    const db = await mongoose.connect(MONGODB_URI, opts)
-    return db
+  if (mongoose.connection.readyState === 1) {
+    console.log('Already connected')
+    console.log('Connection: ', mongoose.connection.readyState)
+  } else {
+    try {
+      console.log('Not connected to db.. attempting to connect to db')
+      let db = await mongoose.connect(MONGODB_URI, opts)
+      console.log('Successfully connect to db!')
+      console.log('Caching connection')
+      cached.conn = db
+    } catch (error) {
+      console.log('Failed to connect to db')
+      console.log(error)
+    }
   }
-
-  console.log(cached.conn)
-  if (cached.conn) {
-    return console.log('Already connected to DB 🔥🚀')
-  }
-
-  try {
-    const db = await mongoose.connect(MONGODB_URI, opts)
-    console.log('New connect to DB')
-    cached.conn = db.connections[0].readyState
-  } catch (error) {
-    console.log(error)
-  }
-
-  // // Try connecting via cached connection
-  // if (cached.conn) {
-  //   console.log('Connected to DB via cache 🔥🚀')
-  //   return cached.conn
-  // }
-
-  // // If in production, don't use cache
-  // if (process.env.NODE_ENV === 'development') {
-  //   return mongoose
-  //     .connect(MONGODB_URI, opts)
-  //     .then((conn) => console.log('Connected to DB in dev mode 🚀🔥'))
-  //     .catch((error) => console.log(error))
-  // }
-
-  // // Checking cache
-  // if (!cached.promise) {
-  //   try {
-  //     cached.promise = mongoose.connect(MONGODB_URI, opts).then((conn) => conn)
-
-  //     console.log('Connected to DB 🚀🔥 and cached connection')
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
-  // // Set cache connection
-  // cached.conn = await cached.promise
-  // return cached.conn
 }

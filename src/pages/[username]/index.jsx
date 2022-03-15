@@ -57,17 +57,7 @@ export default Profile
 
 export async function getServerSideProps(context) {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      try {
-        console.log('Not connected to db, connecting now')
-        await connectToDb()
-        console.log('Done connecting')
-      } catch (error) {
-        console.log('Failed to connect')
-        console.log(error)
-      }
-    }
-
+    await connectToDb()
     const userQuery = context.query.username
 
     const user = await User.findOne({ username: userQuery })
