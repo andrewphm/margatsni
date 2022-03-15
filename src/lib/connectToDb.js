@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { env } from 'process'
 
 const MONGODB_URI = process.env.MONGODB_URI
 
@@ -23,6 +24,12 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
+  if (process.env.NODE_ENV === 'production') {
+    const db = await mongoose
+      .connect(MONGODB_URI, opts)
+      .then(() => console.log('Connected to DB in Production'))
+  }
+
   console.log(cached.conn)
   if (cached.conn) {
     return console.log('Already connected to DB 🔥🚀')
