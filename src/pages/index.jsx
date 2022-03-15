@@ -9,7 +9,7 @@ import Layout from '../components/layouts/Layout'
 import Sidebar from '../components/home/Sidebar'
 import Timeline from '../components/home/Timeline'
 
-const Home = ({ isConnected }) => {
+const Home = () => {
   const router = useRouter()
 
   const user = useSelector((state) => state.user?.currentUser)
@@ -29,22 +29,6 @@ const Home = ({ isConnected }) => {
       </Layout>
     </>
   )
-}
-
-/* Retrieves pet(s) data from mongodb database */
-export const getServerSideProps = async (context) => {
-  try {
-    await connectToDb()
-    return {
-      props: { isConnected: true },
-    }
-  } catch (error) {
-    console.log(error)
-
-    return {
-      props: { isConnected: false },
-    }
-  }
 }
 
 export default Home
