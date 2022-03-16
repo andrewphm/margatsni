@@ -337,13 +337,14 @@ const UserPost = ({ userPosts, post, userData }) => {
 export default UserPost
 
 export const getServerSideProps = async (context) => {
-  console.log('Connecting to db')
-
-  const db = await mongoose
-    .connect(process.env.MONGODB_URI, {
-      bufferCommands: false,
-    })
-    .then(() => console.log('Connected to db!'))
+  if (mongoose.connection.readyState !== 1) {
+    console.log('Connecting to db')
+    const db = await mongoose
+      .connect(process.env.MONGODB_URI, {
+        bufferCommands: false,
+      })
+      .then(() => console.log('Connected to db!'))
+  }
 
   let userQuery = context.query.username
   let userPosts = await Post.findOne({ username: userQuery })
