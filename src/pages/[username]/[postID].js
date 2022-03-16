@@ -58,11 +58,16 @@ const UserPost = ({ userPosts, post, userData }) => {
 
   const [showComments, setShowComments] = useState(3)
 
+  const handleWriteComment = () => {
+    document.getElementById('comment-box').classList.remove('h-0', 'w-0')
+  }
+
   return (
     <Layout>
       {/* Mobile render */}
-      {windowSize < 776 && (
+      {windowSize < 767 && (
         <article className="h-full min-h-[80vh] w-full">
+          {/* Header */}
           <div className="flex w-full items-center gap-x-3 p-3 md:hidden">
             <div className="relative h-9 w-9 overflow-hidden rounded-full border border-neutral-400">
               <Image
@@ -85,7 +90,7 @@ const UserPost = ({ userPosts, post, userData }) => {
               Follow
             </button>
           </div>
-
+          {/* Image */}
           <div className=" relative flex w-full items-center border border-neutral-200 bg-neutral-400 bg-opacity-20 pt-[100%]">
             <Image
               src={post.image}
@@ -127,7 +132,10 @@ const UserPost = ({ userPosts, post, userData }) => {
                 )}
               </div>
               {/* Comment */}
-              <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
+              <div
+                onClick={handleWriteComment}
+                className="cursor-pointer hover:scale-[1.05] hover:text-gray-500"
+              >
                 <svg
                   aria-label="Comment"
                   color="currentColor"
@@ -281,12 +289,44 @@ const UserPost = ({ userPosts, post, userData }) => {
               </ul>
             </div>
           )}
+
+          {/* Write a comment */}
+          <div
+            id="comment-box"
+            className="mx-4 flex h-0 w-0 items-start overflow-hidden border-t p-3 text-sm"
+          >
+            <svg
+              aria-label="Emoji"
+              color="#262626"
+              fill="#262626"
+              height="24"
+              role="img"
+              viewBox="0 0 24 24"
+              width="24"
+            >
+              <path d="M15.83 10.997a1.167 1.167 0 101.167 1.167 1.167 1.167 0 00-1.167-1.167zm-6.5 1.167a1.167 1.167 0 10-1.166 1.167 1.167 1.167 0 001.166-1.167zm5.163 3.24a3.406 3.406 0 01-4.982.007 1 1 0 10-1.557 1.256 5.397 5.397 0 008.09 0 1 1 0 00-1.55-1.263zM12 .503a11.5 11.5 0 1011.5 11.5A11.513 11.513 0 0012 .503zm0 21a9.5 9.5 0 119.5-9.5 9.51 9.51 0 01-9.5 9.5z"></path>
+            </svg>
+            <textarea
+              name="comment"
+              placeholder="Add a comment..."
+              rows={4}
+              autoFocus={true}
+              className="h-full w-full resize-none bg-transparent px-2 placeholder:text-sm focus:outline-none"
+            ></textarea>
+
+            <button
+              className="font-semibold text-blue-btn opacity-50"
+              disabled={true}
+            >
+              Post
+            </button>
+          </div>
         </article>
       )}
 
       {/* Desktop render */}
-      {windowSize > 776 && (
-        <article>
+      {windowSize > 767 && (
+        <article className="mx-auto h-full min-h-[80vh] w-full max-w-4xl">
           <p>hi</p>
         </article>
       )}
