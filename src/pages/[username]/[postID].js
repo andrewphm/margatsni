@@ -362,14 +362,15 @@ const UserPost = ({ userPosts, post, userData }) => {
 
       {/* Desktop render */}
       {windowSize > 767 && (
-        <article className="mx-auto flex h-[450px] max-w-4xl border border-neutral-300 bg-white">
-          {/* Image */}
-          <div className="relative h-[450px] w-full bg-black bg-opacity-10">
-            <Image src={post.image} layout="fill" objectFit="contain" />
+        <article className="mx-auto flex max-h-[525px] min-h-[500px] w-fit max-w-5xl border border-neutral-300 bg-white">
+          <div className="relative flex max-h-[525px] min-w-[660px] justify-center bg-black bg-opacity-20">
+            <div className="max-h-[525px] w-full">
+              <Image src={post.image} layout="fill" objectFit="contain" />
+            </div>
           </div>
 
           {/* Info */}
-          <div className="flex max-h-[450px] min-w-[335px] flex-col overflow-hidden">
+          <div className="flex min-h-[450px] min-w-[345px] flex-col overflow-hidden">
             <header className="h-[60px] w-full border-b border-b-neutral-200">
               <div className="flex h-full w-full items-center gap-x-3 px-4 py-2">
                 <Link href={`/${userData.username}`}>
@@ -422,31 +423,32 @@ const UserPost = ({ userPosts, post, userData }) => {
                     </p>
                   </li>
                 )}
-                {commentData.map(({ username, comment, image }, i) => {
-                  return (
-                    <li key={i} className="flex items-center gap-x-3 text-sm">
-                      <Link href={`/${username}`}>
-                        <a>
-                          <div
-                            className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
-                       rounded-full"
-                          >
-                            <Image src={image || nopfp} />
-                          </div>
-                        </a>
-                      </Link>
-
-                      <p className="leading-4">
+                {post.comments > 0 &&
+                  post.comments.map(({ username, comment, image }, i) => {
+                    return (
+                      <li key={i} className="flex items-center gap-x-3 text-sm">
                         <Link href={`/${username}`}>
                           <a>
-                            <span className="font-semibold">{username} </span>
+                            <div
+                              className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
+                       rounded-full"
+                            >
+                              <Image src={image || nopfp} />
+                            </div>
                           </a>
                         </Link>
-                        {comment}
-                      </p>
-                    </li>
-                  )
-                })}
+
+                        <p className="leading-4">
+                          <Link href={`/${username}`}>
+                            <a>
+                              <span className="font-semibold">{username} </span>
+                            </a>
+                          </Link>
+                          {comment}
+                        </p>
+                      </li>
+                    )
+                  })}
               </ul>
             </div>
 
