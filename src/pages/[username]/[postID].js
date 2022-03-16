@@ -1,4 +1,3 @@
-import connectToDb from '../../lib/connectToDb'
 import Post from '../../models/Post'
 import User from '../../models/User'
 import Layout from '../../components/layouts/Layout'
@@ -8,6 +7,7 @@ import { useEffect } from 'react'
 import nopfp from '../../../public/images/nopfp.jpeg'
 import Image from 'next/image'
 import { formatDistance } from 'date-fns'
+import mongoose from 'mongoose'
 
 const UserPost = ({ userPosts, post, userData }) => {
   // If user post cannot be found
@@ -62,7 +62,7 @@ const UserPost = ({ userPosts, post, userData }) => {
     <Layout>
       {/* Mobile render */}
       {windowSize < 776 && (
-        <article className="h-full w-full">
+        <article className="h-full min-h-[80vh] w-full">
           <div className="flex w-full items-center gap-x-3 p-3 md:hidden">
             <div className="relative h-9 w-9 overflow-hidden rounded-full border border-neutral-400">
               <Image
@@ -296,8 +296,14 @@ const UserPost = ({ userPosts, post, userData }) => {
 
 export default UserPost
 
-export async function getServerSideProps(context) {
-  await connectToDb()
+export const getServerSideProps = async (context) => {
+  console.log('Connecting to db')
+
+  const db = await mongoose
+    .connect(process.env.MONGODB_URI, {
+      bufferCommands: false,
+    })
+    .then(() => console.log('Connected to db!'))
 
   let userQuery = context.query.username
   let userPosts = await Post.findOne({ username: userQuery })

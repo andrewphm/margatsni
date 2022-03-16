@@ -1,14 +1,13 @@
 import bcrypt from 'bcrypt'
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
+import Post from '../../../models/Post'
 import formatValidationErr from '../../../helpers/formatValidationErr'
 import cookie from 'cookie'
 import { SignJWT } from 'jose'
 
 export default async function handler(req, res) {
   const { method, body } = req
-
-  console.log('auth route')
 
   await connectToDb()
 
@@ -25,6 +24,9 @@ export default async function handler(req, res) {
 
         let newUser = new User({ username, fullName, hashedPassword, email })
         let savedUser = await newUser.save()
+
+        let newUserPosts = new Post({ username })
+        let savedNewUserPosts = await newUserPosts.save()
 
         // Create JWT
         // const accessToken = jwt.sign(
@@ -58,8 +60,7 @@ export default async function handler(req, res) {
           })
         )
 
-        // Return custom user object
-        return res.status(200).json({ ...savedUser })
+        return res.status(200).json(savedUser)
       } catch (error) {
         console.log(error)
         let { keyValue, code } = error

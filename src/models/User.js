@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
     },
     following: {
       type: Array,
-      default: [],
+      default: ['Demo'],
     },
     followers: {
       type: Array,

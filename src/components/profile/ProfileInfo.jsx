@@ -44,8 +44,7 @@ const ProfileInfo = ({ userData }) => {
           <div className="flex flex-col">
             <p className="font-semibold">{userData.fullName}</p>
             <p className="max-w-[475px]">
-              Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-              consectetur, adipisci velit...
+              This is placeholder, add feature to change later!
             </p>
           </div>
         </div>
@@ -62,8 +61,7 @@ const ProfileInfo = ({ userData }) => {
       <div className="flex flex-col px-4 pb-4 sm:px-8 sm:pb-5 md:hidden">
         <h2 className="font-medium">{userData.fullName}</h2>
         <p className="max-w-[400px] text-sm">
-          Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,
-          consectetur, adipisci velit...
+          This is placeholder, add feature to change later!
         </p>
       </div>
 

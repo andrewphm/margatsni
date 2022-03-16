@@ -12,7 +12,7 @@ const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
 
   // If user cannot be found.
-  if (!userData.username) {
+  if (!userData) {
     return (
       <Layout>
         <div className="my-10 mx-auto flex flex-col gap-y-5 px-10 text-center">
@@ -38,17 +38,19 @@ const Profile = ({ userData, userPosts }) => {
 
   return (
     <Layout>
-      <ProfileInfo userData={userData} />
-      {userData.isPrivate ? (
-        <div className="mx-auto flex w-full flex-col border-y border-neutral-300  bg-white md:max-w-4xl">
-          <div className="mx-auto flex flex-col py-10 text-center">
-            <p className="text-sm font-semibold">This Account is Private</p>
-            <p className="text-sm">Follow to see their photos and videos.</p>
+      <section className="min-h-[80vh]">
+        <ProfileInfo userData={userData} />
+        {userData.isPrivate ? (
+          <div className="mx-auto flex w-full flex-col border-y border-neutral-300  bg-white md:max-w-4xl">
+            <div className="mx-auto flex flex-col py-10 text-center">
+              <p className="text-sm font-semibold">This Account is Private</p>
+              <p className="text-sm">Follow to see their photos and videos.</p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <ProfileContent userPosts={userPosts} />
-      )}
+        ) : (
+          <ProfileContent userPosts={userPosts} />
+        )}
+      </section>
     </Layout>
   )
 }
@@ -67,6 +69,15 @@ export const getServerSideProps = async (context) => {
     const userQuery = context.query.username
 
     const user = await User.findOne({ username: userQuery })
+
+    if (!user) {
+      return {
+        props: {
+          userData: false,
+        },
+      }
+    }
+
     const userPosts = await Post.findOne({ username: userQuery })
     const items = JSON.parse(JSON.stringify(userPosts.items))
 
@@ -105,14 +116,6 @@ export const getServerSideProps = async (context) => {
             },
           },
         }
-      }
-    } else {
-      return {
-        props: {
-          userData: {
-            userData: false,
-          },
-        },
       }
     }
   } catch (error) {
