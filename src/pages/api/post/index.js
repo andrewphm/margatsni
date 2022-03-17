@@ -4,6 +4,31 @@ import Post from '../../../models/Post'
 export default async function (req, res) {
   await connectToDb()
 
+  const { id } = req.query
+
+  // Fetch a single post
+  const fetchPost = async () => {
+    if (!id)
+      return res
+        .status(400)
+        .json({ succes: fail, message: 'No post was found' })
+
+    try {
+      let post = await Post.findOne({ _id: id })
+
+      if (!post)
+        return res
+          .status(400)
+          .json({ succes: fail, message: 'No post was found' })
+
+      return res.status(200).json(post)
+    } catch (error) {
+      return res
+        .status(400)
+        .json({ succes: fail, message: 'No post was found' })
+    }
+  }
+
   // Create new post
   const handlePOSTMethod = async () => {
     if (!req.body)
@@ -25,7 +50,7 @@ export default async function (req, res) {
 
   switch (req.method) {
     case 'GET':
-      return res.status(200).json({ method: 'GET' })
+      return await fetchPost()
     case 'POST':
       return await handlePOSTMethod()
     default:
