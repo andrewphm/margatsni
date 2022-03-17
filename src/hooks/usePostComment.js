@@ -1,12 +1,16 @@
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import API from '../API'
 
 const usePostComment = (setComments) => {
   const user = useSelector((state) => state.user.currentUser)
   const [isLoading, setIsLoading] = useState(false)
   const [comment, setComment] = useState('')
   const router = useRouter()
+  const {
+    query: { postID },
+  } = router
 
   const handleCommentClick = async (e) => {
     e.preventDefault()
@@ -22,7 +26,12 @@ const usePostComment = (setComments) => {
     }
 
     setIsLoading((prev) => !prev)
-    // Call api route
+    try {
+      await API.postCommentOnPost(postID, userComment)
+    } catch (error) {
+      console.log(error)
+      setIsLoading((prev) => !prev)
+    }
 
     setComments((prev) => {
       return [userComment, ...prev]

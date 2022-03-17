@@ -1,7 +1,7 @@
 import Post from '../../../../models/Post'
 import connectToDb from '../../../../lib/connectToDb'
 
-export default async function (req) {
+export default async function (req, res) {
   await connectToDb()
 
   const {
@@ -12,12 +12,14 @@ export default async function (req) {
   try {
     const post = await Post.findOne({ _id: id })
 
-    post.comments.push(body.req)
+    post.comments.push(req.body)
 
     const savedPost = await post.save()
 
-    res.status(200).json(savedPost)
+    return res.status(200).json(savedPost)
   } catch (error) {
-    res.status(400).json({ success: false, message: 'Failed to post comment.' })
+    return res
+      .status(400)
+      .json({ success: false, message: 'Failed to post comment.' })
   }
 }

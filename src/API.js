@@ -22,8 +22,9 @@ const apiSettings = {
     const res = await axios.post(`${BASE_URL}post/`, body)
     return res
   },
-  postCommentOnPost: async (user, body) => {
-    const res = await axios.post(`${BASE_URL}post/`)
+  postCommentOnPost: async (id, body) => {
+    const res = await axios.post(`${BASE_URL}post/comment/${id}`, body)
+    return res
   },
 }
 
