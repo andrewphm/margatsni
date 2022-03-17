@@ -1,14 +1,13 @@
-import Post from '../../models/Post'
-import User from '../../models/User'
 import Layout from '../../components/layouts/Layout'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useEffect } from 'react'
-import mongoose from 'mongoose'
 import MobilePost from '../../components/post/MobilePost'
 import DesktopPost from '../../components/post/DesktopPost'
+import axios from 'axios'
+import mongoose from 'mongoose'
 
-const UserPost = ({ userPosts, post, userData }) => {
+const UserPost = ({ post, userData }) => {
   // If user post cannot be found
   if (!post) {
     return (
@@ -62,34 +61,32 @@ const UserPost = ({ userPosts, post, userData }) => {
 export default UserPost
 
 export const getServerSideProps = async (context) => {
-  if (mongoose.connection.readyState !== 1) {
-    console.log('Connecting to db')
-    const db = await mongoose
-      .connect(process.env.MONGODB_URI, {
-        bufferCommands: false,
-      })
-      .then(() => console.log('Connected to db!'))
-  }
+  const BASE_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/'
+      : 'https://margatsni.andrewpham.ca/api/'
 
   let userQuery = context.query.username
-  let userPosts = await Post.findOne({ username: userQuery })
-  // Serialize results
-  userPosts = JSON.parse(JSON.stringify(userPosts))
-  let userData = await User.findOne({ username: userQuery })
-
   let postID = context.query.postID
-  let post = userPosts.items.filter((item) => {
-    return item._id === postID
-  })[0]
 
-  return {
-    props: {
-      userPosts,
-      post: post || null,
-      userData: {
-        username: userData.username,
-        image: userData.image,
+  try {
+    console.log('Attempting to fetch post')
+    let { data: post } = await axios.get(`${BASE_URL}post?id=${postID}`)
+    let {
+      data: { username, image },
+    } = await axios.get(`${BASE_URL}user/${userQuery}`)
+
+    return {
+      props: {
+        post: post || null,
+        userData: { username, image },
       },
-    },
+    }
+  } catch (error) {
+    return {
+      props: {
+        post: null,
+      },
+    }
   }
 }

@@ -23,8 +23,6 @@ if (!cached) {
 const opts = { bufferCommands: false }
 
 export default async function () {
-  console.log(mongoose.connection.readyState)
-
   if (mongoose.connection.readyState === 1) {
     console.log('Already connected')
     console.log('Connection: ', mongoose.connection.readyState)

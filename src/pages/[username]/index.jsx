@@ -36,7 +36,7 @@ const Profile = ({ userData, userPosts }) => {
   return (
     <Layout>
       <section className="min-h-[80vh]">
-        <ProfileInfo userData={userData} />
+        <ProfileInfo userData={userData} userPosts={userPosts} />
         {userData.isPrivate ? (
           <div className="mx-auto flex w-full flex-col border-y border-neutral-300  bg-white md:max-w-4xl">
             <div className="mx-auto flex flex-col py-10 text-center">

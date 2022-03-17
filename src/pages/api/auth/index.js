@@ -25,9 +25,6 @@ export default async function handler(req, res) {
         let newUser = new User({ username, fullName, hashedPassword, email })
         let savedUser = await newUser.save()
 
-        let newUserPosts = new Post({ username })
-        let savedNewUserPosts = await newUserPosts.save()
-
         // Create JWT
         // const accessToken = jwt.sign(
         //   {

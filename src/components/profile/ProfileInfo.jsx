@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import nopfp from '../../../public/images/nopfp.jpeg'
 
-const ProfileInfo = ({ userData }) => {
+const ProfileInfo = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
 
   console.log(userData)
@@ -31,7 +31,7 @@ const ProfileInfo = ({ userData }) => {
 
           <div className="flex gap-x-4 lg:gap-x-8">
             <p>
-              <span className="font-semibold">{userData.posts}</span> posts
+              <span className="font-semibold">{userPosts.length}</span> posts
             </p>
             <p>
               <span className="font-semibold">{userData.followers.length}</span>{' '}
@@ -70,7 +70,7 @@ const ProfileInfo = ({ userData }) => {
       <div className="w-full border-y border-y-neutral-300 md:hidden">
         <div className="mx-auto flex w-full max-w-[450px] justify-between px-8 py-2">
           <div className="text-center">
-            <p className="text-sm font-medium">{userData.posts || 0}</p>
+            <p className="text-sm font-medium">{userPosts.length}</p>
             <p className="text-sm text-neutral-500">posts</p>
           </div>
           <div className="text-center">

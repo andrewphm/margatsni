@@ -2,7 +2,7 @@ import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
 
 const handler = async (req, res) => {
-  await connectToDb
+  await connectToDb()
 
   const {
     method,
