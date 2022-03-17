@@ -18,12 +18,8 @@ const apiSettings = {
     const res = await axios.get(`${BASE_URL}auth/signout`)
     return res
   },
-  createNewUserPost: async (body, userToken) => {
-    const res = await axios.post(`${BASE_URL}post/`, body, {
-      headers: {
-        token: `Bearer ${userToken}`,
-      },
-    })
+  createNewUserPost: async (body) => {
+    const res = await axios.post(`${BASE_URL}post/`, body)
     return res
   },
   postCommentOnPost: async (user, body) => {

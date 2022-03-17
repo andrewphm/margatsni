@@ -12,8 +12,8 @@ export default async function (req, res) {
         .json({ success: false, message: 'No data/body provided.' })
 
     try {
-      const newPost = new Post({ ...req.body })
-      const savedPost = await userPosts.save()
+      const newPost = new Post(req.body)
+      const savedPost = await newPost.save()
       return res.status(200).json(savedPost)
     } catch (error) {
       console.log(error)
@@ -31,7 +31,7 @@ export default async function (req, res) {
     default:
   }
 
-  return res.status(200).json({ message: 'Did not make a new user' })
+  return res.status(200).json({ message: 'Failed to make post.' })
   // Create Post
 
   // Update Post

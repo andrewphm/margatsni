@@ -43,7 +43,8 @@ const NewPost = ({ setShowNewPost }) => {
     }
 
     try {
-      await API.createNewUserPost(user.username, {
+      await API.createNewUserPost({
+        username: user.username,
         image: imgUrl,
         caption: postCaption,
       })

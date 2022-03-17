@@ -22,19 +22,20 @@ const PostSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      unique: true,
       required: true,
     },
     image: {
       type: String,
-      default: '',
       required: true,
     },
     likes: {
       type: Array,
       default: [],
     },
-    caption: String,
+    caption: {
+      type: String,
+      default: '',
+    },
     comments: [PostCommentSchema],
   },
   { timestamps: true }
