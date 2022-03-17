@@ -271,7 +271,7 @@ const ProfileContent = ({ userPosts }) => {
       </div>
 
       {/* No posts */}
-      {tab === 'posts' && userPosts.items.length === 0 && (
+      {tab === 'posts' && userPosts.length === 0 && (
         <div className="flex w-full items-center justify-center">
           <div className="flex flex-col items-center justify-center gap-y-4 py-12">
             <svg
@@ -316,11 +316,11 @@ const ProfileContent = ({ userPosts }) => {
       )}
 
       {/* Show posts */}
-      {tab === 'posts' && userPosts.items.length > 0 && (
+      {tab === 'posts' && userPosts.length > 0 && (
         <div className="mb-1 grid w-full grid-cols-3 gap-1 md:gap-5 xl:gap-4">
-          {userPosts.items?.map((item) => {
+          {userPosts?.map((item) => {
             return (
-              <Link key={item._id} href={`/${userPosts.username}/${item._id}`}>
+              <Link key={item._id} href={`/${item.username}/${item._id}`}>
                 <a>
                   <div
                     key={item._id}

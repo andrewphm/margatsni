@@ -2,10 +2,8 @@ import { useSelector } from 'react-redux'
 import Layout from '../../components/layouts/Layout'
 import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
-import User from '../../models/User'
-import Post from '../../models/Post'
 import ProfileContent from '../../components/profile/ProfileContent'
-import mongoose from 'mongoose'
+import axios from 'axios'
 
 const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -57,72 +55,38 @@ const Profile = ({ userData, userPosts }) => {
 export default Profile
 
 export const getServerSideProps = async (context) => {
+  const BASE_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/'
+      : 'https://margatsni.andrewpham.ca/api/'
+
+  const userQuery = context.query.username
+
   try {
-    if (mongoose.connection.readyState !== 1) {
-      console.log('Connecting to db')
-      const db = await mongoose
-        .connect(process.env.MONGODB_URI, {
-          bufferCommands: false,
-        })
-        .then(() => console.log('Connected to db!'))
-    }
+    console.log('Attempting to fetch user')
+    const {
+      data: { username, bio, followers, following, isAdmin, isPrivate },
+    } = await axios.get(`${BASE_URL}user/${userQuery}`)
 
-    const userQuery = context.query.username
-    const user = await User.findOne({ username: userQuery })
+    const { data } = await axios.get(`${BASE_URL}post/${userQuery}`)
 
-    if (!user) {
-      return {
-        props: {
-          userData: false,
-        },
-      }
-    }
-
-    const userPosts = await Post.findOne({ username: userQuery })
-    const items = JSON.parse(JSON.stringify(userPosts.items))
-
-    if (user) {
-      if (!user.isPrivate) {
-        console.log('firing first')
-        return {
-          props: {
-            userData: {
-              username: user.username,
-              fullName: user.fullName,
-              bio: user.bio || '',
-              followers: user.followers.length,
-              following: user.following.length,
-              posts: userPosts?.items.length || 0,
-              isPrivate: user.isPrivate,
-            },
-            userPosts: {
-              items,
-              username: user.username,
-            },
-          },
-        }
-      } else {
-        // User is private, so only return user info.
-        return {
-          props: {
-            userData: {
-              username: user.username,
-              fullName: user.fullName,
-              bio: user.bio || '',
-              followers: user.followers.length,
-              following: user.following.length,
-              posts: userPosts?.items.length || 0,
-              isPrivate: user.isPrivate,
-            },
-          },
-        }
-      }
-    }
-  } catch (error) {
-    console.log('Error: ', error)
     return {
       props: {
-        userData: false,
+        userData: {
+          username,
+          bio,
+          followers,
+          following,
+          isAdmin,
+          isPrivate,
+        },
+        userPosts: [...data],
+      },
+    }
+  } catch (error) {
+    return {
+      props: {
+        userData: null,
       },
     }
   }

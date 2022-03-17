@@ -6,6 +6,8 @@ import nopfp from '../../../public/images/nopfp.jpeg'
 const ProfileInfo = ({ userData }) => {
   const user = useSelector((state) => state.user.currentUser)
 
+  console.log(userData)
+
   return (
     <div className="mx-auto flex w-full flex-col md:max-w-4xl">
       <div className="flex w-full items-center gap-x-5 p-4 sm:py-5 sm:px-8 md:items-start lg1:py-8">
@@ -32,11 +34,11 @@ const ProfileInfo = ({ userData }) => {
               <span className="font-semibold">{userData.posts}</span> posts
             </p>
             <p>
-              <span className="font-semibold">{userData.followers}</span>{' '}
+              <span className="font-semibold">{userData.followers.length}</span>{' '}
               followers
             </p>
             <p>
-              <span className="font-semibold">{userData.following}</span>{' '}
+              <span className="font-semibold">{userData.following.length}</span>{' '}
               following
             </p>
           </div>
@@ -68,15 +70,15 @@ const ProfileInfo = ({ userData }) => {
       <div className="w-full border-y border-y-neutral-300 md:hidden">
         <div className="mx-auto flex w-full max-w-[450px] justify-between px-8 py-2">
           <div className="text-center">
-            <p className="text-sm font-medium">{userData.posts}</p>
+            <p className="text-sm font-medium">{userData.posts || 0}</p>
             <p className="text-sm text-neutral-500">posts</p>
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium">{userData.followers}</p>
+            <p className="text-sm font-medium">{userData.followers.length}</p>
             <p className="text-sm text-neutral-500">followers</p>
           </div>
           <div className="text-center">
-            <p className="text-sm font-medium">{userData.following}</p>
+            <p className="text-sm font-medium">{userData.following.length}</p>
             <p className="text-sm text-neutral-500">following</p>
           </div>
         </div>

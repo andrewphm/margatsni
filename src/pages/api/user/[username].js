@@ -12,11 +12,12 @@ const handler = async (req, res) => {
   try {
     const user = await User.findOne({ username })
 
-    res.status(200).json({ user })
-
     if (!user) {
-      res.status(400).json({ succes: false, message: 'Could not find user' })
+      return res
+        .status(400)
+        .json({ success: false, message: 'Could not find user.' })
     }
+    return res.status(200).json(user)
   } catch (error) {
     res.status(400).json({
       succes: false,
