@@ -8,7 +8,7 @@ const usePostComment = (setComments) => {
   const [comment, setComment] = useState('')
   const router = useRouter()
 
-  const handleCommentClick = (e) => {
+  const handleCommentClick = async (e) => {
     e.preventDefault()
 
     if (!user) {
@@ -29,7 +29,6 @@ const usePostComment = (setComments) => {
     })
 
     setComment((prev) => '')
-
     setIsLoading((prev) => !prev)
   }
 

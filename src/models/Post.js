@@ -8,7 +8,7 @@ const PostCommentSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default: null,
+      default: '',
     },
     comment: {
       type: String,
@@ -18,29 +18,24 @@ const PostCommentSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-const SinglePostSchema = new mongoose.Schema(
+const PostSchema = new mongoose.Schema(
   {
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     image: {
       type: String,
+      default: '',
       required: true,
     },
     likes: {
       type: Array,
       default: [],
     },
-    comments: [PostCommentSchema],
     caption: String,
-  },
-  { timestamps: true }
-)
-
-const PostSchema = new mongoose.Schema(
-  {
-    items: [SinglePostSchema],
-    username: {
-      type: String,
-      unique: true,
-    },
+    comments: [PostCommentSchema],
   },
   { timestamps: true }
 )
