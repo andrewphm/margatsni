@@ -4,17 +4,6 @@ import Post from '../../../models/Post'
 export default async function (req, res) {
   await connectToDb()
 
-  const userQuery = req.query.user
-
-  let userPosts = await Post.findOne({ username: userQuery })
-
-  // If there is no document for the user, create one.
-  if (!userPosts) {
-    let newUserPost = new Post({ username: userQuery })
-
-    userPosts = await newUserPost.save()
-  }
-
   // Create new post
   const handlePOSTMethod = async () => {
     if (!req.body)
@@ -22,11 +11,10 @@ export default async function (req, res) {
         .status(400)
         .json({ success: false, message: 'No data/body provided.' })
 
-    userPosts.items.push(req.body)
-
     try {
-      let saved = await userPosts.save()
-      return res.status(200).json(saved)
+      const newPost = new Post({ ...req.body })
+      const savedPost = await userPosts.save()
+      return res.status(200).json(savedPost)
     } catch (error) {
       console.log(error)
       return res
@@ -39,7 +27,7 @@ export default async function (req, res) {
     case 'GET':
       return res.status(200).json({ method: 'GET' })
     case 'POST':
-      return handlePOSTMethod()
+      return await handlePOSTMethod()
     default:
   }
 
