@@ -52,7 +52,7 @@
 // }
 import React from 'react'
 
-const testt = () => {
+const test = () => {
   return <div>test</div>
 }
 
