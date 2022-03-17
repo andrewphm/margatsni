@@ -25,7 +25,7 @@ const usePostComment = (setComments) => {
     // Call api route
 
     setComments((prev) => {
-      return [...prev, userComment]
+      return [userComment, ...prev]
     })
 
     setComment((prev) => '')

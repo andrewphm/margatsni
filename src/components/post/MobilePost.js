@@ -3,11 +3,17 @@ import Link from 'next/link'
 import { formatDistance } from 'date-fns'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import usePostComment from '../../hooks/usePostComment'
 
 const MobilePost = ({ userData, post }) => {
   const handleExpandComment = () => {
     document.getElementById('comment-box').classList.remove('h-0', 'w-0')
   }
+
+  const [comments, setComments] = useState(post.comments)
+
+  const { isLoading, comment, setComment, handleCommentClick } =
+    usePostComment(setComments)
 
   const [showMoreCaption, setShowMoreCaption] = useState(false)
 
@@ -216,10 +222,10 @@ const MobilePost = ({ userData, post }) => {
       </div>
 
       {/* Comments */}
-      {post.comments.length > 0 && (
+      {comments.length > 0 && (
         <div className="flex flex-col px-4 py-1">
           <ul className="flex flex-col gap-y-2">
-            {post.comments.map(({ username, comment, image }, i) => {
+            {comments.map(({ username, comment, image }, i) => {
               if (i >= showComments) return null
 
               return (
@@ -246,7 +252,7 @@ const MobilePost = ({ userData, post }) => {
                 </li>
               )
             })}
-            {showComments <= post.comments.length && (
+            {showComments < comments.length && (
               <li>
                 <p
                   onClick={() => setShowComments((prev) => prev + 3)}
@@ -279,14 +285,19 @@ const MobilePost = ({ userData, post }) => {
         <textarea
           name="comment"
           placeholder="Add a comment..."
+          onChange={(e) => setComment((prev) => e.target.value)}
+          value={comment}
           rows={4}
           autoFocus={true}
           className="h-full w-full resize-none bg-transparent px-2 placeholder:text-sm focus:outline-none"
         ></textarea>
 
         <button
-          className="font-semibold text-blue-btn opacity-50"
-          disabled={true}
+          onClick={handleCommentClick}
+          className={`pr-2 font-semibold text-blue-btn ${
+            !comment && 'opacity-50'
+          }`}
+          disabled={!comment ? true : false}
         >
           Post
         </button>
