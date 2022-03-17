@@ -4,11 +4,14 @@ import User from '../../../models/User'
 const handler = async (req, res) => {
   await connectToDb
 
-  const userQuery = req.query.user
-  let user
+  const {
+    method,
+    query: { username },
+  } = req
 
   try {
-    user = await User.findOne({ username: userQuery })
+    const user = await User.findOne({ username })
+
     res.status(200).json({ user })
 
     if (!user) {
