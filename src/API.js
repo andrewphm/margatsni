@@ -22,8 +22,16 @@ const apiSettings = {
     const res = await axios.post(`${BASE_URL}post/`, body)
     return res
   },
-  postCommentOnPost: async (id, body) => {
+  commentOnPost: async (id, body) => {
     const res = await axios.post(`${BASE_URL}post/comment/${id}`, body)
+    return res
+  },
+  likePost: async (id) => {
+    const res = await axios.post(`${BASE_URL}post/like/${id}`)
+    return res
+  },
+  unlikePost: async (id) => {
+    const res = await axios.post(`${BASE_URL}post/unlike/${id}`)
     return res
   },
 }

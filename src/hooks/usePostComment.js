@@ -27,7 +27,7 @@ const usePostComment = (setComments) => {
 
     setIsLoading((prev) => !prev)
     try {
-      await API.postCommentOnPost(postID, userComment)
+      await API.commentOnPost(postID, userComment)
     } catch (error) {
       console.log(error)
       setIsLoading((prev) => !prev)

@@ -3,14 +3,16 @@ import Link from 'next/link'
 import { formatDistance } from 'date-fns'
 import Image from 'next/image'
 import { useState } from 'react'
+import useLikePost from '../../hooks/useLikePost'
 
 import usePostComment from '../../hooks/usePostComment'
 
 const DesktopPost = ({ userData, post }) => {
   const [comments, setComments] = useState(post.comments)
-
   const { isLoading, comment, setComment, handleCommentClick } =
     usePostComment(setComments)
+
+  const { isLiked, handleLikeClick, likes } = useLikePost(post)
 
   return (
     <article className="mx-auto flex max-h-[525px] min-h-[500px] w-full border border-neutral-300 bg-white md:max-w-3xl lg:max-w-5xl">
@@ -107,8 +109,9 @@ const DesktopPost = ({ userData, post }) => {
             <div className="flex items-center gap-x-[18px]">
               {/* Like */}
               <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
-                {true ? (
+                {isLiked ? (
                   <svg
+                    onClick={handleLikeClick}
                     aria-label="Unlike"
                     color="#ed4956"
                     fill="#ed4956"
@@ -121,6 +124,7 @@ const DesktopPost = ({ userData, post }) => {
                   </svg>
                 ) : (
                   <svg
+                    onClick={handleLikeClick}
                     aria-label="Like"
                     color="#262626"
                     fill="#262626"

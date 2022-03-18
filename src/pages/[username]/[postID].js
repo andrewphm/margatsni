@@ -5,7 +5,6 @@ import { useEffect } from 'react'
 import MobilePost from '../../components/post/MobilePost'
 import DesktopPost from '../../components/post/DesktopPost'
 import axios from 'axios'
-import mongoose from 'mongoose'
 
 const UserPost = ({ post, userData }) => {
   // If user post cannot be found

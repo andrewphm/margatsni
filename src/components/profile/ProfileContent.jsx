@@ -152,7 +152,7 @@ const ProfileContent = ({ userPosts }) => {
       </div>
 
       {/* Mobile Tab */}
-      <div className="relative mx-auto flex w-full justify-around py-3 text-gray-500 xs:px-10 sm:px-14 md:hidden">
+      <div className="relative mx-auto flex w-full justify-around border-b border-b-neutral-300 py-3 text-gray-500 xs:px-10 sm:px-14 md:hidden">
         <div
           onClick={handleMobileTabChange}
           id="posts"
@@ -317,7 +317,7 @@ const ProfileContent = ({ userPosts }) => {
 
       {/* Show posts */}
       {tab === 'posts' && userPosts.length > 0 && (
-        <div className="mb-1 grid w-full grid-cols-3 gap-1 md:gap-5 xl:gap-4">
+        <div className="mb-1 grid w-full grid-cols-3 gap-1 pt-1 md:gap-5 xl:gap-4">
           {userPosts?.map((item) => {
             return (
               <Link key={item._id} href={`/${item.username}/${item._id}`}>
