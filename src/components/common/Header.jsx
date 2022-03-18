@@ -33,6 +33,8 @@ const Header = ({ currentTab }) => {
     setTimeout(() => {
       menuRef?.current?.classList.toggle('opacity-0')
       menuRef?.current?.classList.toggle('transform-none')
+      menuRefMobile.current.classList.toggle('opacity-0')
+      menuRefMobile?.current?.classList.toggle('transform-none')
       setTab((prev) => '/')
     }, 100)
   }
@@ -77,6 +79,9 @@ const Header = ({ currentTab }) => {
                 </div>
               )}
               <input
+                tabIndex={0}
+                onFocus={() => setInputIsActive((prev) => true)}
+                onBlur={handleSearchClose}
                 className="w-full bg-transparent text-black placeholder:text-gray-500 focus:outline-none"
                 type="text"
                 placeholder="Search"
@@ -509,6 +514,7 @@ const Header = ({ currentTab }) => {
           </Link>
           {user ? (
             <div
+              tabIndex={0}
               onFocus={handleMenuFocus}
               onBlur={handleMenuBlur}
               className={`flex cursor-pointer items-center justify-center

@@ -18,7 +18,7 @@ export default async function (req, res) {
     }
     return res.status(200).json(user)
   } catch (error) {
-    res.status(400).json({
+    return res.status(400).json({
       succes: false,
       message: 'Something went wrong, please try again.',
     })
