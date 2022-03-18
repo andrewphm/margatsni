@@ -26,12 +26,12 @@ const apiSettings = {
     const res = await axios.post(`${BASE_URL}post/comment/${id}`, body)
     return res
   },
-  likePost: async (id) => {
-    const res = await axios.post(`${BASE_URL}post/like/${id}`)
+  likePost: async (id, body) => {
+    const res = await axios.post(`${BASE_URL}post/like/${id}`, body)
     return res
   },
-  unlikePost: async (id) => {
-    const res = await axios.post(`${BASE_URL}post/unlike/${id}`)
+  unlikePost: async (id, body) => {
+    const res = await axios.post(`${BASE_URL}post/unlike/${id}`, body)
     return res
   },
 }

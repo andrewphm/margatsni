@@ -57,6 +57,7 @@ const MobilePost = ({ userData, post }) => {
           layout="fill"
           className="object-cover"
           objectPosition="center"
+          priority={true}
         />
       </div>
 

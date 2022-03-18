@@ -7,18 +7,29 @@ const useLikePost = (post) => {
   const [likes, setLikes] = useState(post.likes)
   const [isLiked, setIsLiked] = useState(likes.includes(user.username))
 
-  const handleLikeClick = () => {
-    setIsLiked((prev) => !prev)
-    if (isLiked) {
-      //
-      const { data } = await API.likePost(post._id)
-      setLikes((prev) => data)
+  const handleLikeClick = async () => {
+    if (!isLiked) {
+      try {
+        setIsLiked((prev) => !prev)
+        const { data } = await API.likePost(post._id, {
+          username: user.username,
+        })
+        setLikes((prev) => data)
+      } catch (error) {
+        console.log(error)
+      }
     } else {
-      const { data } = await API.unlikePost(post._id)
-      setLikes((prev) => data)
+      try {
+        setIsLiked((prev) => !prev)
+        const { data } = await API.unlikePost(post._id, {
+          username: user.username,
+        })
+        setLikes((prev) => data)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
-
   return { isLiked, likes, handleLikeClick }
 }
 

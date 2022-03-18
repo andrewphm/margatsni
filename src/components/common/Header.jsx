@@ -52,7 +52,7 @@ const Header = ({ currentTab }) => {
           <Link href={ROUTE.DASHBOARD}>
             <a>
               <div className="relative flex h-[35px] w-[113px] min-w-[113px] cursor-pointer">
-                <Image src={logo} layout="fill" />
+                <Image src={logo} layout="fill" priority={true} />
               </div>
             </a>
           </Link>
