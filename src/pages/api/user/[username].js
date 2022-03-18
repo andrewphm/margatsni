@@ -1,15 +1,14 @@
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
 
-const handler = async (req, res) => {
-  await connectToDb()
-
+export default async function (req, res) {
   const {
     method,
     query: { username },
   } = req
 
   try {
+    await connectToDb()
     const user = await User.findOne({ username })
 
     if (!user) {
@@ -25,5 +24,3 @@ const handler = async (req, res) => {
     })
   }
 }
-
-export default handler
