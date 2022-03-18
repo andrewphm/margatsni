@@ -20,13 +20,21 @@ const Header = ({ currentTab }) => {
   const dispatch = useDispatch()
   const [showNewPost, setShowNewPost] = useState(false)
 
-  const handleProfileClick = () => {
+  const handleMenuFocus = () => {
     setTab((prev) => 'user')
 
     menuRefMobile.current.classList.toggle('opacity-0')
     menuRefMobile?.current?.classList.toggle('transform-none')
     menuRef?.current?.classList.toggle('opacity-0')
     menuRef?.current?.classList.toggle('transform-none')
+  }
+
+  const handleMenuBlur = () => {
+    setTimeout(() => {
+      menuRef?.current?.classList.toggle('opacity-0')
+      menuRef?.current?.classList.toggle('transform-none')
+      setTab((prev) => '/')
+    }, 100)
   }
 
   const handleSearchClose = () => {
@@ -45,7 +53,7 @@ const Header = ({ currentTab }) => {
   return (
     <>
       <header className="sticky top-0 z-50 flex min-h-[60px] w-full items-center justify-center border bg-white">
-        {/* Hidden on small screens */}
+        {/* Desktop devices */}
         <div className="hidden w-full max-w-6xl items-center justify-between gap-x-2 px-5 md:flex">
           {/* Logo */}
 
@@ -338,8 +346,9 @@ const Header = ({ currentTab }) => {
               </div>
 
               <div
+                onBlur={handleMenuBlur}
                 tabIndex={0}
-                onClickCapture={handleProfileClick}
+                onFocus={handleMenuFocus}
                 className={`flex cursor-pointer items-center justify-center rounded-full ${
                   tab === 'user' ? 'border border-black p-[2px]' : ''
                 }`}
@@ -500,7 +509,8 @@ const Header = ({ currentTab }) => {
           </Link>
           {user ? (
             <div
-              onClickCapture={handleProfileClick}
+              onFocus={handleMenuFocus}
+              onBlur={handleMenuBlur}
               className={`flex cursor-pointer items-center justify-center
               rounded-full`}
             >
