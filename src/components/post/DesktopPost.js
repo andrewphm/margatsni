@@ -232,10 +232,19 @@ const DesktopPost = ({ userData, post }) => {
 
           {/* Likes */}
           <div className="mt-2 px-4">
-            <p className="text-[14px]">
-              Be the first to{' '}
-              <span className="cursor-pointer font-bold">like this</span>
-            </p>
+            {likes.length === 0 ? (
+              <p className="text-[14px]">
+                Be the first to{' '}
+                <span
+                  onClick={handleLikeClick}
+                  className="cursor-pointer font-bold"
+                >
+                  like this
+                </span>
+              </p>
+            ) : (
+              <p className="text-[14px] font-semibold">{likes.length} likes</p>
+            )}
           </div>
 
           {/* Date */}

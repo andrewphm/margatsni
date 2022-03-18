@@ -1,4 +1,3 @@
-import { RestoreTwoTone } from '@mui/icons-material'
 import connectToDb from '../../../../lib/connectToDb'
 import Post from '../../../../models/Post'
 
