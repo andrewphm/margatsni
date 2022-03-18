@@ -5,12 +5,12 @@ import Image from 'next/image'
 import { useState } from 'react'
 import useLikePost from '../../hooks/useLikePost'
 
-import usePostComment from '../../hooks/usePostComment'
+import useCommentPost from '../../hooks/useCommentPost'
 
 const DesktopPost = ({ userData, post }) => {
   const [comments, setComments] = useState(post.comments)
   const { isLoading, comment, setComment, handleCommentClick } =
-    usePostComment(setComments)
+    useCommentPost(setComments)
 
   const { isLiked, handleLikeClick, likes } = useLikePost(post)
 
@@ -243,7 +243,9 @@ const DesktopPost = ({ userData, post }) => {
                 </span>
               </p>
             ) : (
-              <p className="text-[14px] font-semibold">{likes.length} likes</p>
+              <p className="text-[14px] font-semibold">
+                {likes.length} like{likes.length > 1 && 's'}
+              </p>
             )}
           </div>
 

@@ -6,8 +6,6 @@ import nopfp from '../../../public/images/nopfp.jpeg'
 const ProfileInfo = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
 
-  console.log(userData)
-
   return (
     <div className="mx-auto flex w-full flex-col md:max-w-4xl">
       <div className="flex w-full items-center gap-x-5 p-4 sm:py-5 sm:px-8 md:items-start lg1:py-8">

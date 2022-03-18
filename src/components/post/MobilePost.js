@@ -2,8 +2,9 @@ import nopfp from '../../../public/images/nopfp.jpeg'
 import Link from 'next/link'
 import { formatDistance } from 'date-fns'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import usePostComment from '../../hooks/usePostComment'
+import { useState } from 'react'
+import useCommentPost from '../../hooks/useCommentPost'
+import useLikePost from '../../hooks/useLikePost'
 
 const MobilePost = ({ userData, post }) => {
   const handleExpandComment = () => {
@@ -11,19 +12,18 @@ const MobilePost = ({ userData, post }) => {
   }
 
   const [comments, setComments] = useState(post.comments)
-
   const { isLoading, comment, setComment, handleCommentClick } =
-    usePostComment(setComments)
+    useCommentPost(setComments)
 
   const [showMoreCaption, setShowMoreCaption] = useState(false)
-
   const handleShowMoreCaption = () => {
     setShowMoreCaption((prev) => !prev)
     const caption = document.getElementById('caption')
     caption.classList.add('whitespace-normal')
   }
-
   const [showComments, setShowComments] = useState(3)
+
+  const { isLiked, handleLikeClick, likes } = useLikePost(post)
 
   return (
     <article className="h-full min-h-[80vh] w-full">
@@ -66,8 +66,9 @@ const MobilePost = ({ userData, post }) => {
         <div className="flex items-center gap-x-[18px]">
           {/* Like */}
           <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
-            {true ? (
+            {isLiked ? (
               <svg
+                onClick={handleLikeClick}
                 aria-label="Unlike"
                 color="#ed4956"
                 fill="#ed4956"
@@ -80,6 +81,7 @@ const MobilePost = ({ userData, post }) => {
               </svg>
             ) : (
               <svg
+                onClick={handleLikeClick}
                 aria-label="Like"
                 color="#262626"
                 fill="#262626"
@@ -185,10 +187,21 @@ const MobilePost = ({ userData, post }) => {
 
       {/* Likes */}
       <div className="my-2 px-4">
-        <p className="text-[15px]">
-          Be the first to{' '}
-          <span className="cursor-pointer font-bold">like this</span>
-        </p>
+        {likes.length === 0 ? (
+          <p className="text-[15px]">
+            Be the first to{' '}
+            <span
+              onClick={handleLikeClick}
+              className="cursor-pointer font-bold"
+            >
+              like this
+            </span>
+          </p>
+        ) : (
+          <p className="text-[14px] font-semibold">
+            {likes.length} like{likes.length > 1 && 's'}
+          </p>
+        )}
       </div>
 
       {/* Caption */}
@@ -270,7 +283,7 @@ const MobilePost = ({ userData, post }) => {
       {/* Write a comment */}
       <div
         id="comment-box"
-        className=" flex h-0 w-0 items-start overflow-hidden border-t p-3 text-sm"
+        className=" mt-2 flex h-0 w-0 items-start overflow-hidden border-t p-3 text-sm"
       >
         <svg
           aria-label="Emoji"
