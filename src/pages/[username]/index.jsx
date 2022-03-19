@@ -4,6 +4,7 @@ import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
+import clientPromise from '../../lib/mongodb'
 
 const Profile = ({ userData, userPosts }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -55,20 +56,26 @@ const Profile = ({ userData, userPosts }) => {
 export default Profile
 
 export const getServerSideProps = async (context) => {
-  const BASE_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/api/'
-      : 'https://margatsni.andrewpham.ca/api/'
-
   const userQuery = context.query.username
 
-  try {
-    console.log('Attempting to fetch user')
-    const {
-      data: { username, bio, followers, following, isAdmin, isPrivate },
-    } = await axios.get(`${BASE_URL}user/${userQuery}`)
+  // Attempting to connect to DB
+  const client = await clientPromise
+  const db = client.db('mainDB')
+  const { username, bio, followers, following, isAdmin, isPrivate, fullName } =
+    await db.collection('users').findOne({ username: userQuery })
 
-    const { data } = await axios.get(`${BASE_URL}post/${userQuery}`)
+  const posts = await db
+    .collection('posts')
+    .find({ username: userQuery })
+    .toArray()
+
+  try {
+    // console.log('Attempting to fetch user')
+    // const {
+    //   data: { username, bio, followers, following, isAdmin, isPrivate },
+    // } = await axios.get(`${BASE_URL}user/${userQuery}`)
+
+    // const { data } = await axios.get(`${BASE_URL}post/${userQuery}`)
 
     return {
       props: {
@@ -80,10 +87,11 @@ export const getServerSideProps = async (context) => {
           isAdmin,
           isPrivate,
         },
-        userPosts: [...data],
+        userPosts: JSON.parse(JSON.stringify(posts)),
       },
     }
   } catch (error) {
+    console.log(error)
     return {
       props: {
         userData: null,
