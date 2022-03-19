@@ -20,7 +20,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null }
 }
 
-export default async function () {
+export default async function connectToDb() {
   if (mongoose.connection.readyState === 1) {
     console.log('Already connected')
     console.log('Connection: ', mongoose.connection.readyState)
