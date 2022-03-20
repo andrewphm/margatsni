@@ -4,6 +4,10 @@ import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
+import mongoose from 'mongoose'
+import User from '../../models/User'
+import Post from '../../models/Post'
+import connectToDb from '../../lib/connectToDb'
 
 export default function Profile({ userData, userPosts }) {
   // If user cannot be found.
@@ -52,17 +56,20 @@ export default function Profile({ userData, userPosts }) {
 
 export async function getServerSideProps(context) {
   const userQuery = context.query.username
+  if (process.env.NODE === 'production') {
+    await mongoose.connect(process.env.MONGODB_URI).then((conn) => {
+      console.log('In production mode, creating new connection for SSR!')
+      return conn
+    })
+  } else {
+    await connectToDb()
+  }
 
-  const BASE_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/api/'
-      : 'https://margatsni.andrewpham.ca/api/'
   try {
-    const {
-      data: { username, bio, followers, following, isAdmin, isPrivate },
-    } = await axios.get(`${BASE_URL}user/${userQuery}`)
+    const { username, bio, followers, following, isAdmin, isPrivate } =
+      await User.findOne({ username: userQuery })
 
-    const { data } = await axios.get(`${BASE_URL}post/${userQuery}`)
+    const userPosts = await Post.find({ username: userQuery })
 
     return {
       props: {
@@ -74,7 +81,7 @@ export async function getServerSideProps(context) {
           isAdmin,
           isPrivate,
         },
-        userPosts: [...data],
+        userPosts: JSON.parse(JSON.stringify(userPosts)),
       },
     }
   } catch (error) {
