@@ -4,9 +4,8 @@ import Link from 'next/link'
 import Layout from '../../../components/layouts/Layout'
 import ProfileInfo from '../../../components/profile/ProfileInfo'
 import ProfileContent from '../../../components/profile/ProfileContent'
-import Post from '../../../models/Post'
 
-export default function Test({ userData }) {
+export default function Test({ userData, userPosts }) {
   // // If user cannot be found.
   // if (!userData) {
   //   return (
@@ -35,13 +34,8 @@ export default function Test({ userData }) {
   return (
     <Layout>
       <section className="min-h-[80vh]">
-        <p>{JSON.stringify(userData)}</p>
-        <p>
-          <br></br>
-        </p>
-        {/* <p>{JSON.stringify(userPosts)}</p> */}
-        {/* <ProfileInfo userData={userData} userPosts={userPosts} />
-        <ProfileContent userPosts={userPosts} /> */}
+        <ProfileInfo userData={userData} userPosts={userPosts} />
+        {/* <ProfileContent userPosts={userPosts} /> */}
       </section>
     </Layout>
   )
@@ -77,7 +71,7 @@ export async function getServerSideProps(context) {
         fullName,
       },
 
-      // userPosts: JSON.parse(JSON.stringify(userPosts)),
+      userPosts: [],
     },
   }
 }
