@@ -35,8 +35,13 @@ export default function Test({ userData, userPosts }) {
   return (
     <Layout>
       <section className="min-h-[80vh]">
-        <ProfileInfo userData={userData} userPosts={userPosts} />
-        <ProfileContent userPosts={userPosts} />
+        <p>{JSON.stringify(userData)}</p>
+        <p>
+          <br></br>
+        </p>
+        <p>{JSON.stringify(userPosts)}</p>
+        {/* <ProfileInfo userData={userData} userPosts={userPosts} />
+        <ProfileContent userPosts={userPosts} /> */}
       </section>
     </Layout>
   )
