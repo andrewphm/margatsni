@@ -1,9 +1,9 @@
-import connectToDb from '../../../lib/connectToDb'
-import User from '../../../models/User'
+import connectToDb from '../../lib/connectToDb'
+import User from '../../models/User'
 import Link from 'next/link'
-import Layout from '../../../components/layouts/Layout'
-import ProfileInfo from '../../../components/profile/ProfileInfo'
-import ProfileContent from '../../../components/profile/ProfileContent'
+import Layout from '../../components/layouts/Layout'
+import ProfileInfo from '../../components/profile/ProfileInfo'
+import ProfileContent from '../../components/profile/ProfileContent'
 
 export default function Test({ userData, userPosts }) {
   // // If user cannot be found.
