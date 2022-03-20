@@ -4,8 +4,9 @@ import Link from 'next/link'
 import Layout from '../../../components/layouts/Layout'
 import ProfileInfo from '../../../components/profile/ProfileInfo'
 import ProfileContent from '../../../components/profile/ProfileContent'
+import Post from '../../../models/Post'
 
-export default function Test({ userData, userPosts }) {
+export default function Test({ userData }) {
   // If user cannot be found.
   if (!userData) {
     return (
@@ -50,42 +51,48 @@ export async function getServerSideProps(context) {
   await connectToDb()
   const userQuery = context.query.username
 
-  try {
-    const {
-      username,
-      bio,
-      followers,
-      following,
-      isAdmin,
-      isPrivate,
-      image,
-      fullName,
-    } = await User.findOne({ username: userQuery })
+  const {
+    username,
+    bio,
+    followers,
+    following,
+    isAdmin,
+    isPrivate,
+    image,
+    fullName,
+  } = await User.findOne({ username: userQuery })
 
-    // const userPosts = await Post.find({ username: userQuery })
+  const userPosts = await Post.find({ username: userQuery })
 
-    return {
-      props: {
-        userData: {
-          username,
-          bio,
-          followers,
-          following,
-          isAdmin,
-          isPrivate,
-          image,
-          fullName,
-        },
-        // userPosts: JSON.parse(JSON.stringify(userPosts)),
+  console.log({
+    username,
+    bio,
+    followers,
+    following,
+    isAdmin,
+    isPrivate,
+    image,
+    fullName,
+  })
+
+  console.log(userPosts)
+
+  // const userPosts = await Post.find({ username: userQuery })
+
+  return {
+    props: {
+      userData: {
+        username,
+        bio,
+        followers,
+        following,
+        isAdmin,
+        isPrivate,
+        image,
+        fullName,
       },
-    }
-  } catch (error) {
-    console.log(error)
 
-    return {
-      props: {
-        userData: null,
-      },
-    }
+      // userPosts: JSON.parse(JSON.stringify(userPosts)),
+    },
   }
 }
