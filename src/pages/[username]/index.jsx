@@ -56,14 +56,11 @@ export default function Profile({ userData, userPosts }) {
 
 export async function getServerSideProps(context) {
   const userQuery = context.query.username
-  if (process.env.NODE === 'production') {
-    await mongoose.connect(process.env.MONGODB_URI).then((conn) => {
-      console.log('In production mode, creating new connection for SSR!')
-      return conn
-    })
-  } else {
-    await connectToDb()
-  }
+
+  await mongoose.connect(process.env.MONGODB_URI).then((conn) => {
+    console.log('In production mode, creating new connection for SSR!')
+    return conn
+  })
 
   try {
     const { username, bio, followers, following, isAdmin, isPrivate } =
