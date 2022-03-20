@@ -1,6 +1,5 @@
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
-import Post from '../../../models/Post'
 import Link from 'next/link'
 import Layout from '../../../components/layouts/Layout'
 import ProfileInfo from '../../../components/profile/ProfileInfo'
@@ -39,7 +38,7 @@ export default function Test({ userData, userPosts }) {
         <p>
           <br></br>
         </p>
-        <p>{JSON.stringify(userPosts)}</p>
+        {/* <p>{JSON.stringify(userPosts)}</p> */}
         {/* <ProfileInfo userData={userData} userPosts={userPosts} />
         <ProfileContent userPosts={userPosts} /> */}
       </section>
@@ -63,7 +62,7 @@ export async function getServerSideProps(context) {
       fullName,
     } = await User.findOne({ username: userQuery })
 
-    const userPosts = await Post.find({ username: userQuery })
+    // const userPosts = await Post.find({ username: userQuery })
 
     return {
       props: {
@@ -77,7 +76,7 @@ export async function getServerSideProps(context) {
           image,
           fullName,
         },
-        userPosts: JSON.parse(JSON.stringify(userPosts)),
+        // userPosts: JSON.parse(JSON.stringify(userPosts)),
       },
     }
   } catch (error) {
