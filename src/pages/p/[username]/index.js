@@ -62,21 +62,6 @@ export async function getServerSideProps(context) {
     fullName,
   } = await User.findOne({ username: userQuery })
 
-  const userPosts = await Post.find({ username: userQuery })
-
-  console.log({
-    username,
-    bio,
-    followers,
-    following,
-    isAdmin,
-    isPrivate,
-    image,
-    fullName,
-  })
-
-  console.log(userPosts)
-
   // const userPosts = await Post.find({ username: userQuery })
 
   return {
