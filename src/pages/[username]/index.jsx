@@ -53,10 +53,10 @@ export default function Profile({ userData, userPosts }) {
 
 export async function getServerSideProps(context) {
   try {
-    console.log('Trying to connect to db: ')
-    await connectToDb()
-    console.log('MONGODB_URI: ', process.env.MONGODB_URI)
-    console.log('Connection state: ', mongoose.connection.readyState)
+    const res = await fetch(`https://margatsni.andrewpham.ca/api/user/demo`)
+    const data = await res.json()
+
+    console.log(data)
   } catch (error) {
     console.log(error)
   }
