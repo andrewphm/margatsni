@@ -9,6 +9,7 @@ import { clearCurrentUser } from '../../redux/userRedux'
 import API from '../../API'
 import * as ROUTE from '../../constants/routes'
 import NewPost from '../newpost/NewPost'
+import { useRouter } from 'next/router'
 
 const Header = ({ currentTab }) => {
   const user = useSelector((state) => state.user.currentUser)
@@ -19,6 +20,7 @@ const Header = ({ currentTab }) => {
   const menuRefMobile = useRef(null)
   const dispatch = useDispatch()
   const [showNewPost, setShowNewPost] = useState(false)
+  const router = useRouter()
 
   const handleMenuFocus = () => {
     setTab((prev) => 'user')
@@ -33,7 +35,7 @@ const Header = ({ currentTab }) => {
     setTimeout(() => {
       menuRef?.current?.classList.toggle('opacity-0')
       menuRef?.current?.classList.toggle('transform-none')
-      menuRefMobile.current.classList.toggle('opacity-0')
+      menuRefMobile?.current.classList.toggle('opacity-0')
       menuRefMobile?.current?.classList.toggle('transform-none')
       setTab((prev) => '/')
     }, 100)
@@ -45,11 +47,17 @@ const Header = ({ currentTab }) => {
   }
 
   const handleSignOut = async () => {
-    await API.userSignOut()
+    try {
+      const data = await API.userSignOut()
+      dispatch(clearCurrentUser())
 
-    dispatch(clearCurrentUser())
-
-    window.location.reload()
+      if (router.pathname === '/') {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error)
+      return
+    }
   }
 
   return (

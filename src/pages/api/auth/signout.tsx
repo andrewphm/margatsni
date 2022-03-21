@@ -7,7 +7,7 @@ type Data = {
   message: string
 }
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
@@ -19,5 +19,5 @@ export default function handler(
     })
   )
 
-  res.status(200).json({ success: true, message: 'Cleared cookies' })
+  return res.status(200).json({ success: true, message: 'Cleared cookies' })
 }

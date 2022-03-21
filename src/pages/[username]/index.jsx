@@ -4,9 +4,7 @@ import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
-import mongoose from 'mongoose'
-import User from '../../models/User'
-import Post from '../../models/Post'
+
 import connectToDb from '../../lib/connectToDb'
 
 export default function Profile({ userData, userPosts }) {
@@ -57,36 +55,28 @@ export default function Profile({ userData, userPosts }) {
 export async function getServerSideProps(context) {
   const userQuery = context.query.username
 
-  await mongoose.connect(process.env.MONGODB_URI).then((conn) => {
-    console.log('In production mode, creating new connection for SSR!')
-    return conn
-  })
+  await connectToDb()
 
-  try {
-    const { username, bio, followers, following, isAdmin, isPrivate } =
-      await User.findOne({ username: userQuery })
+  const User = await import('../../models/User')
+  const Post = await import('../../models/Post')
 
-    const userPosts = await Post.find({ username: userQuery })
+  const { username, fullName, bio, followers, following, isAdmin, isPrivate } =
+    await User.default.findOne({ username: userQuery })
 
-    return {
-      props: {
-        userData: {
-          username,
-          bio,
-          followers,
-          following,
-          isAdmin,
-          isPrivate,
-        },
-        userPosts: JSON.parse(JSON.stringify(userPosts)),
+  const userPosts = await Post.default.find({ username: userQuery })
+
+  return {
+    props: {
+      userData: {
+        username,
+        fullName,
+        bio,
+        followers,
+        following,
+        isAdmin,
+        isPrivate,
       },
-    }
-  } catch (error) {
-    console.log(error)
-    return {
-      props: {
-        userData: null,
-      },
-    }
+      userPosts: JSON.parse(JSON.stringify(userPosts)),
+    },
   }
 }
