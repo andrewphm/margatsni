@@ -1,12 +1,8 @@
-import { useSelector } from 'react-redux'
 import Layout from '../../components/layouts/Layout'
 import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
-import mongoose from 'mongoose'
-
-import connectToDb from '../../lib/connectToDb'
 
 export default function Profile({ userData, userPosts }) {
   // If user cannot be found.
@@ -56,54 +52,28 @@ export default function Profile({ userData, userPosts }) {
 export async function getServerSideProps(context) {
   const userQuery = context.query.username
 
-  console.log(mongoose.connection.readyState)
-  let db
+  const BASE_URL =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000/api/'
+      : 'https://margatsni.andrewpham.ca/api/'
+
   try {
-    db = await mongoose.connect(
-      'mongodb+srv://admin:admin@cluster0.61vc6.mongodb.net/mainDB?retryWrites=true&w=majority'
-    )
-  } catch (error) {
-    console.log(error)
-
-    return {
-      props: {
-        userData: null,
-        userPosts: [],
-      },
-    }
-  }
-
-  if (mongoose.connection.readyState === 1) {
-    const User = await import('../../models/User')
-    const Post = await import('../../models/Post')
-
-    const {
-      username,
-      fullName,
-      bio,
-      followers,
-      following,
-      isAdmin,
-      isPrivate,
-    } = await User.default.findOne({ username: userQuery })
-
-    const userPosts = await Post.default.find({ username: userQuery })
-
+    const { data } = await axios.get(`${BASE_URL}user/${userQuery}`)
     return {
       props: {
         userData: {
-          username,
-          fullName,
-          bio,
-          followers,
-          following,
-          isAdmin,
-          isPrivate,
+          username: data.username,
+          fullName: data.fullName,
+          bio: data.bio,
+          followers: data.followers,
+          following: data.following,
+          isAdmin: data.isAdmin,
+          isPrivate: data.isPrivate,
         },
-        userPosts: JSON.parse(JSON.stringify(userPosts)),
+        userPosts: [],
       },
     }
-  } else {
+  } catch (error) {
     return {
       props: {
         userData: null,
