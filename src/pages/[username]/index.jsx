@@ -50,35 +50,42 @@ export default function Profile({ userData, userPosts }) {
 }
 
 export async function getServerSideProps(context) {
-  const userQuery = context.query.username
+  // const userQuery = context.query.username
 
-  const BASE_URL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/api/'
-      : 'https://margatsni.andrewpham.ca/api/'
+  // const BASE_URL =
+  //   process.env.NODE_ENV === 'development'
+  //     ? 'http://localhost:3000/api/'
+  //     : 'https://margatsni.andrewpham.ca/api/'
 
-  try {
-    const { data } = await axios.get(`${BASE_URL}user/${userQuery}`)
-    return {
-      props: {
-        userData: {
-          username: data.username,
-          fullName: data.fullName,
-          bio: data.bio,
-          followers: data.followers,
-          following: data.following,
-          isAdmin: data.isAdmin,
-          isPrivate: data.isPrivate,
-        },
-        userPosts: [],
-      },
-    }
-  } catch (error) {
-    return {
-      props: {
-        userData: null,
-        userPosts: [],
-      },
-    }
+  // try {
+  //   const { data } = await axios.get(`${BASE_URL}user/${userQuery}`)
+  //   return {
+  //     props: {
+  //       userData: {
+  //         username: data.username,
+  //         fullName: data.fullName,
+  //         bio: data.bio,
+  //         followers: data.followers,
+  //         following: data.following,
+  //         isAdmin: data.isAdmin,
+  //         isPrivate: data.isPrivate,
+  //       },
+  //       userPosts: [],
+  //     },
+  //   }
+  // } catch (error) {
+  //   return {
+  //     props: {
+  //       userData: null,
+  //       userPosts: [],
+  //     },
+  //   }
+  // }
+
+  return {
+    props: {
+      userData: null,
+      userPosts: [],
+    },
   }
 }
