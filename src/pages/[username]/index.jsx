@@ -5,6 +5,43 @@ import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
 import connectToDb from '../../lib/connectToDb'
 import mongoose from 'mongoose'
+import User from '../../models/User'
+
+export async function getStaticPaths() {
+  await connectToDb()
+  const res = await User.find({})
+  const paths = res.map((user) => ({
+    params: { username: user.username },
+  }))
+
+  console.log(paths)
+  return {
+    paths,
+    fallback: 'blocking',
+  }
+}
+
+export async function getStaticProps({ params }) {
+  await connectToDb()
+  const username = params.username
+  const user = await User.findOne({ username })
+
+  if (!user) {
+    return {
+      props: {
+        userData: null,
+        userPosts: [],
+      },
+    }
+  }
+
+  return {
+    props: {
+      userData: { ...JSON.parse(JSON.stringify(user)) },
+      userPosts: [],
+    },
+  }
+}
 
 export default function Profile({ userData, userPosts }) {
   // If user cannot be found.
@@ -49,54 +86,4 @@ export default function Profile({ userData, userPosts }) {
       </section>
     </Layout>
   )
-}
-
-export async function getServerSideProps(context) {
-  try {
-    const res = await fetch(`https://margatsni.andrewpham.ca/api/user/demo`)
-    const data = await res.json()
-
-    console.log(data)
-  } catch (error) {
-    console.log(error)
-  }
-
-  // const userQuery = context.query.username
-
-  // const BASE_URL =
-  //   process.env.NODE_ENV === 'development'
-  //     ? 'http://localhost:3000/api/'
-  //     : 'https://margatsni.andrewpham.ca/api/'
-
-  // try {
-  //   const { data } = await axios.get(`${BASE_URL}user/${userQuery}`)
-  //   return {
-  //     props: {
-  //       userData: {
-  //         username: data.username,
-  //         fullName: data.fullName,
-  //         bio: data.bio,
-  //         followers: data.followers,
-  //         following: data.following,
-  //         isAdmin: data.isAdmin,
-  //         isPrivate: data.isPrivate,
-  //       },
-  //       userPosts: [],
-  //     },
-  //   }
-  // } catch (error) {
-  //   return {
-  //     props: {
-  //       userData: null,
-  //       userPosts: [],
-  //     },
-  //   }
-  // }
-
-  return {
-    props: {
-      userData: null,
-      userPosts: [],
-    },
-  }
 }
