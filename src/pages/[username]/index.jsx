@@ -3,6 +3,8 @@ import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import axios from 'axios'
+import connectToDb from '../../lib/connectToDb'
+import mongoose from 'mongoose'
 
 export default function Profile({ userData, userPosts }) {
   // If user cannot be found.
@@ -50,6 +52,15 @@ export default function Profile({ userData, userPosts }) {
 }
 
 export async function getServerSideProps(context) {
+  try {
+    console.log('Trying to connect to db: ')
+    await connectToDb()
+    console.log('MONGODB_URI: ', process.env.MONGODB_URI)
+    console.log('Connection state: ', mongoose.connection.readyState)
+  } catch (error) {
+    console.log(error)
+  }
+
   // const userQuery = context.query.username
 
   // const BASE_URL =
