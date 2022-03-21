@@ -37,7 +37,7 @@ async function dbConnect() {
   cached.conn = await cached.promise
   console.log('Creating new DB connection and caching.')
 
-  return cached.conn
+  return cached.promise
 }
 
 export default dbConnect

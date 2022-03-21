@@ -55,7 +55,25 @@ export default function Profile({ userData, userPosts }) {
 export async function getServerSideProps(context) {
   const userQuery = context.query.username
 
-  await connectToDb()
+  try {
+    let db = await connectToDb()
+    if (db.connection.readyState !== 1) {
+      return {
+        props: {
+          userData: null,
+          userPosts: [],
+        },
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      props: {
+        userData: null,
+        userPosts: [],
+      },
+    }
+  }
 
   const User = await import('../../models/User')
   const Post = await import('../../models/Post')
