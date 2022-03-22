@@ -1,4 +1,4 @@
-import connectToDb from '../../../../lib/connectToDb'
+import connectToDb from '../../../../connectToDb'
 import Post from '../../../../models/Post'
 
 export default async function (req, res) {

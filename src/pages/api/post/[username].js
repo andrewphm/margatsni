@@ -1,5 +1,5 @@
 import Post from '../../../models/Post'
-import connectToDb from '../../../lib/connectToDb'
+import connectToDb from '../../../connectToDb'
 
 export default async function (req, res) {
   await connectToDb()

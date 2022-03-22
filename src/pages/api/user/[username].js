@@ -1,4 +1,4 @@
-import connectToDb from '../../../lib/connectToDb'
+import connectToDb from '../../../connectToDb'
 import User from '../../../models/User'
 
 export default async function (req, res) {

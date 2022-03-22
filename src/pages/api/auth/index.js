@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import connectToDb from '../../../lib/connectToDb'
+import connectToDb from '../../../connectToDb'
 import User from '../../../models/User'
 import formatValidationErr from '../../../helpers/formatValidationErr'
 import cookie from 'cookie'
