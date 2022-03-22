@@ -2,7 +2,7 @@ import Layout from '../../components/layouts/Layout'
 import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
-import connectToDb from '../../lib/connectToDb'
+import connectToDb from '../../connectToDb'
 import User from '../../models/User'
 
 export async function getServerSideProps(context) {
