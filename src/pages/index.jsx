@@ -1,10 +1,8 @@
 import Head from 'next/head'
-import connectToDb from '../lib/connectToDb.js'
 import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Layout from '../components/layouts/Layout'
-import mongoose from 'mongoose'
 
 // Components
 import Sidebar from '../components/home/Sidebar'

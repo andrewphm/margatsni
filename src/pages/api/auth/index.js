@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
 import connectToDb from '../../../lib/connectToDb'
 import User from '../../../models/User'
-import Post from '../../../models/Post'
 import formatValidationErr from '../../../helpers/formatValidationErr'
 import cookie from 'cookie'
 import { SignJWT } from 'jose'

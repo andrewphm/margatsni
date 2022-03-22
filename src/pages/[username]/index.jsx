@@ -2,38 +2,13 @@ import Layout from '../../components/layouts/Layout'
 import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
-import axios from 'axios'
 import connectToDb from '../../lib/connectToDb'
-import mongoose from 'mongoose'
-import User from '../../models/User'
+import User from '../../models/user'
 
-export async function getStaticPaths() {
-  await connectToDb()
-  const res = await User.find({})
-  const paths = res.map((user) => ({
-    params: { username: user.username },
-  }))
+export async function getServerSideProps(context) {
+  let userQuery = context.query.username
 
-  console.log(paths)
-  return {
-    paths,
-    fallback: 'blocking',
-  }
-}
-
-export async function getStaticProps({ params }) {
-  await connectToDb()
-  const username = params.username
-  const user = await User.findOne({ username })
-
-  if (!user) {
-    return {
-      props: {
-        userData: null,
-        userPosts: [],
-      },
-    }
-  }
+  let user = await User.findOne({ username: userQuery })
 
   return {
     props: {
