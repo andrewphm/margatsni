@@ -3,16 +3,18 @@ import ProfileInfo from '../../components/profile/ProfileInfo'
 import Link from 'next/link'
 import ProfileContent from '../../components/profile/ProfileContent'
 import connectToDb from '../../lib/connectToDb'
-import User from '../../models/user'
+import User from '../../models/User'
 
 export async function getServerSideProps(context) {
+  await connectToDb()
+
   let userQuery = context.query.username
 
-  let user = await User.findOne({ username: userQuery })
+  let userData = await User.findOne({ username: userQuery })
 
   return {
     props: {
-      userData: { ...JSON.parse(JSON.stringify(user)) },
+      userData: { ...JSON.parse(JSON.stringify(userData)) },
       userPosts: [],
     },
   }
