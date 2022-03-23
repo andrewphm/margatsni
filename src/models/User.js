@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    savedPosts: {
+      type: Array,
+      default: [],
+    },
     bio: {
       type: String,
       default: '',

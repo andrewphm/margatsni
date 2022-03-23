@@ -16,7 +16,7 @@ const DesktopPost = ({ userData, post }) => {
 
   return (
     <article className="mx-auto md:flex max-h-[525px] min-h-[500px] w-full border border-neutral-300 bg-white md:max-w-3xl lg:max-w-5xl hidden">
-      <div className="relative flex max-h-[525px] flex-grow justify-center bg-black bg-opacity-20">
+      <div className="relative flex max-h-[525px] flex-grow justify-center bg-black bg-opacity-10">
         <div className="relative max-h-[525px] w-full">
           <Image
             src={post.image}

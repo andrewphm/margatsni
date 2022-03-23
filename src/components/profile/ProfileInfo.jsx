@@ -15,7 +15,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
             layout="fill"
             className="rounded-full border"
             objectFit="contain"
-            alt=""
+            alt="User image"
             priority={true}
           />
         </div>

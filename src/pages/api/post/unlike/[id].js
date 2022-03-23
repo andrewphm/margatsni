@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   try {
     await connectToDb();
-    const post = await Post.findOne({ id_: id });
+    const post = await Post.findOne({ _id: id });
     let index = post.likes.indexOf(req.body.username);
     post.likes.splice(index, 1);
     await post.save();
