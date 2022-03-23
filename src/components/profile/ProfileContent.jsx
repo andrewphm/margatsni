@@ -2,11 +2,16 @@ import Image from 'next/image';
 import { useState, useRef } from 'react';
 import { Favorite, ModeComment } from '@mui/icons-material';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import NoPost from './NoPost';
 
 const ProfileContent = ({ userPosts }) => {
   const [tab, setTab] = useState('posts');
   const tabRef = useRef(null);
   const mobileTabRef = useRef(null);
+  const user = useSelector((state) => state.user.currentUser);
+  const path = useRouter().asPath.split('/')[1];
 
   const handleTabChange = (e) => {
     if (tabRef.current === e.currentTarget) return;
@@ -270,90 +275,97 @@ const ProfileContent = ({ userPosts }) => {
         </div>
       </div>
 
-      {/* No posts */}
-      {tab === 'posts' && userPosts.length === 0 && (
-        <div className="flex w-full items-center justify-center">
-          <div className="flex flex-col items-center justify-center gap-y-4 py-12">
-            <svg
-              aria-label=""
-              color="currentColor"
-              fill="currentColor"
-              height="45"
-              role="img"
-              viewBox="0 0 24 24"
-              width="45"
-            >
-              <path
-                d="M10.201 3.797L12 1.997l1.799 1.8a1.59 1.59 0 001.124.465h5.259A1.818 1.818 0 0122 6.08v14.104a1.818 1.818 0 01-1.818 1.818H3.818A1.818 1.818 0 012 20.184V6.08a1.818 1.818 0 011.818-1.818h5.26a1.59 1.59 0 001.123-.465z"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></path>
-              <path
-                d="M18.598 22.002V21.4a3.949 3.949 0 00-3.948-3.949H9.495A3.949 3.949 0 005.546 21.4v.603"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></path>
-              <circle
-                cx="12.072"
-                cy="11.075"
-                fill="none"
-                r="3.556"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></circle>
-            </svg>
-            <p className="text-xl font-light">No Posts</p>
-          </div>
-        </div>
-      )}
-
       {/* Show posts */}
-      {tab === 'posts' && userPosts.length > 0 && (
-        <div className="mb-1 grid w-full grid-cols-3 gap-1 pt-1 md:gap-5 xl:gap-4">
-          {userPosts?.map((item) => {
-            return (
-              <Link key={item._id} href={`/p/${item._id}`}>
-                <a>
-                  <div
-                    key={item._id}
-                    className="relative w-full cursor-pointer pt-[100%]"
-                  >
-                    <Image
-                      layout="fill"
-                      src={item.image}
-                      className=""
-                      objectFit="cover"
-                      alt=""
-                    />
+      {tab === 'posts' && (
+        <>
+          {userPosts.length === 0 && path === user.username && <NoPost />}
 
-                    <div className="absolute top-0 bottom-0 right-0 left-0 flex h-full w-full bg-black bg-opacity-0 hover:bg-opacity-40">
-                      <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-3 text-base text-transparent hover:text-white">
-                        <div className="flex gap-x-2">
-                          <Favorite />
-                          <p className="font-semibold">{item.likes.length}</p>
-                        </div>
-                        <div className="flex gap-x-2">
-                          <ModeComment />
-                          <p className="font-semibold">
-                            {item.comments.length}
-                          </p>
+          {userPosts.length === 0 && path !== user.username && (
+            <div className="flex w-full items-center justify-center">
+              <div className="flex flex-col items-center justify-center gap-y-4 py-12">
+                <svg
+                  aria-label=""
+                  color="currentColor"
+                  fill="currentColor"
+                  height="45"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="45"
+                >
+                  <path
+                    d="M10.201 3.797L12 1.997l1.799 1.8a1.59 1.59 0 001.124.465h5.259A1.818 1.818 0 0122 6.08v14.104a1.818 1.818 0 01-1.818 1.818H3.818A1.818 1.818 0 012 20.184V6.08a1.818 1.818 0 011.818-1.818h5.26a1.59 1.59 0 001.123-.465z"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                  ></path>
+                  <path
+                    d="M18.598 22.002V21.4a3.949 3.949 0 00-3.948-3.949H9.495A3.949 3.949 0 005.546 21.4v.603"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                  ></path>
+                  <circle
+                    cx="12.072"
+                    cy="11.075"
+                    fill="none"
+                    r="3.556"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                  ></circle>
+                </svg>
+                <p className="text-xl font-light">No Posts</p>
+              </div>
+            </div>
+          )}
+
+          {userPosts.length > 0 && (
+            <div className="mb-1 grid w-full grid-cols-3 gap-1 pt-1 md:gap-5 xl:gap-4">
+              {userPosts?.map((item) => {
+                return (
+                  <Link key={item._id} href={`/p/${item._id}`}>
+                    <a>
+                      <div
+                        key={item._id}
+                        className="relative w-full cursor-pointer pt-[100%]"
+                      >
+                        <Image
+                          layout="fill"
+                          src={item.image}
+                          className=""
+                          objectFit="cover"
+                          alt=""
+                        />
+
+                        <div className="absolute top-0 bottom-0 right-0 left-0 flex h-full w-full bg-black bg-opacity-0 hover:bg-opacity-40">
+                          <div className="flex h-full w-full flex-wrap items-center justify-center gap-x-3 text-base text-transparent hover:text-white">
+                            <div className="flex gap-x-2">
+                              <Favorite />
+                              <p className="font-semibold">
+                                {item.likes.length}
+                              </p>
+                            </div>
+                            <div className="flex gap-x-2">
+                              <ModeComment />
+                              <p className="font-semibold">
+                                {item.comments.length}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </a>
-              </Link>
-            );
-          })}
-        </div>
+                    </a>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </>
       )}
 
       {/* Showed Tagged Photos */}

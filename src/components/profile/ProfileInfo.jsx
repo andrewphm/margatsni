@@ -16,6 +16,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
             className="rounded-full border"
             objectFit="contain"
             alt=""
+            priority={true}
           />
         </div>
 
