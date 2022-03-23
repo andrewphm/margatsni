@@ -34,6 +34,14 @@ const apiCalls = {
     const res = await axios.post(`${BASE_URL}post/unlike/${id}`, body);
     return res;
   },
+  savePost: async (username, body) => {
+    const res = await axios.post(`${BASE_URL}user/save/${username}`, body);
+    return res;
+  },
+  unsavePost: async (username, body) => {
+    const res = await axios.post(`${BASE_URL}user/unsave/${username}`, body);
+    return res;
+  },
 };
 
 export default apiCalls;
