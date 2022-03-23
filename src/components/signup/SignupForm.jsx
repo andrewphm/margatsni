@@ -1,65 +1,71 @@
-import { useState, useEffect, useRef } from 'react'
-import logo from '../../../public/images/logo.png'
-import googleBadge from '../../../public/images/login/googleplaybadge.png'
-import appleBadge from '../../../public/images/login/applestorebadge.png'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Facebook } from '@mui/icons-material'
-import API from '../../API'
-import { useDispatch, useSelector } from 'react-redux'
-import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux'
+import { useState, useEffect, useRef } from 'react';
+import logo from '../../../public/images/logo.png';
+import googleBadge from '../../../public/images/login/googleplaybadge.png';
+import appleBadge from '../../../public/images/login/applestorebadge.png';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Facebook } from '@mui/icons-material';
+import API from 'src/apiCalls';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux';
 
 const initialForm = {
   email: '',
   fullName: '',
   username: '',
   password: '',
-}
+};
 
 const LoginForm = () => {
-  const [form, setForm] = useState(initialForm)
-  const [isVisible, setIsVisible] = useState(false)
-  const inputRef = useRef(null)
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
+  const [form, setForm] = useState(initialForm);
+  const [isVisible, setIsVisible] = useState(false);
+  const inputRef = useRef(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   // Focus input
   useEffect(() => {
-    document.title = 'Signup - Instagram'
+    document.title = 'Signup - Instagram';
 
     if (inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }, [])
+  }, []);
 
   const handleFormChange = (e) => {
     setForm((prev) => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      dispatch(loginStart())
-      const res = await API.userSignup(form)
-      dispatch(loginSuccess(res.data))
-      window.location.reload()
+      dispatch(loginStart());
+      const res = await API.userSignup(form);
+      dispatch(loginSuccess(res.data));
+      window.location.reload();
     } catch (error) {
       // Display error message
-      dispatch(loginFailure(error.response.data.error))
+      dispatch(loginFailure(error.response.data.error));
     }
-  }
+  };
 
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <div className="relative h-[20px] w-40 p-9">
-          <Image src={logo} layout="fill" objectFit="contain" />
+          <Image
+            src={logo}
+            layout="fill"
+            objectFit="contain"
+            alt="logo"
+            priority={true}
+          />
         </div>
 
         <div className="mt-2 mb-4">
@@ -291,7 +297,7 @@ const LoginForm = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

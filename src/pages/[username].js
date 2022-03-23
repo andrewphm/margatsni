@@ -1,33 +1,55 @@
-import Layout from '../../components/layouts/Layout'
-import ProfileInfo from '../../components/profile/ProfileInfo'
-import Link from 'next/link'
-import ProfileContent from '../../components/profile/ProfileContent'
-import connectToDb from '../../connectToDb'
-import User from '../../models/User'
+import dbConnect from '../lib/dbConnect';
+import mongoose from 'mongoose';
+import Post from '../models/Post';
+import User from '../models/User';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 export async function getServerSideProps(context) {
-  await connectToDb()
+  await dbConnect();
+  const userQuery = context.query.username;
 
-  let userQuery = context.query.username
+  if (mongoose.connection.readyState === 1) {
+    let userData = await User.findOne({ username: userQuery });
+    let userPosts = await Post.find({ username: userQuery });
 
-  let userData = await User.findOne({ username: userQuery })
+    if (!userData) {
+      return {
+        props: {
+          userData: null,
+          userPosts: [],
+        },
+      };
+    }
 
-  return {
-    props: {
-      userData: { ...JSON.parse(JSON.stringify(userData)) },
-      userPosts: [],
-    },
+    return {
+      props: {
+        userData: JSON.parse(JSON.stringify(userData)),
+        userPosts: JSON.parse(JSON.stringify(userPosts)),
+      },
+    };
   }
 }
 
 export default function Profile({ userData, userPosts }) {
+  /*
+  Encountering a very strange bug where next.js Severless function will time-out if these UI components are not dynamically imported after the severless function finishes.
+  */
+  const ProfileInfo = dynamic(() =>
+    import('../components/profile/ProfileInfo.jsx')
+  );
+  const ProfileContent = dynamic(() =>
+    import('../components/profile/ProfileContent.jsx')
+  );
+  const Layout = dynamic(() => import('../components/layouts/Layout.jsx'));
+
   // If user cannot be found.
   if (!userData) {
     return (
       <Layout>
         <div className="my-10 mx-auto flex flex-col gap-y-5 px-10 text-center">
           <p className="text-2xl font-semibold">
-            Sorry, this page isn't available.
+            Sorry, this page is not available.
           </p>
 
           <p>
@@ -43,7 +65,7 @@ export default function Profile({ userData, userPosts }) {
           </p>
         </div>
       </Layout>
-    )
+    );
   }
 
   return (
@@ -62,5 +84,5 @@ export default function Profile({ userData, userPosts }) {
         )}
       </section>
     </Layout>
-  )
+  );
 }

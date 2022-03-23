@@ -1,21 +1,21 @@
-import nopfp from '../../../public/images/nopfp.jpeg'
-import Link from 'next/link'
-import { formatDistance } from 'date-fns'
-import Image from 'next/image'
-import { useState } from 'react'
-import useLikePost from '../../hooks/useLikePost'
+import nopfp from '../../../public/images/nopfp.jpeg';
+import Link from 'next/link';
+import { formatDistance } from 'date-fns';
+import Image from 'next/image';
+import { useState } from 'react';
+import useLikePost from '../../hooks/useLikePost';
 
-import useCommentPost from '../../hooks/useCommentPost'
+import useCommentPost from '../../hooks/useCommentPost';
 
 const DesktopPost = ({ userData, post }) => {
-  const [comments, setComments] = useState(post.comments)
+  const [comments, setComments] = useState(post.comments);
   const { isLoading, comment, setComment, handleCommentClick } =
-    useCommentPost(setComments)
+    useCommentPost(setComments);
 
-  const { isLiked, handleLikeClick, likes } = useLikePost(post)
+  const { isLiked, handleLikeClick, likes } = useLikePost(post);
 
   return (
-    <article className="mx-auto flex max-h-[525px] min-h-[500px] w-full border border-neutral-300 bg-white md:max-w-3xl lg:max-w-5xl">
+    <article className="mx-auto md:flex max-h-[525px] min-h-[500px] w-full border border-neutral-300 bg-white md:max-w-3xl lg:max-w-5xl hidden">
       <div className="relative flex max-h-[525px] flex-grow justify-center bg-black bg-opacity-20">
         <div className="relative max-h-[525px] w-full">
           <Image
@@ -23,6 +23,7 @@ const DesktopPost = ({ userData, post }) => {
             layout="fill"
             objectFit="contain"
             priority={true}
+            alt=""
           />
         </div>
       </div>
@@ -38,6 +39,7 @@ const DesktopPost = ({ userData, post }) => {
                     src={userData.image || nopfp}
                     layout="fill"
                     objectFit="cover"
+                    alt=""
                   />
                 </div>
               </a>
@@ -52,7 +54,7 @@ const DesktopPost = ({ userData, post }) => {
         </header>
 
         {/* Comments */}
-        <div className="h-full overflow-y-scroll border-b border-b-neutral-200 scrollbar-hide">
+        <div className="h-full overflow-y-auto border-b border-b-neutral-200">
           <ul className="flex w-full flex-col gap-y-3 px-4 py-2">
             {post.caption.length > 0 && (
               <li className="flex items-center gap-x-3 text-sm">
@@ -62,7 +64,7 @@ const DesktopPost = ({ userData, post }) => {
                       className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
                        rounded-full"
                     >
-                      <Image src={userData.image || nopfp} />
+                      <Image src={userData.image || nopfp} alt="" />
                     </div>
                   </a>
                 </Link>
@@ -81,30 +83,41 @@ const DesktopPost = ({ userData, post }) => {
             )}
 
             {comments.length > 0 &&
-              comments.map(({ username, comment, image }, i) => {
+              comments.map(({ username, comment, image, createdAt }, i) => {
                 return (
-                  <li key={i} className="flex items-center gap-x-3 text-sm">
-                    <Link href={`/${username}`}>
-                      <a>
-                        <div
-                          className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
-                       rounded-full"
-                        >
-                          <Image src={image || nopfp} />
-                        </div>
-                      </a>
-                    </Link>
-
-                    <p className="leading-4">
+                  <li
+                    key={i}
+                    className="flex items-center gap-x-3 text-sm w-full justify-between"
+                  >
+                    <div className="flex items-center gap-x-3">
                       <Link href={`/${username}`}>
                         <a>
-                          <span className="font-semibold">{username} </span>
+                          <div
+                            className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
+                       rounded-full"
+                          >
+                            <Image src={image || nopfp} alt="" />
+                          </div>
                         </a>
                       </Link>
-                      {comment}
+
+                      <p className="leading-4">
+                        <Link href={`/${username}`}>
+                          <a>
+                            <span className="font-semibold">{username} </span>
+                          </a>
+                        </Link>
+                        {comment}
+                      </p>
+                    </div>
+
+                    <p className="text-[10px] text-gray-500">
+                      {formatDistance(new Date(createdAt), new Date(), {
+                        addSuffix: true,
+                      })}
                     </p>
                   </li>
-                )
+                );
               })}
           </ul>
         </div>
@@ -319,7 +332,7 @@ const DesktopPost = ({ userData, post }) => {
         </div>
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default DesktopPost
+export default DesktopPost;

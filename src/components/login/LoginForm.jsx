@@ -1,71 +1,77 @@
-import { useState, useRef, useEffect } from 'react'
-import logo from '../../../public/images/logo.png'
-import googleBadge from '../../../public/images/login/googleplaybadge.png'
-import appleBadge from '../../../public/images/login/applestorebadge.png'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Facebook } from '@mui/icons-material'
-import { useDispatch, useSelector } from 'react-redux'
-import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux'
-import API from '../../API'
+import { useState, useRef, useEffect } from 'react';
+import logo from '../../../public/images/logo.png';
+import googleBadge from '../../../public/images/login/googleplaybadge.png';
+import appleBadge from '../../../public/images/login/applestorebadge.png';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Facebook } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginStart, loginFailure, loginSuccess } from '../../redux/userRedux';
+import API from 'src/apiCalls';
 
 const initialForm = {
   username: '',
   password: '',
-}
+};
 
 const LoginForm = () => {
-  const [form, setForm] = useState(initialForm)
-  const [isVisible, setIsVisible] = useState(false)
-  const inputRef = useRef(null)
-  const user = useSelector((state) => state.user)
-  const dispatch = useDispatch()
+  const [form, setForm] = useState(initialForm);
+  const [isVisible, setIsVisible] = useState(false);
+  const inputRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   // Focus input and change title
   useEffect(() => {
-    document.title = 'Login - Instagram'
+    document.title = 'Login - Instagram';
 
     if (inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }, [])
+  }, []);
 
   const handleFormChange = (e) => {
     setForm((prev) => {
       return {
         ...prev,
         [e.target.name]: e.target.value,
-      }
-    })
-  }
+      };
+    });
+  };
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     // Call post auth login endpoint
     try {
       // Assign user to persisted global state
-      dispatch(loginStart())
-      const res = await API.userLogin(form)
-      dispatch(loginSuccess(res.data))
-      window.location.reload()
+      dispatch(loginStart());
+      const res = await API.userLogin(form);
+      dispatch(loginSuccess(res.data));
+      window.location.reload();
     } catch (error) {
       // Display error message
-      dispatch(loginFailure(error.response.data.error))
+      dispatch(loginFailure(error.response.data.error));
     }
-  }
+  };
 
   const handleDemoLogin = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    console.log('demo')
-  }
+    console.log('demo');
+  };
 
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <div className="relative mb-2 h-[20px] w-40 p-10">
-          <Image src={logo} layout="fill" objectFit="contain" />
+          <Image
+            src={logo}
+            layout="fill"
+            objectFit="contain"
+            alt="logo"
+            priority={true}
+          />
         </div>
 
         <form
@@ -213,7 +219,7 @@ const LoginForm = () => {
 
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
         <p className="text-sm">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link href="/signup">
             <a>
               <span className="cursor-pointer font-semibold text-[#0095f6] hover:underline">
@@ -238,7 +244,7 @@ const LoginForm = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

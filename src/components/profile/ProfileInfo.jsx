@@ -1,10 +1,10 @@
-import Image from 'next/image'
-import { useSelector } from 'react-redux'
+import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
-import nopfp from '../../../public/images/nopfp.jpeg'
+import nopfp from '../../../public/images/nopfp.jpeg';
 
 const ProfileInfo = ({ userData, userPosts }) => {
-  const user = useSelector((state) => state.user.currentUser)
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <div className="mx-auto flex w-full flex-col md:max-w-4xl">
@@ -15,6 +15,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
             layout="fill"
             className="rounded-full border"
             objectFit="contain"
+            alt=""
           />
         </div>
 
@@ -82,7 +83,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileInfo
+export default ProfileInfo;

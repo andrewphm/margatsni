@@ -1,35 +1,35 @@
-import nopfp from '../../../public/images/nopfp.jpeg'
-import Link from 'next/link'
-import { formatDistance } from 'date-fns'
-import Image from 'next/image'
-import { useState } from 'react'
-import useCommentPost from '../../hooks/useCommentPost'
-import useLikePost from '../../hooks/useLikePost'
+import nopfp from '../../../public/images/nopfp.jpeg';
+import Link from 'next/link';
+import { formatDistance } from 'date-fns';
+import Image from 'next/image';
+import { useState } from 'react';
+import useCommentPost from '../../hooks/useCommentPost';
+import useLikePost from '../../hooks/useLikePost';
 
 const MobilePost = ({ userData, post }) => {
   const handleExpandComment = () => {
-    document.getElementById('comment-box').classList.remove('h-0', 'w-0')
-    document.getElementById('text-area').focus()
-    let scrollY = document.getElementById('text-area').scrollHeight
-    window.scrollTo(0, scrollY)
-  }
+    document.getElementById('comment-box').classList.remove('h-0', 'w-0');
+    document.getElementById('text-area').focus();
+    let scrollY = document.getElementById('text-area').scrollHeight;
+    window.scrollTo(0, scrollY);
+  };
 
-  const [comments, setComments] = useState(post.comments)
+  const [comments, setComments] = useState(post.comments);
   const { isLoading, comment, setComment, handleCommentClick } =
-    useCommentPost(setComments)
+    useCommentPost(setComments);
 
-  const [showMoreCaption, setShowMoreCaption] = useState(false)
+  const [showMoreCaption, setShowMoreCaption] = useState(false);
   const handleShowMoreCaption = () => {
-    setShowMoreCaption((prev) => !prev)
-    const caption = document.getElementById('caption')
-    caption.classList.add('whitespace-normal')
-  }
-  const [showComments, setShowComments] = useState(3)
+    setShowMoreCaption((prev) => !prev);
+    const caption = document.getElementById('caption');
+    caption.classList.add('whitespace-normal');
+  };
+  const [showComments, setShowComments] = useState(3);
 
-  const { isLiked, handleLikeClick, likes } = useLikePost(post)
+  const { isLiked, handleLikeClick, likes } = useLikePost(post);
 
   return (
-    <article className="h-full min-h-[80vh] w-full">
+    <article className="h-full min-h-[80vh] w-full md:hidden">
       {/* Header */}
       <div className="flex w-full items-center gap-x-3 p-3 md:hidden">
         <div className="relative h-9 w-9 overflow-hidden rounded-full border border-neutral-400">
@@ -38,6 +38,7 @@ const MobilePost = ({ userData, post }) => {
             objectFit="contain"
             layout="fill"
             className="-z-20"
+            alt=""
           />
         </div>
 
@@ -61,6 +62,7 @@ const MobilePost = ({ userData, post }) => {
           className="object-cover"
           objectPosition="center"
           priority={true}
+          alt=""
         />
       </div>
 
@@ -242,32 +244,43 @@ const MobilePost = ({ userData, post }) => {
       {comments.length > 0 && (
         <div className="flex flex-col px-4 py-1">
           <ul className="flex flex-col gap-y-2">
-            {comments.map(({ username, comment, image }, i) => {
-              if (i >= showComments) return null
+            {comments.map(({ username, comment, image, createdAt }, i) => {
+              if (i >= showComments) return null;
 
               return (
-                <li key={i} className="flex items-center gap-x-3 text-sm">
-                  <Link href={`/${username}`}>
-                    <a>
-                      <div
-                        className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
-                       rounded-full"
-                      >
-                        <Image src={image || nopfp} />
-                      </div>
-                    </a>
-                  </Link>
-
-                  <p className="leading-4">
+                <li
+                  key={i}
+                  className="flex items-center gap-x-3 text-sm w-full justify-between"
+                >
+                  <div className="flex items-center gap-x-3">
                     <Link href={`/${username}`}>
                       <a>
-                        <span className="font-semibold">{username} </span>
+                        <div
+                          className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
+                       rounded-full"
+                        >
+                          <Image src={image || nopfp} alt="" />
+                        </div>
                       </a>
                     </Link>
-                    {comment}
+
+                    <p className="leading-4">
+                      <Link href={`/${username}`}>
+                        <a>
+                          <span className="font-semibold">{username} </span>
+                        </a>
+                      </Link>
+                      {comment}
+                    </p>
+                  </div>
+
+                  <p className="text-[10px] text-gray-500">
+                    {formatDistance(new Date(createdAt), new Date(), {
+                      addSuffix: true,
+                    })}
                   </p>
                 </li>
-              )
+              );
             })}
             {showComments < comments.length && (
               <li>
@@ -344,7 +357,7 @@ const MobilePost = ({ userData, post }) => {
         )}
       </div>
     </article>
-  )
-}
+  );
+};
 
-export default MobilePost
+export default MobilePost;

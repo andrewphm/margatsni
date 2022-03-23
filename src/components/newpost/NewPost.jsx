@@ -3,67 +3,76 @@ import {
   KeyboardBackspace,
   CheckCircleOutline,
   ErrorOutline,
-} from '@mui/icons-material'
-import { useEffect, useState } from 'react'
-import imageUpload from '../../helpers/imageUpload'
-import API from '../../API'
-import { useSelector } from 'react-redux'
+} from '@mui/icons-material';
+import { useEffect, useState } from 'react';
+import imageUpload from '../../helpers/imageUpload';
+import API from '../../apiCalls';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const NewPost = ({ setShowNewPost }) => {
-  const [fileURL, setFileUrl] = useState(null)
-  const [postCaption, setPostCaption] = useState('')
-  const [file, setFile] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const user = useSelector((state) => state.user.currentUser)
+  const [fileURL, setFileUrl] = useState(null);
+  const [postCaption, setPostCaption] = useState('');
+  const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const user = useSelector((state) => state.user.currentUser);
+  const [postID, setPostID] = useState(null);
+  const router = useRouter();
 
   const handleUserInputChange = (event) => {
-    setFile((prev) => event.target.files[0])
-    setFileUrl((prev) => URL.createObjectURL(event.target.files[0]))
-  }
+    setFile((prev) => event.target.files[0]);
+    setFileUrl((prev) => URL.createObjectURL(event.target.files[0]));
+  };
 
   const handleCloseNewPost = (event) => {
-    if (event.target.id === 'overlay') setShowNewPost((prev) => false)
-  }
+    if (event.target.id === 'overlay') setShowNewPost((prev) => false);
+  };
 
   const handlePrevious = () => {
-    setFileUrl((prev) => null)
-  }
+    setFileUrl((prev) => null);
+  };
 
   const handlePostClick = async (e) => {
-    e.preventDefault()
-    setIsLoading((prev) => !prev)
+    e.preventDefault();
+    setIsLoading((prev) => !prev);
 
     // Upload image to firebase
-    const imgUrl = await imageUpload(file)
+    const imgUrl = await imageUpload(file);
     if (!imgUrl) {
-      setIsLoading((prev) => !prev)
-      setError((prev) => !prev)
+      setIsLoading((prev) => !prev);
+      setError((prev) => !prev);
     }
 
     try {
-      await API.createNewUserPost({
+      let { data } = await API.createNewUserPost({
         username: user.username,
         image: imgUrl,
         caption: postCaption,
-      })
-      setIsLoading((prev) => !prev)
-      setSuccess((prev) => !prev)
+      });
+
+      setPostID((prev) => data._id);
+      setIsLoading((prev) => !prev);
+      setSuccess((prev) => !prev);
     } catch (error) {
-      console.log(error)
-      setIsLoading((prev) => !prev)
-      setError((prev) => !prev)
+      console.log(error);
+      setIsLoading((prev) => !prev);
+      setError((prev) => !prev);
     }
-  }
+  };
 
   useEffect(() => {
-    if (success || error) {
-      setTimeout(() => {
-        setShowNewPost((prev) => !prev)
-      }, 2000)
+    if (success) {
+      router.push(`/p/${postID}`);
     }
-  }, [success, error])
+
+    if (error) {
+      setTimeout(() => {
+        setShowNewPost((prev) => !prev);
+      }, 2000);
+    }
+  }, [success, error, setShowNewPost]);
 
   return (
     <section
@@ -185,7 +194,7 @@ const NewPost = ({ setShowNewPost }) => {
                     cy="12"
                     r="10"
                     stroke="currentColor"
-                    stroke-width="4"
+                    strokeWidth="4"
                   ></circle>
                   <path
                     className="opacity-75"
@@ -238,7 +247,7 @@ const NewPost = ({ setShowNewPost }) => {
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default NewPost
+export default NewPost;
