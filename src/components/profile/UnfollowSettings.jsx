@@ -25,6 +25,7 @@ export default function UnfollowSettings({
               layout="fill"
               className="rounded-full"
               src={userData.image || nopfp}
+              priority={true}
             />
           </div>
           <p className="pt-4">Unfollow @{userData.username}?</p>

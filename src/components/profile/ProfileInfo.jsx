@@ -47,7 +47,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
                 {userData.username}
               </p>
 
-              {user.username === userData.username ? (
+              {user?.username === userData.username ? (
                 <Link href="/account/settings">
                   <a>
                     <button className="text-sm font-semibold border px-3 rounded-md py-[6px] border-neutral-300 flex gap-x-2 items-center shadow-sm hover:scale-[1.02] relative top-[2px]">
@@ -211,7 +211,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
           <div className=" flex w-full flex-col gap-y-1 md:hidden">
             <p className=" w-full truncate text-2xl">{userData.username}</p>
 
-            {user.username === userData.username ? (
+            {user?.username === userData.username ? (
               <Link href="/account/settings">
                 <a>
                   <button className="text-[12px] font-semibold border px-3 rounded-md py-[6px] border-neutral-300 flex gap-x-2 items-center shadow-sm hover:scale-[1.02] relative top-[2px]">

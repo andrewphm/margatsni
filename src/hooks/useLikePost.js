@@ -18,7 +18,7 @@ const useLikePost = (post) => {
       try {
         setIsLiked((prev) => !prev);
         const { data } = await API.likePost(post._id, {
-          username: user.username,
+          username: user?.username,
         });
         setLikes((prev) => data);
       } catch (error) {
@@ -28,7 +28,7 @@ const useLikePost = (post) => {
       try {
         setIsLiked((prev) => !prev);
         const { data } = await API.unlikePost(post._id, {
-          username: user.username,
+          username: user?.username,
         });
         setLikes((prev) => data);
       } catch (error) {

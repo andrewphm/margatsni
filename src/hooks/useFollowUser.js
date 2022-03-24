@@ -18,12 +18,12 @@ export default function useFollowUser(userData) {
 
   const handleFollowClick = async () => {
     if (!user) {
-      router.push('/login');
+      return router.push('/login');
     }
 
     try {
       setIsLoading((prev) => true);
-      const res = await API.followUser(user.username, {
+      const res = await API.followUser(user?.username, {
         username: userData.username,
       });
 
@@ -42,7 +42,7 @@ export default function useFollowUser(userData) {
   const handleUnfollowClick = async () => {
     try {
       setIsLoading(() => true);
-      const res = await API.unfollowUser(user.username, {
+      const res = await API.unfollowUser(user?.username, {
         username: userData.username,
       });
 

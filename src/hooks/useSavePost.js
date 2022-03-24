@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 
 function useSavedPost(post) {
   const user = useSelector((state) => state.user.currentUser);
-  const [isSaved, setIsSaved] = useState(user.savedPosts.includes(post._id));
+  const [isSaved, setIsSaved] = useState(user?.savedPosts.includes(post._id));
   const dispatch = useDispatch();
 
   const handleSavePostClick = async () => {
     try {
-      let res = await API.savePost(user.username, { postID: post._id });
+      let res = await API.savePost(user?.username, { postID: post._id });
       if (res.status === 200) {
         dispatch(updateCurrentUser(res.data));
         setIsSaved((prev) => !prev);
@@ -23,7 +23,7 @@ function useSavedPost(post) {
 
   const handleUnsavePostClick = async () => {
     try {
-      let res = await API.unsavePost(user.username, { postID: post._id });
+      let res = await API.unsavePost(user?.username, { postID: post._id });
       if (res.status === 200) {
         dispatch(updateCurrentUser(res.data));
         setIsSaved((prev) => !prev);
