@@ -22,7 +22,7 @@ export default function useFollowUser(userData) {
     }
 
     try {
-      setIsLoading((pre) => true);
+      setIsLoading((prev) => true);
       const res = await API.followUser(user.username, {
         username: userData.username,
       });
@@ -39,7 +39,24 @@ export default function useFollowUser(userData) {
     }
   };
 
-  const handleUnfollowClick = () => {};
+  const handleUnfollowClick = async () => {
+    try {
+      setIsLoading(() => true);
+      const res = await API.unfollowUser(user.username, {
+        username: userData.username,
+      });
+
+      if (res.status === 200) {
+        setFollowers(res.data.targetUser.followers.length);
+        dispatch(updateCurrentUser(res.data.savedUser));
+        setIsFollowing(() => false);
+        setIsLoading(() => false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(() => false);
+    }
+  };
 
   return {
     isFollowing,

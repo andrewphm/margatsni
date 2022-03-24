@@ -16,25 +16,18 @@ export default async function handler(req, res) {
       const index = user.following.indexOf(targetUser.username);
       user.following.splice(index, 1);
       savedUser = await user.save();
-
-      console.log(user.username, ' unfollowed ', targetUser.username);
     }
 
     if (targetUser.followers.includes(user.username)) {
       const index = targetUser.followers.indexOf(user.username);
       targetUser.followers.splice(index, 1);
       savedTargetUser = await targetUser.save();
-
-      console.log(
-        'Removed ',
-        user.username,
-        ' from ',
-        targetUser.username,
-        ' follower list'
-      );
     }
 
-    return res.status(200).json(savedUser);
+    return res.status(200).json({
+      targetUser: savedTargetUser || targetUser,
+      savedUser: savedUser,
+    });
   } catch (error) {
     console.log(error);
     return res

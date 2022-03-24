@@ -14,25 +14,17 @@ export default async function handler(req, res) {
     if (!user.following.includes(targetUser.username)) {
       user.following.push(targetUser.username);
       savedUser = await user.save();
-
-      console.log(user.username, ' following ', targetUser.username);
     }
 
     if (!targetUser.followers.includes(user.username)) {
       targetUser.followers.push(user.username);
       savedTargetUser = await targetUser.save();
-
-      console.log(
-        'Add ',
-        user.username,
-        ' to follower list of ',
-        targetUser.username
-      );
     }
 
-    return res
-      .status(200)
-      .json({ targetUser: targetUser, savedUser: savedUser });
+    return res.status(200).json({
+      targetUser: savedTargetUser || targetUser,
+      savedUser: savedUser,
+    });
   } catch (error) {
     console.log(error);
     return res
