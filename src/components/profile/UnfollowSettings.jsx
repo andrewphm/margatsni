@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import nopfp from '../../../public/images/nopfp.jpeg';
+import { useSelector } from 'react-redux';
 
 export default function UnfollowSettings({
   setShowUnfollowSettings,

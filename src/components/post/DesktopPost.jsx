@@ -8,6 +8,7 @@ import useCommentPost from '../../hooks/useCommentPost';
 import useSavePost from '../../hooks/useSavePost';
 import UnfollowSettings from '../profile/UnfollowSettings';
 import useFollowUser from '../../hooks/useFollowUser';
+import { useSelector } from 'react-redux';
 
 const DesktopPost = ({ userData, post }) => {
   const [comments, setComments] = useState(post.comments);
@@ -20,6 +21,8 @@ const DesktopPost = ({ userData, post }) => {
   const [showUnfollowSettings, setShowUnfollowSettings] = useState(false);
   const { handleFollowClick, handleUnfollowClick, isFollowing } =
     useFollowUser(userData);
+
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <>
@@ -66,26 +69,49 @@ const DesktopPost = ({ userData, post }) => {
                   <h1 className="text-sm font-semibold">{userData.username}</h1>
                 </a>
               </Link>
+
+              {userData.username !== user?.username && (
+                <div className="relative -left-1">
+                  <span className="pr-2">•</span>
+                  {isFollowing ? (
+                    <button
+                      className="text-sm text-blue-btn font-semibold"
+                      onClick={() => setShowUnfollowSettings((prev) => true)}
+                    >
+                      Following
+                    </button>
+                  ) : (
+                    <button
+                      className="text-sm text-blue-btn font-semibold "
+                      onClick={handleFollowClick}
+                    >
+                      Follow
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
 
-            <div
-              onClick={() => setShowUnfollowSettings((prev) => true)}
-              className="absolute right-4 top-3 cursor-pointer"
-            >
-              <svg
-                aria-label="More options"
-                color="#262626"
-                fill="#262626"
-                height="24"
-                role="img"
-                viewBox="0 0 24 24"
-                width="24"
+            {/* {userData.username !== user?.username && user && (
+              <div
+                onClick={() => setShowUnfollowSettings((prev) => true)}
+                className="absolute right-4 top-3 cursor-pointer"
               >
-                <circle cx="12" cy="12" r="1.5"></circle>
-                <circle cx="6" cy="12" r="1.5"></circle>
-                <circle cx="18" cy="12" r="1.5"></circle>
-              </svg>
-            </div>
+                <svg
+                  aria-label="More options"
+                  color="#262626"
+                  fill="#262626"
+                  height="24"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <circle cx="12" cy="12" r="1.5"></circle>
+                  <circle cx="6" cy="12" r="1.5"></circle>
+                  <circle cx="18" cy="12" r="1.5"></circle>
+                </svg>
+              </div>
+            )} */}
           </header>
 
           {/* Comments */}
