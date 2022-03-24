@@ -25,11 +25,14 @@ export default async function handler(req, res) {
       console.log(
         'Add ',
         user.username,
-        ' to follower list of '.targetUser.username
+        ' to follower list of ',
+        targetUser.username
       );
     }
 
-    return res.status(200).json(savedUser);
+    return res
+      .status(200)
+      .json({ targetUser: targetUser, savedUser: savedUser });
   } catch (error) {
     console.log(error);
     return res

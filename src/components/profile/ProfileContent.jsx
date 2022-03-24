@@ -278,9 +278,9 @@ const ProfileContent = ({ userPosts }) => {
       {/* Show posts */}
       {tab === 'posts' && (
         <>
-          {userPosts.length === 0 && path === user.username && <NoPost />}
+          {userPosts.length === 0 && path === user?.username && <NoPost />}
 
-          {userPosts.length === 0 && path !== user.username && (
+          {userPosts.length === 0 && path !== user?.username && (
             <div className="flex w-full items-center justify-center">
               <div className="flex flex-col items-center justify-center gap-y-4 py-12">
                 <svg
