@@ -42,6 +42,14 @@ const apiCalls = {
     const res = await axios.post(`${BASE_URL}user/unsave/${username}`, body);
     return res;
   },
+  followUser: async (username, body) => {
+    const res = await axios.post(`${BASE_URL}user/follow/${username}`, body);
+    return res;
+  },
+  unfollowUser: async (username, body) => {
+    const res = await axios.post(`${BASE_URL}user/unfollow/${username}`, body);
+    return res;
+  },
 };
 
 export default apiCalls;
