@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
-
 import nopfp from '../../../public/images/nopfp.jpeg';
+import useFollowUser from '../../hooks/useFollowUser';
 
 const ProfileInfo = ({ userData, userPosts }) => {
-  const user = useSelector((state) => state.user.currentUser);
+  const { isFollowing } = useFollowUser(userData);
+
+  console.log(isFollowing);
 
   return (
     <div className="mx-auto flex w-full flex-col md:max-w-4xl">

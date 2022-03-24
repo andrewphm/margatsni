@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import useCommentPost from '../../hooks/useCommentPost';
 import useLikePost from '../../hooks/useLikePost';
+import useSavePost from '../../hooks/useSavePost';
 
 const MobilePost = ({ userData, post }) => {
   const handleExpandComment = () => {
@@ -27,6 +28,9 @@ const MobilePost = ({ userData, post }) => {
   const [showComments, setShowComments] = useState(3);
 
   const { isLiked, handleLikeClick, likes } = useLikePost(post);
+
+  const { isSaved, handleSavePostClick, handleUnsavePostClick } =
+    useSavePost(post);
 
   return (
     <article className="h-full min-h-[80vh] w-full md:hidden">
@@ -155,8 +159,9 @@ const MobilePost = ({ userData, post }) => {
         </div>
         {/* Save */}
         <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
-          {true ? (
+          {isSaved ? (
             <svg
+              onClick={handleUnsavePostClick}
               aria-label="Remove"
               color="#262626"
               fill="#262626"
@@ -169,6 +174,7 @@ const MobilePost = ({ userData, post }) => {
             </svg>
           ) : (
             <svg
+              onClick={handleSavePostClick}
               aria-label="Save"
               color="currentColor"
               fill="currentColor"

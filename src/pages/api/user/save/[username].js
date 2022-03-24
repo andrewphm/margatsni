@@ -8,6 +8,10 @@ export default async function handler(req, res) {
   try {
     await dbConnect();
     const user = await User.findOne({ username });
+
+    if (user.savedPosts.includes(postID)) {
+      return res.status(200).json(user);
+    }
     user.savedPosts.push(postID);
     const savedUser = await user.save();
     return res.status(200).json(savedUser);
