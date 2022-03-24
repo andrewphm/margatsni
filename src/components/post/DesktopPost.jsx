@@ -6,6 +6,7 @@ import { useState } from 'react';
 import useLikePost from '../../hooks/useLikePost';
 
 import useCommentPost from '../../hooks/useCommentPost';
+import useSavePost from '../../hooks/useSavePost';
 
 const DesktopPost = ({ userData, post }) => {
   const [comments, setComments] = useState(post.comments);
@@ -13,6 +14,9 @@ const DesktopPost = ({ userData, post }) => {
     useCommentPost(setComments);
 
   const { isLiked, handleLikeClick, likes } = useLikePost(post);
+
+  const { isSaved, handleSavePostClick, handleUnsavePostClick } =
+    useSavePost(post);
 
   return (
     <article className="mx-auto md:flex max-h-[525px] min-h-[500px] w-full border border-neutral-300 bg-white md:max-w-3xl lg:max-w-5xl hidden">
@@ -208,8 +212,9 @@ const DesktopPost = ({ userData, post }) => {
             </div>
             {/* Save */}
             <div className="cursor-pointer hover:scale-[1.05] hover:text-gray-500">
-              {true ? (
+              {isSaved ? (
                 <svg
+                  onClick={handleUnsavePostClick}
                   aria-label="Remove"
                   color="#262626"
                   fill="#262626"
@@ -222,6 +227,7 @@ const DesktopPost = ({ userData, post }) => {
                 </svg>
               ) : (
                 <svg
+                  onClick={handleSavePostClick}
                   aria-label="Save"
                   color="currentColor"
                   fill="currentColor"

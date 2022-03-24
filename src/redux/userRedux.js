@@ -24,10 +24,18 @@ const userSlice = createSlice({
     clearCurrentUser: (state) => {
       state.currentUser = null;
     },
+    updateCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
+    },
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure, clearCurrentUser } =
-  userSlice.actions;
+export const {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  clearCurrentUser,
+  updateCurrentUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;
