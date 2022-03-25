@@ -51,7 +51,7 @@ const apiCalls = {
     return res;
   },
   fetchTimeline: async (username) => {
-    const res = await axios.post(`${BASE_URL}user/unfollow/${username}`);
+    const res = await axios.post(`${BASE_URL}user/timeline/${username}`);
     return res;
   },
 };

@@ -22,23 +22,25 @@ export default function UserPost({ post, userData }) {
   if (!post) {
     return (
       <Layout>
-        <div className="my-10 mx-auto flex flex-col gap-y-5 px-10 text-center">
-          <p className="text-2xl font-semibold">
-            Sorry, this page is not available.
-          </p>
+        <section className="h-full w-full">
+          <div className="my-10 mx-auto flex flex-col gap-y-5 px-10 text-center">
+            <p className="text-2xl font-semibold">
+              Sorry, this page is not available.
+            </p>
 
-          <p>
-            The link you followed may be broken, or the page may have been
-            removed.{' '}
-            <Link href="/">
-              <a>
-                <span className="cursor-pointer text-blue-btn">
-                  Click here to go back home.
-                </span>
-              </a>
-            </Link>
-          </p>
-        </div>
+            <p>
+              The link you followed may be broken, or the page may have been
+              removed.{' '}
+              <Link href="/">
+                <a>
+                  <span className="cursor-pointer text-blue-btn">
+                    Click here to go back home.
+                  </span>
+                </a>
+              </Link>
+            </p>
+          </div>
+        </section>
       </Layout>
     );
   }

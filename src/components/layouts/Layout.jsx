@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
   return (
     <main className="relative flex min-h-screen flex-col justify-between">
       <Header />
-      <section className="h-full w-full">{children}</section>
+      {children}
       <Footer />
     </main>
   );

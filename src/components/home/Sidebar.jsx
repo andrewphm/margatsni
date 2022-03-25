@@ -1,5 +1,13 @@
-const Sidebar = () => {
-  return <div>Sidebar</div>
-}
+import { useSelector } from 'react-redux';
 
-export default Sidebar
+const Sidebar = () => {
+  const user = useSelector((state) => state.user.currentUser);
+
+  return (
+    <div className="flex flex-col fixed right-0">
+      <div>Sidebar</div>
+    </div>
+  );
+};
+
+export default Sidebar;
