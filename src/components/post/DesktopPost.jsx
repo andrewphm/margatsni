@@ -48,7 +48,7 @@ const DesktopPost = ({ userData, post }) => {
         </div>
 
         {/* Info */}
-        <div className="flex min-h-[450px] min-w-[345px] flex-col overflow-hidden">
+        <div className="flex min-h-[450px] min-w-[345px] max-w-[350px] flex-col overflow-hidden">
           <header className="h-[60px] w-full border-b border-b-neutral-200 relative">
             <div className="flex h-full w-full items-center gap-x-3 px-4 py-2">
               <Link href={`/${userData.username}`}>
@@ -94,7 +94,7 @@ const DesktopPost = ({ userData, post }) => {
           </header>
 
           {/* Comments */}
-          <div className="h-full overflow-y-auto border-b border-b-neutral-200">
+          <div className="h-full overflow-y-auto overflow-x-hidden border-b border-b-neutral-200">
             <ul className="flex w-full flex-col gap-y-3 px-4 py-2">
               {post.caption.length > 0 && (
                 <li className="flex items-center gap-x-3 text-sm">
@@ -127,9 +127,9 @@ const DesktopPost = ({ userData, post }) => {
                   return (
                     <li
                       key={i}
-                      className="flex items-center gap-x-3 text-sm w-full justify-between"
+                      className="flex items-center gap-x-3 text-sm w-full justify-between overflow-hidden truncate"
                     >
-                      <div className="flex items-center gap-x-3">
+                      <div className="flex items-start gap-x-3">
                         <Link href={`/${username}`}>
                           <a>
                             <div
@@ -141,21 +141,20 @@ const DesktopPost = ({ userData, post }) => {
                           </a>
                         </Link>
 
-                        <p className="leading-4">
+                        <span className="leading-4 truncate w-full whitespace-normal">
                           <Link href={`/${username}`}>
                             <a>
                               <span className="font-semibold">{username} </span>
                             </a>
                           </Link>
                           {comment}
-                        </p>
+                          <p className="text-[10px] text-gray-500">
+                            {formatDistance(new Date(createdAt), new Date(), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        </span>
                       </div>
-
-                      <p className="text-[10px] text-gray-500">
-                        {formatDistance(new Date(createdAt), new Date(), {
-                          addSuffix: true,
-                        })}
-                      </p>
                     </li>
                   );
                 })}
@@ -334,6 +333,11 @@ const DesktopPost = ({ userData, post }) => {
                 placeholder="Add a comment..."
                 rows={2}
                 value={comment}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleCommentClick(e);
+                  }
+                }}
                 onChange={(e) => setComment((prev) => e.target.value)}
                 className="h-full w-full resize-none bg-transparent px-2 placeholder:text-sm focus:outline-none"
               ></textarea>

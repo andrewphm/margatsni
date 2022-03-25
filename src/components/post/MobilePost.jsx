@@ -293,7 +293,7 @@ const MobilePost = ({ userData, post }) => {
                     key={i}
                     className="flex items-center gap-x-3 text-sm w-full justify-between"
                   >
-                    <div className="flex items-center gap-x-3">
+                    <div className="flex items-start gap-x-3">
                       <Link href={`/${username}`}>
                         <a>
                           <div
@@ -305,21 +305,20 @@ const MobilePost = ({ userData, post }) => {
                         </a>
                       </Link>
 
-                      <p className="leading-4">
+                      <span className="leading-4">
                         <Link href={`/${username}`}>
                           <a>
                             <span className="font-semibold">{username} </span>
                           </a>
                         </Link>
                         {comment}
-                      </p>
+                        <p className="text-[10px] text-gray-500">
+                          {formatDistance(new Date(createdAt), new Date(), {
+                            addSuffix: true,
+                          })}
+                        </p>
+                      </span>
                     </div>
-
-                    <p className="text-[10px] text-gray-500">
-                      {formatDistance(new Date(createdAt), new Date(), {
-                        addSuffix: true,
-                      })}
-                    </p>
                   </li>
                 );
               })}

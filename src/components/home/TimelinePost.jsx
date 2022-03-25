@@ -5,7 +5,6 @@ import useFollowUser from 'src/hooks/useFollowUser';
 import useSavePost from 'src/hooks/useSavePost';
 import useLikePost from 'src/hooks/useLikePost';
 import nopfp from '../../../public/images/nopfp.jpeg';
-import apiCalls from 'src/apiCalls';
 import Link from 'next/link';
 import UnfollowSettings from '../profile/UnfollowSettings';
 import { useState } from 'react';
@@ -15,8 +14,10 @@ const TimelinePost = ({ post }) => {
   const [showUnfollowSettings, setShowUnfollowSettings] = useState(false);
 
   const [comments, setComments] = useState(post.comments);
-  const { isLoading, comment, setComment, handleCommentClick } =
-    useCommentPost(setComments);
+  const { isLoading, comment, setComment, handleCommentClick } = useCommentPost(
+    setComments,
+    post
+  );
   const { userData } = useFetchUser(post.username);
   const { isLiked, handleLikeClick, likes } = useLikePost(post);
   const { isSaved, handleSavePostClick, handleUnsavePostClick } =
@@ -257,60 +258,59 @@ const TimelinePost = ({ post }) => {
             </p>
           </div>
 
-          {comments.length > 0 && (
-            <div className="flex flex-col px-4 py-1">
-              <ul className="flex flex-col gap-y-2">
-                {comments.map(({ username, comment, image, createdAt }, i) => {
-                  if (i >= showComments) return null;
+          {/* comments */}
+          <div className="flex flex-col px-4 py-2">
+            <ul className="flex flex-col gap-y-3">
+              {comments.map(({ username, comment, image, createdAt }, i) => {
+                if (i >= showComments) return null;
 
-                  return (
-                    <li
-                      key={i}
-                      className="flex items-center gap-x-3 text-sm w-full justify-between"
-                    >
-                      <div className="flex items-center gap-x-3">
+                return (
+                  <li
+                    key={i}
+                    className="flex items-center gap-x-3 text-sm w-full justify-between"
+                  >
+                    <div className="flex items-start gap-x-3">
+                      <Link href={`/${username}`}>
+                        <a>
+                          <div
+                            className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
+                       rounded-full"
+                          >
+                            <Image src={image || nopfp} alt="" />
+                          </div>
+                        </a>
+                      </Link>
+
+                      <span className="leading-4">
                         <Link href={`/${username}`}>
                           <a>
-                            <div
-                              className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
-                       rounded-full"
-                            >
-                              <Image src={image || nopfp} alt="" />
-                            </div>
+                            <span className="font-semibold">{username} </span>
                           </a>
                         </Link>
+                        {comment}
 
-                        <p className="leading-4">
-                          <Link href={`/${username}`}>
-                            <a>
-                              <span className="font-semibold">{username} </span>
-                            </a>
-                          </Link>
-                          {comment}
+                        <p className="text-[10px] text-gray-500">
+                          {formatDistance(new Date(createdAt), new Date(), {
+                            addSuffix: true,
+                          })}
                         </p>
-                      </div>
-
-                      <p className="text-[10px] text-gray-500">
-                        {formatDistance(new Date(createdAt), new Date(), {
-                          addSuffix: true,
-                        })}
-                      </p>
-                    </li>
-                  );
-                })}
-                {showComments < comments.length && (
-                  <li>
-                    <p
-                      onClick={() => setShowComments((prev) => prev + 3)}
-                      className="cursor-pointer text-[14px] font-medium text-neutral-500"
-                    >
-                      Show more comments
-                    </p>
+                      </span>
+                    </div>
                   </li>
-                )}
-              </ul>
-            </div>
-          )}
+                );
+              })}
+              {showComments < comments.length && (
+                <li>
+                  <p
+                    onClick={() => setShowComments((prev) => prev + 3)}
+                    className="cursor-pointer text-[14px] font-medium text-neutral-500"
+                  >
+                    Show more comments
+                  </p>
+                </li>
+              )}
+            </ul>
+          </div>
 
           {/* Write a comment */}
           <div
@@ -331,8 +331,13 @@ const TimelinePost = ({ post }) => {
             <textarea
               name="comment"
               placeholder="Add a comment..."
-              rows={2}
+              rows={1}
               value={comment}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleCommentClick(e);
+                }
+              }}
               onChange={(e) => setComment((prev) => e.target.value)}
               className="h-full w-full resize-none bg-transparent px-2 placeholder:text-sm focus:outline-none"
             ></textarea>

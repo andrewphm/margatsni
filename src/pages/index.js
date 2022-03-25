@@ -1,14 +1,20 @@
 import Head from 'next/head';
 import dbConnect from 'src/lib/dbConnect';
 import apiCalls from 'src/apiCalls';
-import Layout from '../components/layouts/Layout';
 import Header from '../components/common/Header';
-import Footer from '../components/common/Footer';
 import Timeline from '~/components/home/Timeline';
 import Sidebar from '~/components/home/Sidebar';
 import { jwtVerify } from 'jose';
+import dynamic from 'next/dynamic';
 
 const Home = ({ timelinePosts }) => {
+  /*
+  Encountering a very strange bug where Nextjs Severless function will time-out if these UI components are not dynamically imported after the severless function completes.
+  */
+  const Timeline = dynamic(() => import('../components/home/Timeline.jsx'));
+  const Sidebar = dynamic(() => import('../components/home/Sidebar.jsx'));
+  const Header = dynamic(() => import('../components/common/Header'));
+
   return (
     <>
       <Head>

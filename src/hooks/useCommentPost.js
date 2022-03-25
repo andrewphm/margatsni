@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import API from '../apiCalls';
 
-const useCommentPost = (setComments) => {
+const useCommentPost = (setComments, post) => {
   const user = useSelector((state) => state.user.currentUser);
   const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState('');
   const router = useRouter();
-  const {
-    query: { postID },
-  } = router;
+
+  const postID = post?._id || router.query.postID;
 
   const handleCommentClick = async (e) => {
     e.preventDefault();
