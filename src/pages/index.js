@@ -1,9 +1,5 @@
-import Head from 'next/head';
 import dbConnect from 'src/lib/dbConnect';
 import apiCalls from 'src/apiCalls';
-import Header from '../components/common/Header';
-import Timeline from '~/components/home/Timeline';
-import Sidebar from '~/components/home/Sidebar';
 import { jwtVerify } from 'jose';
 import dynamic from 'next/dynamic';
 
@@ -14,6 +10,7 @@ const Home = ({ timelinePosts }) => {
   const Timeline = dynamic(() => import('../components/home/Timeline.jsx'));
   const Sidebar = dynamic(() => import('../components/home/Sidebar.jsx'));
   const Header = dynamic(() => import('../components/common/Header'));
+  const Head = dynamic(() => import('next/head'));
 
   return (
     <>
