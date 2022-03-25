@@ -9,12 +9,14 @@ export default function useFollowUser(userData) {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+
   const [isFollowing, setIsFollowing] = useState(
-    user?.following.includes(userData.username)
+    user?.following.includes(userData?.username)
   );
+
   const router = useRouter();
 
-  const [followers, setFollowers] = useState(userData.followers.length);
+  const [followers, setFollowers] = useState(userData?.followers.length);
 
   const handleFollowClick = async () => {
     if (!user) {
@@ -24,7 +26,7 @@ export default function useFollowUser(userData) {
     try {
       setIsLoading((prev) => true);
       const res = await API.followUser(user?.username, {
-        username: userData.username,
+        username: userData?.username,
       });
 
       if (res.status === 200) {
@@ -43,7 +45,7 @@ export default function useFollowUser(userData) {
     try {
       setIsLoading(() => true);
       const res = await API.unfollowUser(user?.username, {
-        username: userData.username,
+        username: userData?.username,
       });
 
       if (res.status === 200) {

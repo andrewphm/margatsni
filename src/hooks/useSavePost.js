@@ -4,7 +4,7 @@ import API from '../apiCalls';
 import { updateCurrentUser } from '../redux/userRedux';
 import { useDispatch } from 'react-redux';
 
-function useSavedPost(post) {
+function useSavePost(post) {
   const user = useSelector((state) => state.user.currentUser);
   const [isSaved, setIsSaved] = useState(user?.savedPosts.includes(post._id));
   const dispatch = useDispatch();
@@ -36,4 +36,4 @@ function useSavedPost(post) {
   return { isSaved, handleSavePostClick, handleUnsavePostClick };
 }
 
-export default useSavedPost;
+export default useSavePost;

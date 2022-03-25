@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import API from '../apiCalls';
 
-const usePostComment = (setComments) => {
+const useCommentPost = (setComments) => {
   const user = useSelector((state) => state.user.currentUser);
   const [isLoading, setIsLoading] = useState(false);
   const [comment, setComment] = useState('');
@@ -44,4 +44,4 @@ const usePostComment = (setComments) => {
   return { comment, setComment, isLoading, setIsLoading, handleCommentClick };
 };
 
-export default usePostComment;
+export default useCommentPost;

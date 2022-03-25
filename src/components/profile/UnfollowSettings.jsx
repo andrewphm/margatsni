@@ -24,11 +24,11 @@ export default function UnfollowSettings({
               alt=""
               layout="fill"
               className="rounded-full"
-              src={userData.image || nopfp}
+              src={userData?.image || nopfp}
               priority={true}
             />
           </div>
-          <p className="pt-4">Unfollow @{userData.username}?</p>
+          <p className="pt-4">Unfollow @{userData?.username}?</p>
         </div>
         <ul className="w-full">
           <li

@@ -54,6 +54,11 @@ const apiCalls = {
     const res = await axios.post(`${BASE_URL}user/timeline/${username}`);
     return res;
   },
+  fetchUser: async (username) => {
+    const res = await axios.get(`${BASE_URL}user/${username}`);
+
+    return res;
+  },
 };
 
 export default apiCalls;
