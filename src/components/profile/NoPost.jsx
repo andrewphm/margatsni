@@ -23,7 +23,7 @@ export default function NoPost() {
 
         <div className="flex flex-col w-full items-center justify-center text-center order-1 md:order-1 py-8">
           <p className="font-semibold text-base xs:text-lg">
-            Star capturing and sharing your moments.
+            Start capturing and sharing your moments.
           </p>
           <p className="text-sm xs:text-base">Add a post to get started.</p>
 

@@ -10,14 +10,14 @@ const Sidebar = () => {
   return (
     <div
       id="sidebar"
-      className="flex flex-col flex-grow sticky top-[90px] h-full max-w-[286px]"
+      className="hidden flex-col flex-grow sticky top-[90px] h-full max-w-[286px] lg1:flex"
     >
       <div className="flex gap-x-4 items-center">
-        <Link href={`/${user.username}`}>
+        <Link href={`/${user?.username}`}>
           <a>
             <div className="relative w-16 h-16 rounded-full border border-neutral-300">
               <Image
-                src={user.image || nopfp}
+                src={user?.image || nopfp}
                 layout="fill"
                 objectFit="contain"
                 className="rounded-full"
@@ -27,12 +27,12 @@ const Sidebar = () => {
           </a>
         </Link>
         <div className="flex flex-col text-sm">
-          <Link href={`/${user.username}`}>
+          <Link href={`/${user?.username}`}>
             <a>
-              <p className="font-bold">{user.username}</p>
+              <p className="font-bold">{user?.username}</p>
             </a>
           </Link>
-          <p className="text-neutral-500 font-medium">{user.fullName}</p>
+          <p className="text-neutral-500 font-medium">{user?.fullName}</p>
         </div>
       </div>
 

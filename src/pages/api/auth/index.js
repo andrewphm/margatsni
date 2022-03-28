@@ -24,17 +24,18 @@ export default async function handler(req, res) {
         let newUser = new User({ username, fullName, hashedPassword, email });
         let savedUser = await newUser.save();
 
-        // Create JWT
-        // const accessToken = jwt.sign(
-        //   {
-        //     id: savedUser._id,
-        //     isAdmin: savedUser.isAdmin,
-        //   },
-        //   process.env.JWT_SEC,
-        //   {
-        //     expiresIn: '10d',
-        //   }
-        // )
+        // Automatically adding a new user to users 'andrew', 'john', 'demo' follower list
+        let andrew = User.findOne({ username: 'andrew' });
+        let demo = User.findOne({ username: 'demo' });
+        let john = User.findOne({ username: 'john' });
+        andrew.followers.push(savedUser.username);
+        demo.followers.push(savedUser.username);
+        john.followers.push(savedUser.username);
+
+        await andrew.save();
+        await demo.save();
+        await john.save();
+
         const token = await new SignJWT({
           isAdmin: savedUser.isAdmin,
           username: savedUser.username,
