@@ -7,7 +7,7 @@ import useLikePost from 'src/hooks/useLikePost';
 import nopfp from '../../../public/images/nopfp.jpeg';
 import Link from 'next/link';
 import UnfollowSettings from '../profile/UnfollowSettings';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { formatDistance } from 'date-fns';
 
 const TimelinePost = ({ post }) => {
@@ -27,10 +27,10 @@ const TimelinePost = ({ post }) => {
     useFollowUser(userData);
 
   const [showMoreCaption, setShowMoreCaption] = useState(false);
+  const captionRef = useRef(null);
   const handleShowMoreCaption = () => {
     setShowMoreCaption((prev) => !prev);
-    const caption = document.getElementById('caption');
-    caption.classList.add('whitespace-normal');
+    captionRef.current.classList.add('whitespace-normal');
   };
   const [showComments, setShowComments] = useState(3);
 
@@ -228,29 +228,27 @@ const TimelinePost = ({ post }) => {
           </div>
 
           {/* Caption */}
-          {post.caption && (
-            <div className="w-full px-4">
-              <p id="caption" className="truncate">
-                <Link href={`/${userData?.username}`}>
-                  <a>
-                    <span className="font-semibold">{userData?.username}</span>
-                  </a>
-                </Link>{' '}
-                {post.caption}
+          <div className="w-full px-4">
+            <p className="truncate leading-5" ref={captionRef}>
+              <Link href={`/${userData?.username}`}>
+                <a>
+                  <span className="font-semibold">{userData?.username}</span>
+                </a>
+              </Link>{' '}
+              {post.caption}
+            </p>
+            {post.caption.length > 50 && !showMoreCaption && (
+              <p
+                onClick={handleShowMoreCaption}
+                className="cursor-pointer font-medium text-neutral-500"
+              >
+                more
               </p>
-              {post.caption.length > 50 && !showMoreCaption && (
-                <p
-                  onClick={handleShowMoreCaption}
-                  className="cursor-pointer font-medium text-neutral-500"
-                >
-                  more
-                </p>
-              )}
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Date */}
-          <div className="mb-2 px-4 text-[11px] text-neutral-500">
+          <div className="my-2 px-4 text-[11px] text-neutral-500">
             <p>
               {formatDistance(new Date(post.createdAt), new Date(), {
                 addSuffix: true,

@@ -22,8 +22,8 @@ const Home = ({ timelinePosts }) => {
       <>
         <Header />
         <section className="mx-auto my-0 max-w-5xl w-full  max-h-[90%] flex relative justify-center lg1:mt-6">
-          <Timeline timelinePosts={timelinePosts} />
-          <Sidebar />
+          {/* <Timeline timelinePosts={timelinePosts} /> */}
+          {/* <Sidebar /> */}
         </section>
       </>
     </>
