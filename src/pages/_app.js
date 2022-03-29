@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 // Redux
 import { store, persistor } from '../redux/store';
