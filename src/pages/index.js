@@ -7,8 +7,8 @@ const Home = ({ timelinePosts }) => {
   /*
   Encountering a very strange bug where Nextjs Severless function will time-out if these UI components are not dynamically imported after the severless function completes.
   */
-  const Timeline = dynamic(() => import('../components/home/Timeline.jsx'));
-  const Sidebar = dynamic(() => import('../components/home/Sidebar.jsx'));
+  // const Timeline = dynamic(() => import('../components/home/Timeline.jsx'));
+  // const Sidebar = dynamic(() => import('../components/home/Sidebar.jsx'));
   const Header = dynamic(() => import('../components/common/Header'));
   const Head = dynamic(() => import('next/head'));
 
@@ -24,6 +24,7 @@ const Home = ({ timelinePosts }) => {
         <section className="mx-auto my-0 max-w-5xl w-full  max-h-[90%] flex relative justify-center lg1:mt-6">
           {/* <Timeline timelinePosts={timelinePosts} /> */}
           {/* <Sidebar /> */}
+          <p>{JSON.stringify(timelinePosts)}</p>
         </section>
       </>
     </>
