@@ -12,7 +12,7 @@ const SettingTab = ({ tab, setTab }) => {
   };
 
   return (
-    <div className="overflow-hidden flex flex-col border-r">
+    <div className="overflow-hidden flex flex-col border-r max-w-[64px] sm:max-w-none">
       <div
         onClick={handleTabClick}
         id="profile"

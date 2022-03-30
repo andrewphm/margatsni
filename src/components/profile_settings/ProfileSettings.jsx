@@ -56,9 +56,9 @@ const ProfileSettings = () => {
 
   return (
     <div className="w-full min-h-[70vh]">
-      <div className="flex py-8 px-20 flex-col gap-y-6">
+      <div className="flex py-8 md:px-20 flex-col gap-y-6 px-3">
         <div className="flex items-center gap-x-6">
-          <div className="min-w-[125px] flex justify-end">
+          <div className="md:min-w-[125px] flex justify-end">
             <div className="relative min-w-[64px] min-h-[64px] rounded-full border">
               <Image
                 src={user?.image || nopfp}
@@ -113,8 +113,8 @@ const ProfileSettings = () => {
           </div>
         </div>
 
-        <div className="flex items-start gap-x-6 w-full">
-          <div className="min-w-[125px] text-right font-semibold text-base">
+        <div className="flex items-start gap-x-6 w-full md:flex-row flex-col gap-y-2">
+          <div className="md:min-w-[125px] text-right font-semibold text-base">
             <p>Name</p>
           </div>
           <div className="flex-grow w-full">
@@ -138,8 +138,8 @@ const ProfileSettings = () => {
           </div>
         </div>
 
-        <div className="flex items-start gap-x-6 w-full">
-          <div className="min-w-[125px] text-right font-semibold text-base">
+        <div className="flex items-start gap-x-6 w-full md:flex-row flex-col gap-y-2">
+          <div className="md:min-w-[125px] text-right font-semibold text-base">
             <p>Username</p>
           </div>
           <div className="flex-grow w-full">
@@ -161,8 +161,8 @@ const ProfileSettings = () => {
           </div>
         </div>
 
-        <div className="flex items-start gap-x-6 w-full">
-          <div className="min-w-[125px] text-right font-semibold text-base">
+        <div className="flex items-start gap-x-6 w-full md:flex-row flex-col gap-y-2">
+          <div className="md:min-w-[125px] text-right font-semibold text-base">
             <p>Bio</p>
           </div>
           <div className="flex-grow w-full">
@@ -186,8 +186,8 @@ const ProfileSettings = () => {
           </div>
         </div>
 
-        <div className="flex items-start gap-x-6 w-full">
-          <div className="min-w-[125px] text-right font-semibold text-base"></div>
+        <div className="flex items-start gap-x-6 w-full md:flex-row flex-col gap-y-2">
+          <div className="md:min-w-[125px] text-right font-semibold text-base"></div>
           <div className="flex-grow w-full">
             <p className="text-neutral-500 text-sm mt-2 w-11/12 font-semibold">
               Personal Information
@@ -200,8 +200,8 @@ const ProfileSettings = () => {
           </div>
         </div>
 
-        <div className="flex items-start gap-x-6 w-full">
-          <div className="min-w-[125px] text-right font-semibold text-base">
+        <div className="flex items-start gap-x-6 w-full md:flex-row flex-col gap-y-2">
+          <div className="md:min-w-[125px] text-right font-semibold text-base">
             <p>Email</p>
           </div>
           <div className="flex-grow w-full">
