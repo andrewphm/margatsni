@@ -3,10 +3,10 @@
 @tailwind utilities;
 @layer components {
   .setting__tab {
-    @apply px-2 sm:px-3 lg:px-4 py-3 flex items-center gap-x-2 w-full justify-center md:justify-start;
+    @apply px-2 sm:px-3 lg:px-4 py-3 flex items-center gap-x-2 w-full justify-center md:justify-start hover:bg-neutral-100 cursor-pointer;
   }
   .setting__tab-text {
-    @apply hidden md:inline-flex leading-4 text-sm font-medium;
+    @apply hidden md:inline-flex leading-4 text-sm font-medium hover:font-semibold;
   }
 }
 

@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const router = useRouter();
 
   return (
-    <main className="relative flex min-h-screen flex-col justify-between items-center">
+    <main className="relative flex min-h-screen flex-col justify-between">
       <Header />
       {children}
       <Footer />

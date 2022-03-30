@@ -1,37 +1,22 @@
 import Layout from '~/components/layouts/Layout';
 import { useState } from 'react';
-import {
-  ManageAccounts,
-  Lock,
-  Notifications,
-  Shield,
-} from '@mui/icons-material';
+import SettingTab from '~/components/profile_settings/SettingTab';
+import PrivacySettings from '~/components/profile_settings/PrivacySettings';
+import ProfileSettings from '~/components/profile_settings/ProfileSettings';
+import NotificationSettings from '~/components/profile_settings/NotificationSettings';
+import PasswordSettings from '~/components/profile_settings/PasswordSettings';
 
 const Settings = () => {
-  const [tab, setTab] = useState(null);
+  const [tab, setTab] = useState('profile');
 
   return (
     <Layout>
-      <section className="w-full max-w-4xl border bg-white grid grid-cols-[1fr,_4fr] min-h-[50vh]">
-        <div className="overflow-hidden flex flex-col border-r">
-          <div className="setting__tab">
-            <ManageAccounts className="text-neutral-400" />
-            <p className="setting__tab-text">Edit Profile</p>
-          </div>
-          <div className="setting__tab">
-            <Lock className="text-neutral-400" />
-            <p className="setting__tab-text">Change Password</p>
-          </div>
-          <div className="setting__tab">
-            <Notifications className="text-neutral-400" />
-            <p className="setting__tab-text">Notifications</p>
-          </div>
-          <div className="setting__tab">
-            <Shield className="text-neutral-400" />
-            <p className="setting__tab-text">Privacy and Security</p>
-          </div>
-        </div>
-        <div>Info</div>
+      <section className="w-full max-w-4xl border bg-white grid grid-cols-[1fr,_4fr] min-h-[50vh] mx-auto">
+        <SettingTab tab={tab} setTab={setTab} />
+        {tab === 'profile' && <ProfileSettings />}
+        {tab === 'password' && <PasswordSettings />}
+        {tab === 'notification' && <NotificationSettings />}
+        {tab === 'privacy' && <PrivacySettings />}
       </section>
     </Layout>
   );
