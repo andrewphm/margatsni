@@ -59,6 +59,11 @@ const apiCalls = {
 
     return res;
   },
+  updateUser: async (body) => {
+    const res = await axios.post(`${BASE_URL}user/${body.username}`, body);
+
+    return res;
+  },
 };
 
 export default apiCalls;

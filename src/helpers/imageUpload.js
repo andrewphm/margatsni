@@ -1,25 +1,26 @@
-import app from '../lib/firebase'
+import app from '../lib/firebase';
 
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from 'firebase/storage'
+} from 'firebase/storage';
 
 const imageUpload = async (file) => {
-  const fileName = new Date().getTime() + file.name
-  const storage = getStorage(app)
-  const storageRef = ref(storage, fileName)
+  const fileName = new Date().getTime() + file.name;
+  const storage = getStorage(app);
+  const storageRef = ref(storage, fileName);
 
   try {
-    const uploadTask = await uploadBytesResumable(storageRef, file)
+    const uploadTask = await uploadBytesResumable(storageRef, file);
 
-    let downloadURL = await getDownloadURL(uploadTask.ref)
+    let downloadURL = await getDownloadURL(uploadTask.ref);
 
-    return downloadURL
+    return downloadURL;
   } catch (error) {
-    return false
+    console.log(error);
+    return false;
   }
 
   // // Register three observers:
@@ -57,6 +58,6 @@ const imageUpload = async (file) => {
   //     })
   //   }
   // )
-}
+};
 
-export default imageUpload
+export default imageUpload;
