@@ -374,7 +374,7 @@ const Header = ({ currentTab }) => {
                     src={user?.image ? user.image : nopfp}
                     className="rounded-full"
                     layout="fill"
-                    objectFit="contain"
+                    objectFit="cover"
                     alt=""
                   />
                 </div>
@@ -537,7 +537,7 @@ const Header = ({ currentTab }) => {
                   src={user?.image ? user.image : nopfp}
                   className="rounded-full"
                   layout="fill"
-                  objectFit="contain"
+                  objectFit="cover"
                   alt=""
                 />
               </div>

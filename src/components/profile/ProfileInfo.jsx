@@ -35,7 +35,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
               src={userData.image || nopfp}
               layout="fill"
               className="rounded-full border"
-              objectFit="contain"
+              objectFit="cover"
               alt="User image"
               priority={true}
             />
@@ -201,10 +201,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
 
             <div className="flex flex-col">
               <p className="font-semibold">{userData.fullName}</p>
-              <p className="max-w-[475px]">
-                This is placeholder, add feature to change later! This is
-                placeholder, add feature to change later!
-              </p>
+              <p className="max-w-[475px]">{userData.bio}</p>
             </div>
           </div>
 
@@ -351,9 +348,7 @@ const ProfileInfo = ({ userData, userPosts }) => {
 
         <div className="flex flex-col px-4 pb-4 sm:px-8 sm:pb-5 md:hidden">
           <h2 className="font-medium">{userData.fullName}</h2>
-          <p className="max-w-[400px] text-sm">
-            This is placeholder, add feature to change later!
-          </p>
+          <p className="max-w-[400px] text-sm">{userData.bio}</p>
         </div>
 
         <div className="w-full border-y border-y-neutral-300 md:hidden">
