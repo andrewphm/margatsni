@@ -19,7 +19,7 @@ const Sidebar = () => {
               <Image
                 src={user?.image || nopfp}
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
                 className="rounded-full"
                 alt=""
               />

@@ -1,30 +1,33 @@
-const secret = process.env.JWT_SEC
-import { USER_TOKEN } from '../constants/routes'
-import { SignJWT, jwtVerify } from 'jose'
+const secret = process.env.JWT_SEC;
+import { USER_TOKEN } from '../constants/routes';
+import { SignJWT, jwtVerify } from 'jose';
 
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
 export default async function middleware(req) {
-  const token = req.cookies[USER_TOKEN]
+  const token = req.cookies[USER_TOKEN];
 
   // Check user-token if attempting to reach main page
-  if (req.nextUrl.pathname === '/') {
+  if (
+    req.nextUrl.pathname === '/' ||
+    req.nextUrl.pathname.includes('/account')
+  ) {
     if (!token) {
-      console.log('No token, redirect to login')
-      const url = req.nextUrl.clone()
-      url.pathname = '/login'
-      return NextResponse.redirect(url)
+      console.log('No token, redirect to login');
+      const url = req.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
     } else {
       try {
         const verified = await jwtVerify(
           token,
           new TextEncoder().encode(secret)
-        )
-        return NextResponse.next()
+        );
+        return NextResponse.next();
       } catch (error) {
-        const url = req.nextUrl.clone()
-        url.pathname = '/login'
-        return NextResponse.redirect(url)
+        const url = req.nextUrl.clone();
+        url.pathname = '/login';
+        return NextResponse.redirect(url);
       }
     }
   }
@@ -36,14 +39,14 @@ export default async function middleware(req) {
         const verified = await jwtVerify(
           token,
           new TextEncoder().encode(secret)
-        )
-        console.log('redirecting to homepage')
-        const url = req.nextUrl.clone()
-        url.pathname = '/'
-        return NextResponse.redirect(url)
+        );
+        console.log('redirecting to homepage');
+        const url = req.nextUrl.clone();
+        url.pathname = '/';
+        return NextResponse.redirect(url);
       } catch (error) {
-        console.log(error)
-        return NextResponse.next()
+        console.log(error);
+        return NextResponse.next();
       }
     }
   }

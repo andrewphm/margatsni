@@ -59,6 +59,7 @@ const DesktopPost = ({ userData, post }) => {
                       layout="fill"
                       objectFit="cover"
                       alt=""
+                      className="rounded-full"
                     />
                   </div>
                 </a>
@@ -104,7 +105,13 @@ const DesktopPost = ({ userData, post }) => {
                         className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
                        rounded-full"
                       >
-                        <Image src={userData.image || nopfp} alt="" />
+                        <Image
+                          src={userData.image || nopfp}
+                          layout="fill"
+                          objectFit="cover"
+                          alt=""
+                          className="rounded-full"
+                        />
                       </div>
                     </a>
                   </Link>
@@ -136,7 +143,13 @@ const DesktopPost = ({ userData, post }) => {
                               className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
                        rounded-full"
                             >
-                              <Image src={image || nopfp} alt="" />
+                              <Image
+                                src={image || nopfp}
+                                layout="fill"
+                                alt=""
+                                objectFit="cover"
+                                className="rounded-full"
+                              />
                             </div>
                           </a>
                         </Link>

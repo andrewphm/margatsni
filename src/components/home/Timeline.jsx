@@ -6,7 +6,7 @@ const Timeline = ({ timelinePosts }) => {
   const { timeline, error } = useFetchUserTimeline();
 
   return (
-    <div className="max-w-[580px] flex w-full lg1:mr-8">
+    <div className="max-w-[580px] flex w-full lg1:mr-8 mb-10">
       <ul className="w-full">
         {timeline ? (
           <>

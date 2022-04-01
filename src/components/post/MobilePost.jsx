@@ -58,7 +58,7 @@ const MobilePost = ({ userData, post }) => {
           <div className="relative h-9 w-9 overflow-hidden rounded-full border border-neutral-400">
             <Image
               src={userData.image || nopfp}
-              objectFit="contain"
+              objectFit="cover"
               layout="fill"
               className="-z-20"
               alt=""
@@ -300,7 +300,13 @@ const MobilePost = ({ userData, post }) => {
                             className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
                        rounded-full"
                           >
-                            <Image src={image || nopfp} alt="" />
+                            <Image
+                              src={image || nopfp}
+                              alt=""
+                              layout="fill"
+                              objectFit="cover"
+                              className="rounded-full"
+                            />
                           </div>
                         </a>
                       </Link>

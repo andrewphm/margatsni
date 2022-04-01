@@ -11,8 +11,8 @@ const ProfileSettings = () => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
   const [form, setForm] = useState({
-    bio: user.bio,
-    fullName: user.fullName,
+    bio: user?.bio,
+    fullName: user?.fullName,
   });
 
   const [isPhotoUploading, setIsPhotoUploading] = useState(false);
@@ -147,7 +147,7 @@ const ProfileSettings = () => {
               type="text"
               className="w-full focus:outline-none border border-neutral-200 rounded-sm px-3 py-1 cursor-not-allowed"
               name="username"
-              value={user.username}
+              value={user?.username}
               disabled={true}
             />
 
@@ -210,7 +210,7 @@ const ProfileSettings = () => {
               className="cursor-not-allowed w-full focus:outline-none border border-neutral-200 rounded-sm px-3 py-1"
               name="email"
               disabled={true}
-              value={user.email}
+              value={user?.email}
             />
             <p className="mt-2 text-xs w-11/12">
               <span className="text-blue-btn">
@@ -224,11 +224,11 @@ const ProfileSettings = () => {
           onClick={handleSubmitClick}
           disabled={
             isLoading ||
-            (form.bio === user.bio && form.fullName === user.fullName)
+            (form.bio === user?.bio && form.fullName === user?.fullName)
           }
           className={`mx-auto text-white bg-blue-btn px-3 py-1 rounded-lg font-semibold mt-2 min-w-[80px] ${
-            form.bio === user.bio &&
-            form.fullName === user.fullName &&
+            form.bio === user?.bio &&
+            form.fullName === user?.fullName &&
             'opacity-50'
           } ${isLoading && 'opacity-50 cursor-not-allowed'}`}
         >

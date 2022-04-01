@@ -51,7 +51,7 @@ const TimelinePost = ({ post }) => {
                 src={userData?.image || nopfp}
                 alt=""
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
                 className="rounded-full"
               />
             </div>
@@ -274,7 +274,12 @@ const TimelinePost = ({ post }) => {
                             className="relative max-h-8 min-h-[32px] min-w-[32px] max-w-[32px]
                        rounded-full"
                           >
-                            <Image src={image || nopfp} alt="" />
+                            <Image
+                              src={image || nopfp}
+                              alt="Comment Profile Photo"
+                              layout="fill"
+                              objectFit="cover"
+                            />
                           </div>
                         </a>
                       </Link>
