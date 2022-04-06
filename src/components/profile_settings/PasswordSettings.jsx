@@ -25,12 +25,12 @@ const PasswordSettings = () => {
   };
 
   return (
-    <div className="w-full min-h-[70vh] px-1 py-4">
+    <div className="w-full min-h-[70vh] px-1 py-4 xs:px-5 sm:px-8 sm:py-8">
       <div className="flex items-center gap-x-4 mb-3">
-        <div className="flex justify-end">
+        <div className="flex justify-end sm:min-w-[200px]">
           <Link href={`/${user?.username}`}>
             <a>
-              <div className="relative min-w-[40px] min-h-[40px] max-h-[40px] max-w-[40px]">
+              <div className="relative min-w-[40px] min-h-[40px] max-h-[40px] max-w-[40px] md:min-h-[60px] md:min-w-[60px] md:max-h-[60px] md:max-w-[60px]">
                 <Image
                   src={user.image || nopfp}
                   alt="Profile photo"
@@ -43,7 +43,7 @@ const PasswordSettings = () => {
           </Link>
         </div>
         <div className="flex flex-grow">
-          <p className="font-medium text-lg">{user?.username}</p>
+          <p className="font-medium text-lg md:text-2xl">{user?.username}</p>
         </div>
       </div>
 
@@ -52,25 +52,25 @@ const PasswordSettings = () => {
         className="w-full flex flex-col gap-y-3"
         onSubmit={handleFormSubmit}
       >
-        <div className="flex items-center flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:gap-x-5">
           <label
-            className="font-medium text-sm md:text-base"
+            className="font-medium text-sm md:text-base min-w-[200px] sm:text-right"
             htmlFor="oldPassword"
           >
             Old Password
           </label>
           <input
             className="focus:outline-none bg-[#FAFAFA] flex-grow rounded-sm border min-w-[200px] py-1 px-1 mr-2"
-            type="text"
+            type="password"
             id="oldPassword"
             name="oldPassword"
             value={form.oldPassword}
             onChange={handleFormChange}
           />
         </div>
-        <div className="flex items-center flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:gap-x-5">
           <label
-            className="font-medium text-sm md:text-base"
+            className="font-medium text-sm md:text-base min-w-[200px] sm:text-right"
             htmlFor="newPassword"
           >
             New Password
@@ -84,9 +84,9 @@ const PasswordSettings = () => {
             onChange={handleFormChange}
           />
         </div>
-        <div className="flex items-center flex-wrap">
+        <div className="flex flex-col sm:flex-row sm:gap-x-5">
           <label
-            className="font-medium text-sm md:text-base"
+            className="font-medium text-sm md:text-base min-w-[200px] sm:text-right"
             htmlFor="confirmNewPassword"
           >
             Confirm New Password
@@ -101,12 +101,23 @@ const PasswordSettings = () => {
           />
         </div>
 
-        <div className="w-full flex justify-center">
+        <div className="flex flex-col sm:flex-row sm:gap-x-5 my-5">
+          <div className="min-w-[200px]"></div>
           <input
             type="submit"
-            disabled={true}
+            disabled={
+              form.oldPassword == '' ||
+              form.newPassword == '' ||
+              form.confirmNewPassword == ''
+            }
             value="Change Password"
-            className="bg-blue-btn text-white py-1 px-3 rounded-sm shadow-sm hover:scale-[1.02] transition cursor-pointer text-medium"
+            className={`bg-blue-btn text-white py-1 px-3 rounded-sm shadow-sm  transition cursor-pointer text-medium max-w-[200px] ${
+              form.oldPassword == '' ||
+              form.newPassword == '' ||
+              form.confirmNewPassword == ''
+                ? 'opacity-30 cursor-not-allowed'
+                : ''
+            }`}
           />
         </div>
       </form>

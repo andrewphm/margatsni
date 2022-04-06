@@ -11,7 +11,7 @@ const Settings = () => {
 
   return (
     <Layout>
-      <section className="w-full max-w-4xl border bg-white grid grid-cols-[1fr,_4fr] min-h-[80vh] mx-auto md:mt-10">
+      <section className="w-full max-w-4xl border bg-white grid grid-cols-[64px,_4fr] md:grid-cols-[1fr,_4fr] min-h-[80vh] mx-auto md:mt-10">
         <SettingTab tab={tab} setTab={setTab} />
         {tab === 'profile' && <ProfileSettings />}
         {tab === 'password' && <PasswordSettings />}
