@@ -87,8 +87,6 @@ export default async function handler(req, res) {
 
     // Log in user
     case 'POST':
-      console.log('attempting to log in');
-
       try {
         let { username, password } = body;
 
