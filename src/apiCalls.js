@@ -56,12 +56,14 @@ const apiCalls = {
   },
   fetchUser: async (username) => {
     const res = await axios.get(`${BASE_URL}user/${username}`);
-
     return res;
   },
   updateUser: async (body) => {
     const res = await axios.post(`${BASE_URL}user/${body.username}`, body);
-
+    return res;
+  },
+  changePassword: async (username, body) => {
+    const res = await axios.post(`${BASE_URL}auth/password/${username}`, body);
     return res;
   },
 };
