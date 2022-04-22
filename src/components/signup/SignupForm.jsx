@@ -55,6 +55,19 @@ const LoginForm = () => {
     }
   };
 
+  const handleDemoLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      dispatch(loginStart());
+      const res = await API.userLogin({ username: 'demo', password: 'demo' });
+      dispatch(loginSuccess(res.data));
+      window.location.reload();
+    } catch (error) {
+      dispatch(loginFailure('Something went wrong, please try again.'));
+    }
+  };
+
   return (
     <div className="flex w-[350px] flex-col gap-y-3">
       <div className="flex w-full flex-col items-center p-6 xs:border xs:bg-white">
@@ -241,7 +254,10 @@ const LoginForm = () => {
             )}
           </button>
 
-          <button className="w-full rounded-md border bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] py-[2px] font-medium text-white ease-out hover:scale-[1.01] hover:bg-neutral-50 hover:shadow-sm">
+          <button
+            onClick={handleDemoLogin}
+            className="w-full rounded-md border bg-[linear-gradient(90deg,_#6F019C_0%,_#C6017E_135.12%)_!important] py-[2px] font-medium text-white ease-out hover:scale-[1.01] hover:bg-neutral-50 hover:shadow-sm"
+          >
             Demo Log In
           </button>
 

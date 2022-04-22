@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import nopfp from '../../../public/images/nopfp.jpeg';
 import { useState } from 'react';
 import Link from 'next/link';
+import apiCalls from 'src/apiCalls';
 
 const initialForm = {
   oldPassword: '',
   newPassword: '',
-  confirmNewPaswword: '',
+  confirmNewPassword: '',
 };
 
 const PasswordSettings = () => {
@@ -18,10 +19,20 @@ const PasswordSettings = () => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    console.log('hitting submit');
+    try {
+      const res = await apiCalls.changePassword(user?.username, form);
+
+      if (res.status === 200) {
+        console.log(res.data);
+      }
+
+      setForm((prev) => initialForm);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

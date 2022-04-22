@@ -58,7 +58,14 @@ const LoginForm = () => {
   const handleDemoLogin = async (event) => {
     event.preventDefault();
 
-    console.log('demo');
+    try {
+      dispatch(loginStart());
+      const res = await API.userLogin({ username: 'demo', password: 'demo' });
+      dispatch(loginSuccess(res.data));
+      window.location.reload();
+    } catch (error) {
+      dispatch(loginFailure('Something went wrong, please try again.'));
+    }
   };
 
   return (
