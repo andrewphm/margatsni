@@ -279,6 +279,7 @@ const TimelinePost = ({ post }) => {
                               alt="Comment Profile Photo"
                               layout="fill"
                               objectFit="cover"
+                              className="rounded-full"
                             />
                           </div>
                         </a>
