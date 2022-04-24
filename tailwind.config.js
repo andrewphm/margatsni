@@ -25,6 +25,10 @@ module.exports = {
           '60%': { opacity: 0 },
           '100%': { opacity: 0 },
         },
+        modalSlideDown: {
+          from: { top: '-300px', opacity: 0 },
+          to: { top: 0, opacity: 1 },
+        },
       },
     },
   },

@@ -4,13 +4,13 @@ const Modal = ({ message, setShowModal }) => {
   useEffect(() => {
     setTimeout(() => {
       setShowModal((prev) => !prev);
-    }, 4000);
+    }, 10000);
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 z-50 w-screen h-full">
+    <div className="fixed top-0 left-0 z-50 w-screen animate-[modalSlideDown_2s_ease]">
       <div className="mx-auto w-3/4 bg-green-400 rounded-b-md">
-        <p className="text-sm text-center text-white font-medium py-2">
+        <p className="text-base text-center text-white font-semibold py-3">
           {message || 'Success'}
         </p>
       </div>

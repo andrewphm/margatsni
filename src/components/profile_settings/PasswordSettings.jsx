@@ -16,6 +16,8 @@ const PasswordSettings = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [form, setForm] = useState(initialForm);
   const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleFormChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -24,26 +26,34 @@ const PasswordSettings = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    setErrorMessage((prev) => '');
+
+    if (form.newPassword !== form.confirmNewPassword) {
+      setErrorMessage(
+        (prev) => 'New password does not match, please try again.'
+      );
+
+      return setForm((prev) => initialForm);
+    }
+
     try {
       const res = await apiCalls.changePassword(user?.username, form);
 
       if (res.status === 200) {
+        setModalMessage((prev) => 'Successfully changed password.');
         setShowModal((prev) => !prev);
       }
 
       setForm((prev) => initialForm);
     } catch (error) {
-      console.log(error);
+      setErrorMessage((prev) => 'Old Password is incorrect, please try again.');
     }
   };
 
   return (
     <>
       {showModal && (
-        <Modal
-          message="Successfully Changed Password"
-          setShowModal={setShowModal}
-        />
+        <Modal message={modalMessage} setShowModal={setShowModal} />
       )}
       <div className="w-full min-h-[70vh] px-1 py-4 xs:px-5 sm:px-8 sm:py-8">
         <div className="flex items-center gap-x-4 mb-3">
@@ -121,7 +131,9 @@ const PasswordSettings = () => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:gap-x-5 my-5">
+          <p className="text-red-600 font-medium text-sm">{errorMessage}</p>
+
+          <div className="flex flex-col sm:flex-row sm:gap-x-5">
             <div className="min-w-[200px]"></div>
             <input
               type="submit"
