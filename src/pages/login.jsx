@@ -1,15 +1,14 @@
-import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 // Components
-import Footer from '../components/common/Footer'
-import LoginForm from '../components/login/LoginForm'
-import MobileSlideShow from '../components/login/MobileSlideShow'
+import Footer from '../components/common/Footer';
+import LoginForm from '../components/login/LoginForm';
+import MobileSlideShow from '../components/login/MobileSlideShow';
 
 const Login = () => {
-  const user = useSelector((state) => state.user.currentUser)
-  const router = useRouter()
+  const user = useSelector((state) => state.user.currentUser);
+  const router = useRouter();
 
   // // If User already logged in, push to main index
   // user && router.push('/')
@@ -27,7 +26,7 @@ const Login = () => {
 
       <Footer />
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
