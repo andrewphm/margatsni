@@ -1,4 +1,16 @@
-const NotificationSettings = () => {
+import { useState } from 'react';
+
+const NotificationSettings = ({ notificationSettings }) => {
+  const [likeNotificationSetting, setLikeNotificationSetting] = useState(
+    notificationSettings?.likeNotificationSetting || false
+  );
+  const [followNotificationSetting, setFollowNotificationSetting] = useState(
+    notificationSettings?.followNotificationSetting || false
+  );
+  const [messageNotificationSetting, setMessageNotificationSetting] = useState(
+    notificationSettings?.messageNotificationSetting || false
+  );
+
   const handleNotificationChange = (e) => {};
 
   return (
@@ -14,10 +26,12 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                name="likeNotificationSetting"
                 id="likeOn"
-                value="on"
-                checked={true}
+                checked={likeNotificationSetting}
+                onChange={() => {
+                  setLikeNotificationSetting((prev) => true);
+                }}
               />
               <label className="text-sm font-medium" htmlFor="likeOn">
                 From everyone
@@ -27,10 +41,12 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                checked={!likeNotificationSetting}
+                name="likeNotificationSetting"
                 id="likeOff"
-                value="off"
-                checked={false}
+                onChange={() => {
+                  setLikeNotificationSetting((prev) => false);
+                }}
               />
               <label className="text-sm font-medium" htmlFor="likeOff">
                 Off
@@ -49,10 +65,10 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                name="followNotificationSetting"
                 id="likeOn"
-                value="on"
-                checked={true}
+                checked={followNotificationSetting}
+                onChange={() => setFollowNotificationSetting((prev) => true)}
               />
               <label className="text-sm font-medium" htmlFor="likeOn">
                 From everyone
@@ -62,10 +78,10 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                name="followNotificationSetting"
                 id="likeOff"
-                value="off"
-                checked={false}
+                checked={!followNotificationSetting}
+                onChange={() => setFollowNotificationSetting((prev) => false)}
               />
               <label className="text-sm font-medium" htmlFor="likeOff">
                 Off
@@ -84,9 +100,10 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                name="directMessageNotification"
                 id="likeOn"
-                value="on"
+                checked={messageNotificationSetting}
+                onChange={() => setMessageNotificationSetting((prev) => true)}
               />
               <label className="text-sm font-medium" htmlFor="likeOn">
                 From everyone
@@ -96,9 +113,10 @@ const NotificationSettings = () => {
               <input
                 className="h-4 w-4"
                 type="radio"
-                name="likeOff"
+                name="directMessageNotification"
                 id="likeOff"
-                value="off"
+                checked={!messageNotificationSetting}
+                onChange={() => setMessageNotificationSetting((prev) => false)}
               />
               <label className="text-sm font-medium" htmlFor="likeOff">
                 Off
