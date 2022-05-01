@@ -5,6 +5,7 @@ import PrivacySettings from '~/components/profile_settings/PrivacySettings';
 import ProfileSettings from '~/components/profile_settings/ProfileSettings';
 import NotificationSettings from '~/components/profile_settings/NotificationSettings';
 import PasswordSettings from '~/components/profile_settings/PasswordSettings';
+import { jwtVerify } from 'jose';
 
 const Settings = () => {
   const [tab, setTab] = useState('profile');
@@ -21,5 +22,18 @@ const Settings = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps(context) {
+  const userToken = context.req.cookies['user-token'];
+  const secret = process.env.JWT_SEC;
+
+  const user = await jwtVerify(userToken, new TextEncoder().encode(secret));
+
+  // get notification
+
+  return {
+    props: {},
+  };
+}
 
 export default Settings;
