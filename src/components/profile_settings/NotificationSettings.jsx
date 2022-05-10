@@ -1,15 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
-const NotificationSettings = ({ notificationSettings }) => {
+const NotificationSettings = () => {
+  const user = useSelector((state) => state.user.currentUser);
+
+  const firstLoadRef = useRef(true);
+
   const [likeNotificationSetting, setLikeNotificationSetting] = useState(
-    notificationSettings?.likeNotificationSetting || false
+    user?.settings.notifications.like
   );
   const [followNotificationSetting, setFollowNotificationSetting] = useState(
-    notificationSettings?.followNotificationSetting || false
+    user?.settings.notifications.follow
   );
   const [messageNotificationSetting, setMessageNotificationSetting] = useState(
-    notificationSettings?.messageNotificationSetting || false
+    user?.settings.notifications.directMessage
   );
+
+  // useEffect that updates user settings everytime it changes state
+  useEffect(() => {
+    if (firstLoadRef.current) {
+      firstLoadRef.current = false;
+      return;
+    }
+  }, [
+    likeNotificationSetting,
+    followNotificationSetting,
+    messageNotificationSetting,
+  ]);
 
   const handleNotificationChange = (e) => {};
 

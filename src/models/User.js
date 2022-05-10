@@ -50,8 +50,17 @@ const UserSchema = new mongoose.Schema(
       default: false,
     },
     settings: {
-      notifications: {},
-      privacy: {},
+      type: Object,
+      default: {
+        notifications: {
+          like: true,
+          follow: true,
+          directMessage: true,
+        },
+        privacy: {
+          private: false,
+        },
+      },
     },
   },
   { timestamps: true }
